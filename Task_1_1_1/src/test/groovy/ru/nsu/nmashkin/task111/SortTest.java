@@ -37,7 +37,8 @@ class SortTest {
 
     @Test
     void sort_a_lot() {
-        int n = 30000000, ind = n / 2;
+        int n = 30000000;
+        int ind = n / 2;
         int[] array = new int[n];
         int[] expected = new int[n];
         for (int i = 0; i < n; i++) {
