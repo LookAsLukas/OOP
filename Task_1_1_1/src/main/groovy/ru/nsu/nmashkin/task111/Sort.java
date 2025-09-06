@@ -52,7 +52,7 @@ public class Sort {
     }
 
     /**
-     * Main function showing that the complexity is indeed n*log(n)
+     * Main function showing that the complexity is indeed n*log(n).
      *
      * @param args completely useless but necessary
      */
