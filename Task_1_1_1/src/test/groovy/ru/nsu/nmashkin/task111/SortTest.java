@@ -49,4 +49,9 @@ class SortTest {
         Sort.sort(array);
         assertArrayEquals(expected, array);
     }
+
+    @Test
+    void sort_main() {
+        Sort.main(null);
+    }
 }

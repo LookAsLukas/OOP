@@ -50,4 +50,25 @@ public class Sort {
             heapify(array, i, 0);
         }
     }
+
+    /**
+     * Main function showing that the complexity is indeed n*log(n)
+     *
+     * @param args completely useless but necessary
+     */
+    public static void main(String[] args) {
+        for (int len = 4; len <= 40000000; len *= 10) {
+            int[] array = new int[len];
+            int ind = len / 2;
+            for (int i = 0; i < len; i++) {
+                array[ind] = i + 1;
+                ind += (i + 1) * (2 * (i % 2) - 1);
+            }
+
+            long start = System.nanoTime();
+            Sort.sort(array);
+            double time = (System.nanoTime() - start) / 1_000_000.0;
+            System.out.println("N = " + len + ", Time = " + time + "ms");
+        }
+    }
 }
