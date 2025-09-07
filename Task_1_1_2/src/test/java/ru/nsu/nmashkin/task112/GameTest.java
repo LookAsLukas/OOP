@@ -22,13 +22,10 @@ class GameTest {
         Game.round(in);
         in.close();
 
-        in = new Scanner(new ByteArrayInputStream("1\n1\n1\n0\n0\n0\n".getBytes()));
-        Game.round(in);
-        in.close();
-    }
-
-    @Test
-    void stupid() {
-        Game.stupid();
+        for (int i = 0; i < 500; i++) {
+            in = new Scanner(new ByteArrayInputStream("1\n0\n0\n0\n".getBytes()));
+            Game.round(in);
+            in.close();
+        }
     }
 }
