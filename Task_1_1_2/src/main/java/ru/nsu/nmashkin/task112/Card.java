@@ -1,7 +1,7 @@
 package ru.nsu.nmashkin.task112;
 
 /**
- * Card class used to abstract from card numbers
+ * Card class used to abstract from card numbers.
  */
 public class Card {
     private boolean hidden = false;
@@ -9,7 +9,7 @@ public class Card {
     private int worth;
 
     /**
-     * Constructor to determine the card's worth and suit
+     * Constructor to determine the card's worth and suit.
      *
      * @param num card number (form 0 to 51)
      */
@@ -41,21 +41,21 @@ public class Card {
     }
 
     /**
-     * Make the card appear hidden
+     * Make the card appear hidden.
      */
     public void hide() {
         hidden = true;
     }
 
     /**
-     * Make the card stop appearing hidden
+     * Make the card stop appearing hidden.
      */
     public void reveal() {
         hidden = false;
     }
 
     /**
-     * Get the card's value
+     * Get the card's value.
      *
      * @return how much is the card worth
      */
@@ -64,7 +64,7 @@ public class Card {
     }
 
     /**
-     * If the card is an ace, downgrade it's worth
+     * If the card is an ace, downgrade it's worth.
      *
      * @return was the downgrade successful
      */
@@ -77,7 +77,7 @@ public class Card {
     }
 
     /**
-     * Determine how the card is printed
+     * Determine how the card is printed.
      *
      * @return string representation
      */

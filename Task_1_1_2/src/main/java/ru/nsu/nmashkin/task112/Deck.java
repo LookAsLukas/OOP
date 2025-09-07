@@ -4,13 +4,13 @@ import java.util.Collections;
 import java.util.Stack;
 
 /**
- * Class for the representation of the deck of 52 cards
+ * Class for the representation of the deck of 52 cards.
  */
 public class Deck {
     private final Stack<Card> deck;
 
     /**
-     * Constructor for initializing the deck
+     * Constructor for initializing the deck.
      */
     public Deck() {
         deck = new Stack<>();
@@ -22,7 +22,7 @@ public class Deck {
     }
 
     /**
-     * Draw one card from the top of the deck
+     * Draw one card from the top of the deck.
      *
      * @return the drawn card
      */

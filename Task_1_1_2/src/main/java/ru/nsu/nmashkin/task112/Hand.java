@@ -3,14 +3,14 @@ package ru.nsu.nmashkin.task112;
 import java.util.Vector;
 
 /**
- * Hand class representing player's or dealer's hand
+ * Hand class representing player's or dealer's hand.
  */
 public class Hand {
     private final Vector<Card> cards;
     private final boolean dealer;
 
     /**
-     * Constructor initializing the cards vector
+     * Constructor initializing the cards vector.
      *
      * @param isDealer is this a dealer's hand
      */
@@ -20,7 +20,7 @@ public class Hand {
     }
 
     /**
-     * Add a card to the hand
+     * Add a card to the hand.
      *
      * @param card the card to be added
      */
@@ -32,7 +32,7 @@ public class Hand {
     }
 
     /**
-     * Get the sum of cards' worths
+     * Get the sum of cards' worths.
      *
      * @return the sum of cards' worths
      */
@@ -45,7 +45,7 @@ public class Hand {
     }
 
     /**
-     * Downgrade an ace if possible
+     * Downgrade an ace if possible.
      *
      * @return true if nothing to rebalance
      */
@@ -59,7 +59,7 @@ public class Hand {
     }
 
     /**
-     * Reveal dealer's second card
+     * Reveal dealer's second card.
      */
     public void enableDealer() {
         if (!dealer) {
@@ -70,7 +70,7 @@ public class Hand {
     }
 
     /**
-     * Get the last card in hand
+     * Get the last card in hand.
      *
      * @return the last card in hand
      */
@@ -79,7 +79,7 @@ public class Hand {
     }
 
     /**
-     * Determine how the hand is printed
+     * Determine how the hand is printed.
      *
      * @return the string representation
      */
