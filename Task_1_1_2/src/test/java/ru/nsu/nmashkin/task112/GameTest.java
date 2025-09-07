@@ -10,7 +10,7 @@ class GameTest {
     @Test
     void main() {
         InputStream in = System.in;
-        System.setIn(new ByteArrayInputStream("1\n0\n1\n0\n0\n".getBytes()));
+        System.setIn(new ByteArrayInputStream("1\n0\n1\n0\n0\n0\n".getBytes()));
         Game.main(null);
         System.setIn(in);
     }
@@ -18,8 +18,12 @@ class GameTest {
     @Test
     void round() {
         InputStream in = System.in;
-        System.setIn(new ByteArrayInputStream("1\n0\n".getBytes()));
-        Game.round();
+        System.setIn(new ByteArrayInputStream("1\n0\n0\n0\n".getBytes()));
+        Game tmp = new Game();
+        tmp.round();
+
+        System.setIn(new ByteArrayInputStream("1\n0\n1\n0\n0\n0\n".getBytes()));
+        tmp.main(null);
         System.setIn(in);
     }
 }
