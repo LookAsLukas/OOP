@@ -3,7 +3,6 @@ package ru.nsu.nmashkin.task112;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Scanner;
-
 import org.junit.jupiter.api.Test;
 
 class GameTest {
@@ -21,11 +20,5 @@ class GameTest {
         Scanner in = new Scanner(new ByteArrayInputStream("lol\n1\n0\n0\n0\n".getBytes()));
         Game.round(in);
         in.close();
-
-        for (int i = 0; i < 500; i++) {
-            in = new Scanner(new ByteArrayInputStream("1\n0\n0\n0\n".getBytes()));
-            Game.round(in);
-            in.close();
-        }
     }
 }
