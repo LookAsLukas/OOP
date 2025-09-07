@@ -1,9 +1,10 @@
 package ru.nsu.nmashkin.task112;
 
-import org.junit.jupiter.api.Test;
-
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.Scanner;
+
+import org.junit.jupiter.api.Test;
 
 class GameTest {
 
@@ -11,32 +12,18 @@ class GameTest {
     void main() {
         InputStream in = System.in;
         System.setIn(new ByteArrayInputStream("lol\n0\nlol\n1\n0\n1\n0\n0\n".getBytes()));
-        Game dummy = new Game();
-        dummy.main(null);
+        Game.main(null);
         System.setIn(in);
-        dummy.destroyScanner();
     }
 
     @Test
     void round() {
-        InputStream in = System.in;
-        System.setIn(new ByteArrayInputStream("lol\n1\n0\n0\n0\n".getBytes()));
-        Game dummy = new Game();
-        dummy.round();
-        System.setIn(in);
-        dummy.destroyScanner();
+        Scanner in = new Scanner(new ByteArrayInputStream("lol\n1\n0\n0\n0\n".getBytes()));
+        Game.round(in);
+        in.close();
 
-        in = System.in;
-        System.setIn(new ByteArrayInputStream("1\n1\n1\n0\n0\n0\n".getBytes()));
-        dummy = new Game();
-        dummy.round();
-        System.setIn(in);
-        dummy.destroyScanner();
-    }
-
-    @Test
-    void destroyScanner() {
-        Game dummy = new Game();
-        dummy.destroyScanner();
+        in = new Scanner(new ByteArrayInputStream("1\n1\n1\n0\n0\n0\n".getBytes()));
+        Game.round(in);
+        in.close();
     }
 }

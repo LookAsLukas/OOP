@@ -9,14 +9,6 @@ public class Game {
     private static int roundNo = 1;
     private static int playerWinCount = 0;
     private static int dealerWinCount = 0;
-    private static final Scanner input = new Scanner(System.in);
-
-    /**
-     * Closes the input scanner.
-     */
-    public static void destroyScanner() {
-        input.close();
-    }
 
     /**
      * Entry point.
@@ -25,10 +17,11 @@ public class Game {
      */
     public static void main(String[] args) {
         System.out.println("Welcome to The BlackJack!");
+        Scanner in = new Scanner(System.in);
         while (true) {
             System.out.println("\nRound " + roundNo);
 
-            int result  = round();
+            int result = round(in);
             if (result > 0) {
                 playerWinCount++;
             } else if (result < 0) {
@@ -40,17 +33,17 @@ public class Game {
             System.out.println("Dealer - " + dealerWinCount);
 
             System.out.println("\nIf you want to continue type 1, else - 0");
-            String answer = input.nextLine();
+            String answer = in.nextLine();
             while (!answer.equals("0") && !answer.equals("1")) {
                 System.out.println("Please provide a valid answer (1 to continue, 0 to quit)");
-                answer = input.nextLine();
+                answer = in.nextLine();
             }
             if (answer.equals("0")) {
                 break;
             }
         }
         System.out.println("Goodbye!");
-        destroyScanner();
+        in.close();
     }
 
     /**
@@ -58,7 +51,7 @@ public class Game {
      *
      * @return 1 if the player won, -1 if the dealer won, 0 if draw
      */
-    public static int round() {
+    public static int round(Scanner in) {
         Deck deck = new Deck();
         Hand player = new Hand(false);
         Hand dealer = new Hand(true);
@@ -87,11 +80,11 @@ public class Game {
 
         System.out.println("Your turn:");
         System.out.println("Type 1 to draw a card, type 0 to stop");
-        String answer = input.nextLine();
+        String answer = in.nextLine();
         while (!answer.equals("0")) {
             if (!answer.equals("1")) {
                 System.out.println("Please, provide a valid answer (1 to draw, 0 to stop)");
-                answer = input.nextLine();
+                answer = in.nextLine();
                 continue;
             }
 
@@ -120,7 +113,7 @@ public class Game {
                 return 1;
             }
 
-            answer = input.nextLine();
+            answer = in.nextLine();
         }
 
         System.out.println("\nDealer's turn");
