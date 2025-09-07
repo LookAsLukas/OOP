@@ -40,11 +40,11 @@ public class Hand {
             return;
         }
 
-        cards.getLast().reveal();
+        cards.get(cards.size() - 1).reveal();
     }
 
     public Card getLast() {
-        return cards.getLast();
+        return cards.get(cards.size() - 1);
     }
 
     @Override
