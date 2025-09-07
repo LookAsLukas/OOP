@@ -2,12 +2,20 @@ package ru.nsu.nmashkin.task112;
 
 import java.util.Scanner;
 
+/**
+ * Main game class
+ */
 public class Game {
     private static int roundNo = 1;
     private static int playerWinCount = 0;
     private static int dealerWinCount = 0;
     private static final Scanner input = new Scanner(System.in);
 
+    /**
+     * Entry point
+     *
+     * @param args useless
+     */
     public static void main(String[] args) {
         System.out.println("Welcome to The BlackJack!");
         while (true) {
@@ -38,6 +46,11 @@ public class Game {
         input.close();
     }
 
+    /**
+     * Play one round of the game
+     *
+     * @return 1 if the player won, -1 if the dealer won, 0 if draw
+     */
     private static int round() {
         Deck deck = new Deck();
         Hand player = new Hand(false);
