@@ -20,5 +20,11 @@ class GameTest {
         Scanner in = new Scanner(new ByteArrayInputStream("lol\n1\n0\n0\n0\n".getBytes()));
         Game.round(in);
         in.close();
+
+        for (int i = 0; i < 500; i++) {
+            in = new Scanner(new ByteArrayInputStream("1\n0\n0\n0\n".getBytes()));
+            Game.round(in);
+            in.close();
+        }
     }
 }
