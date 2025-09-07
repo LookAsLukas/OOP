@@ -51,7 +51,7 @@ public class Game {
      *
      * @return 1 if the player won, -1 if the dealer won, 0 if draw
      */
-    private static int round() {
+    public static int round() {
         Deck deck = new Deck();
         Hand player = new Hand(false);
         Hand dealer = new Hand(true);
