@@ -12,6 +12,13 @@ public class Game {
     private static final Scanner input = new Scanner(System.in);
 
     /**
+     * Closes the input scanner.
+     */
+    public static void destroyScanner() {
+        input.close();
+    }
+
+    /**
      * Entry point.
      *
      * @param args useless
@@ -43,7 +50,7 @@ public class Game {
             }
         }
         System.out.println("Goodbye!");
-        input.close();
+        destroyScanner();
     }
 
     /**
