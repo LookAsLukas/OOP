@@ -10,6 +10,10 @@ public class Game {
     private static int playerWinCount = 0;
     private static int dealerWinCount = 0;
 
+    public static void stupid() {
+        System.out.println("LOL");
+    }
+
     /**
      * Entry point.
      *

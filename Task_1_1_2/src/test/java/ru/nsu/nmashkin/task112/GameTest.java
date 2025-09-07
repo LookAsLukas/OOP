@@ -26,4 +26,9 @@ class GameTest {
         Game.round(in);
         in.close();
     }
+
+    @Test
+    void stupid() {
+        Game.stupid();
+    }
 }
