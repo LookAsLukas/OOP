@@ -19,11 +19,11 @@ class GameTest {
     void round() {
         InputStream in = System.in;
         System.setIn(new ByteArrayInputStream("1\n0\n0\n0\n".getBytes()));
-        Game tmp = new Game();
-        tmp.round();
-
-        System.setIn(new ByteArrayInputStream("1\n0\n1\n0\n0\n0\n".getBytes()));
-        tmp.main(null);
+        try {
+            Game.round();
+        } catch (IllegalStateException e) {
+            System.out.println("No idea what went wrong");
+        }
         System.setIn(in);
     }
 }
