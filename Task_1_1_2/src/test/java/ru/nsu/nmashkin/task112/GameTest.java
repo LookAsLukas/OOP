@@ -9,6 +9,7 @@ class GameTest {
 
     @Test
     void main() {
+        Game dummy = new Game();
         InputStream in = System.in;
         System.setIn(new ByteArrayInputStream("1\n0\n1\n0\n0\n0\n".getBytes()));
         Game.main(null);
