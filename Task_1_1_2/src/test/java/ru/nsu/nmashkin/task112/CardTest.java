@@ -67,4 +67,10 @@ class CardTest {
         Card card = new Card(42);
         assert card.toString().equals("Five of Diamonds (5)");
     }
+
+    @Test
+    void constructor() {
+        Card card = new Card(-1);
+        assert card.getWorth() == 0;
+    }
 }

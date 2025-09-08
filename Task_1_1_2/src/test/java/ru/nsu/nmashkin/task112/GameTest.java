@@ -34,4 +34,9 @@ class GameTest {
             in.close();
         }
     }
+
+    @Test
+    void constructor() {
+        Game game = new Game();
+    }
 }

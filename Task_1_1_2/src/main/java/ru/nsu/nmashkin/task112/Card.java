@@ -5,7 +5,7 @@ package ru.nsu.nmashkin.task112;
  */
 public class Card {
     private boolean hidden = false;
-    private String name;
+    private final String name;
     private int worth;
 
     /**
@@ -15,6 +15,8 @@ public class Card {
      */
     public Card(int num) {
         if (num < 0 || num > 52) {
+            name = null;
+            worth = 0;
             return;
         }
 
