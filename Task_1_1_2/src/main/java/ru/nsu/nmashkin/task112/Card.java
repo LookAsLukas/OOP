@@ -5,7 +5,7 @@ package ru.nsu.nmashkin.task112;
  */
 public class Card {
     private boolean hidden = false;
-    private final String name;
+    private String name;
     private int worth;
 
     /**
@@ -14,6 +14,10 @@ public class Card {
      * @param num card number (form 0 to 51)
      */
     public Card(int num) {
+        if (num < 0 || num > 52) {
+            return;
+        }
+
         worth = Math.min(10, num % 13 + 2) + (num % 13 == 12 ? 1 : 0);
 
         String[] names = new String[] {

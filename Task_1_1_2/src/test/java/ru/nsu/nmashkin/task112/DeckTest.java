@@ -13,4 +13,13 @@ class DeckTest {
         }
         assert sum == 380;
     }
+
+    @Test
+    void draw_empty() {
+        Deck deck = new Deck();
+        for (int i = 0; i < 52; i++) {
+            deck.draw();
+        }
+        assert deck.draw() == null;
+    }
 }

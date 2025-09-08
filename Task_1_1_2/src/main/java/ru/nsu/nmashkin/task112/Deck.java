@@ -27,6 +27,10 @@ public class Deck {
      * @return the drawn card
      */
     public Card draw() {
+        if (deck.isEmpty()) {
+            return null;
+        }
+
         return deck.pop();
     }
 }

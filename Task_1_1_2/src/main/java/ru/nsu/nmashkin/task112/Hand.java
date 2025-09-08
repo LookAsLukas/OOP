@@ -25,7 +25,7 @@ public class Hand {
      * @param card the card to be added
      */
     public void addCard(Card card) {
-        if (dealer && cards.size() == 1) {
+        if (dealer && !cards.isEmpty()) {
             card.hide();
         }
         cards.add(card);
@@ -62,7 +62,7 @@ public class Hand {
      * Reveal dealer's second card.
      */
     public void enableDealer() {
-        if (!dealer) {
+        if (!dealer || cards.isEmpty()) {
             return;
         }
 
@@ -75,6 +75,10 @@ public class Hand {
      * @return the last card in hand
      */
     public Card getLast() {
+        if (cards.isEmpty()) {
+            return null;
+        }
+
         return cards.get(cards.size() - 1);
     }
 
