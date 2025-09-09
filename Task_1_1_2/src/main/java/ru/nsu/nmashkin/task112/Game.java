@@ -25,6 +25,7 @@ public class Game {
             switch (round.round()) {
                 case PlayerWin -> playerWinCount++;
                 case DealerWin -> dealerWinCount++;
+                default -> {}
             }
             roundNo++;
 

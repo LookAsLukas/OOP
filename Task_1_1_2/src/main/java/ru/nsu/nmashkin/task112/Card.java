@@ -1,6 +1,5 @@
 package ru.nsu.nmashkin.task112;
 
-import javax.annotation.processing.Generated;
 import java.util.Objects;
 
 /**
@@ -140,7 +139,10 @@ public class Card {
      */
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
         Card card = (Card) o;
         return hidden == card.hidden && worth == card.worth && Objects.equals(name, card.name);
     }

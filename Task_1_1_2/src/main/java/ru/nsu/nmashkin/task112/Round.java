@@ -64,8 +64,8 @@ public class Round {
      */
     private void printState(boolean showDealerSum) {
         System.out.println("Your cards: " + player + " ==> " + player.sum());
-        System.out.println("Dealer's cards: " + dealer +
-                            (showDealerSum ? " ==> " + dealer.sum() : ""));
+        System.out.println("Dealer's cards: " + dealer
+                            + (showDealerSum ? " ==> " + dealer.sum() : ""));
     }
 
     /**

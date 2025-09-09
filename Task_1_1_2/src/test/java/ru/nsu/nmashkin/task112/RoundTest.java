@@ -1,8 +1,9 @@
 package ru.nsu.nmashkin.task112;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.Test;
+
 import java.util.Scanner;
+import org.junit.jupiter.api.Test;
 
 class RoundTest {
 
