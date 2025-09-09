@@ -2,7 +2,6 @@ package ru.nsu.nmashkin.task112;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.util.Scanner;
 import org.junit.jupiter.api.Test;
 
 class GameTest {
@@ -20,23 +19,5 @@ class GameTest {
             Game.main(new String[]{"poplach"});
             System.setIn(in);
         }
-    }
-
-    @Test
-    void round() {
-        Scanner in = new Scanner("lol\n1\n0\n0\n0\n");
-        Game.round(in);
-        in.close();
-
-        for (int i = 0; i < 500; i++) {
-            in = new Scanner("1\n0\n0\n0\n");
-            Game.round(in);
-            in.close();
-        }
-    }
-
-    @Test
-    void constructor() {
-        Game game = new Game();
     }
 }

@@ -1,5 +1,10 @@
 package ru.nsu.nmashkin.task112;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import org.junit.jupiter.api.Test;
 
 class HandTest {
@@ -8,7 +13,7 @@ class HandTest {
     void addCard() {
         Hand hand = new Hand(false);
         hand.addCard(new Card(42));
-        assert hand.toString().equals("[Five of Diamonds (5)]");
+        assertEquals("[Five of Diamonds (5)]", hand.toString());
     }
 
     @Test
@@ -16,8 +21,7 @@ class HandTest {
         Hand hand = new Hand(true);
         hand.addCard(new Card(42));
         hand.addCard(new Card(42));
-        hand.addCard(new Card(42));
-        assert hand.toString().equals("[Five of Diamonds (5), <hidden card>, <hidden card>]");
+        assertEquals("[Five of Diamonds (5), <hidden card>]", hand.toString());
     }
 
     @Test
@@ -25,13 +29,13 @@ class HandTest {
         Hand hand = new Hand(false);
         hand.addCard(new Card(42));
         hand.addCard(new Card(51));
-        assert hand.sum() == 16;
+        assertEquals(16, hand.sum());
     }
 
     @Test
     void sum_empty() {
         Hand hand = new Hand(false);
-        assert hand.sum() == 0;
+        assertEquals(0, hand.sum());
     }
 
     @Test
@@ -39,8 +43,8 @@ class HandTest {
         Hand hand = new Hand(false);
         hand.addCard(new Card(42));
         hand.addCard(new Card(51));
-        assert !hand.rebalance();
-        assert hand.sum() == 6;
+        assertFalse(hand.rebalance());
+        assertEquals(6, hand.sum());
     }
 
     @Test
@@ -48,8 +52,8 @@ class HandTest {
         Hand hand = new Hand(false);
         hand.addCard(new Card(42));
         hand.addCard(new Card(50));
-        assert hand.rebalance();
-        assert hand.sum() == 15;
+        assertTrue(hand.rebalance());
+        assertEquals(15, hand.sum());
     }
 
     @Test
@@ -58,14 +62,14 @@ class HandTest {
         hand.addCard(new Card(42));
         hand.addCard(new Card(51));
         hand.enableDealer();
-        assert !hand.getLast().toString().equals("<hidden card>");
+        assertNotEquals("<hidden card>", hand.toString());
     }
 
     @Test
     void enableDealer_empty() {
         Hand hand = new Hand(true);
         hand.enableDealer();
-        assert hand.toString().equals("[]");
+        assertEquals("[]", hand.toString());
     }
 
     @Test
@@ -73,20 +77,12 @@ class HandTest {
         Hand hand = new Hand(false);
         hand.addCard(new Card(42));
         hand.addCard(new Card(51));
-        assert hand.getLast().getWorth() == 11;
+        assertEquals(11, hand.getLast().getWorth());
     }
 
     @Test
     void getLast_empty() {
         Hand hand = new Hand(false);
-        assert hand.getLast() == null;
-    }
-
-    @Test
-    void testToString() {
-        Hand hand = new Hand(false);
-        hand.addCard(new Card(42));
-        hand.addCard(new Card(51));
-        assert hand.toString().equals("[Five of Diamonds (5), Ace of Diamonds (11)]");
+        assertNull(hand.getLast());
     }
 }

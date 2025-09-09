@@ -22,6 +22,18 @@ public class Deck {
     }
 
     /**
+     * Constructor for initializing the deck with custom card order.
+     *
+     * @param cardNums custom card numbers
+     */
+    public Deck(int[] cardNums) {
+        deck = new Stack<>();
+        for (int cardNum : cardNums) {
+            deck.push(new Card(cardNum));
+        }
+    }
+
+    /**
      * Draw one card from the top of the deck.
      *
      * @return the drawn card

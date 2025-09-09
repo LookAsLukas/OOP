@@ -1,5 +1,7 @@
 package ru.nsu.nmashkin.task112;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import org.junit.jupiter.api.Test;
 
 class DeckTest {
@@ -11,7 +13,7 @@ class DeckTest {
         for (int i = 0; i < 52; i++) {
             sum += deck.draw().getWorth();
         }
-        assert sum == 380;
+        assertEquals(380, sum);
     }
 
     @Test
@@ -20,6 +22,6 @@ class DeckTest {
         for (int i = 0; i < 52; i++) {
             deck.draw();
         }
-        assert deck.draw() == null;
+        assertNull(deck.draw());
     }
 }

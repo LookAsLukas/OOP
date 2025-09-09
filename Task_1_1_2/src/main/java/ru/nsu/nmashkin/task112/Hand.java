@@ -25,7 +25,7 @@ public class Hand {
      * @param card the card to be added
      */
     public void addCard(Card card) {
-        if (dealer && !cards.isEmpty()) {
+        if (dealer && cards.size() == 1) {
             card.hide();
         }
         cards.add(card);
