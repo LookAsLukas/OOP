@@ -25,17 +25,17 @@ public class Parser {
             }
 
             if (Operator.isArithmeticOperator(ch)) {
-                while (!operators.isEmpty() &&
-                        operators.peek().getPrecedence() >= Operator.determinePrecedence(ch) &&
-                        operators.peek() != Operator.LPR) {
+                while (!operators.isEmpty()
+                        && operators.peek().getPrecedence() >= Operator.determinePrecedence(ch)
+                        && operators.peek() != Operator.LPR) {
                     output.add(new Token(operators.pop()));
                 }
                 operators.push(Operator.makeOperator(ch));
             } else if (ch == '(') {
                 operators.push(Operator.makeOperator(ch));
             } else if (ch == ')') {
-                while (!operators.isEmpty() &&
-                        operators.peek() != Operator.LPR) {
+                while (!operators.isEmpty()
+                        && operators.peek() != Operator.LPR) {
                     output.add(new Token(operators.pop()));
                 }
                 if (operators.isEmpty()) {
@@ -45,8 +45,8 @@ public class Parser {
             } else if (Character.isDigit(ch)) {
                 int start = i;
                 boolean seenDot = false;
-                while (Character.isDigit(toParse.charAt(i)) ||
-                       (!seenDot && toParse.charAt(i) == '.')) {
+                while (Character.isDigit(toParse.charAt(i))
+                       || (!seenDot && toParse.charAt(i) == '.')) {
                     if (toParse.charAt(i) == '.') {
                         seenDot = true;
                     }
@@ -63,8 +63,8 @@ public class Parser {
                 i--;
             } else if (Character.isAlphabetic(ch)) {
                 int start = i;
-                while (Character.isDigit(toParse.charAt(i)) ||
-                       Character.isAlphabetic(toParse.charAt(i))) {
+                while (Character.isDigit(toParse.charAt(i))
+                       || Character.isAlphabetic(toParse.charAt(i))) {
                     i++;
 
                     if (i == toParse.length()) {

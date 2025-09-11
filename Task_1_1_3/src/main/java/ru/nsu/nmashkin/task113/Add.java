@@ -23,8 +23,8 @@ public class Add extends Expression {
     @Override
     public double eval(String vars) {
         if (children[0] == null || children[1] == null) {
-            System.err.println("WARNING: Evaluating expression with null operands " +
-                               "results in the value being infinite");
+            System.err.println("WARNING: Evaluating expression with null operands "
+                               + "results in the value being infinite");
             return Double.POSITIVE_INFINITY;
         }
         return children[0].eval(vars) + children[1].eval(vars);
@@ -74,16 +74,16 @@ public class Add extends Expression {
 
         Expression newExp =  new Add(children[0].simplify(), children[1].simplify());
         Expression[] newExpChildren = newExp.children;
-        if (newExpChildren[0].getClass() == Number.class &&
-            newExpChildren[1].getClass() == Number.class) {
+        if (newExpChildren[0].getClass() == Number.class
+            && newExpChildren[1].getClass() == Number.class) {
             return new Number(newExpChildren[0].eval("") + newExpChildren[1].eval(""));
         }
-        if (newExpChildren[0].getClass() == Number.class &&
-            newExpChildren[0].eval("") == 0) {
+        if (newExpChildren[0].getClass() == Number.class
+            && newExpChildren[0].eval("") == 0) {
             return newExpChildren[1];
         }
-        if (newExpChildren[1].getClass() == Number.class &&
-            newExpChildren[1].eval("") == 0) {
+        if (newExpChildren[1].getClass() == Number.class
+            && newExpChildren[1].eval("") == 0) {
             return newExpChildren[0];
         }
         return newExp;
@@ -102,7 +102,7 @@ public class Add extends Expression {
         }
 
         Add o = (Add) obj;
-        return children[0].equals(o.children[0]) &&
-               children[1].equals(o.children[1]);
+        return children[0].equals(o.children[0])
+               && children[1].equals(o.children[1]);
     }
 }

@@ -16,17 +16,17 @@ public abstract class Expression {
      * @return corresponding Expression
      */
     public static Expression fromString(String str) {
-        Queue<Token> RPN = Parser.parseString(str);
-        if (RPN == null) {
+        Queue<Token> reversePolish = Parser.parseString(str);
+        if (reversePolish == null) {
             System.err.println("WARNING: Invalid expression defaults to null");
             return null;
         }
 
         Stack<Expression> tokens = new Stack<>();
-        Expression result = null;
+        Expression result;
 
-        while (!RPN.isEmpty()) {
-            Token tok = RPN.poll();
+        while (!reversePolish.isEmpty()) {
+            Token tok = reversePolish.poll();
 
             if (tok.isOperator()) {
                 if (tokens.isEmpty()) {

@@ -49,8 +49,8 @@ public class Variable extends Expression {
     @Override
     public double eval(String vars) {
         if (name == null) {
-            System.err.println("WARNING: Evaluating expression containing null variable name" +
-                               "results in the value being infinite");
+            System.err.println("WARNING: Evaluating expression containing null variable name"
+                               + "results in the value being infinite");
             return Double.POSITIVE_INFINITY;
         }
 
@@ -61,8 +61,8 @@ public class Variable extends Expression {
         }
 
         if (!scanner.hasNext()) {
-            System.err.println("WARNING: Evaluating expression without providing variable value " +
-                               "results in the value being infinite");
+            System.err.println("WARNING: Evaluating expression without providing variable value "
+                               + "results in the value being infinite");
             return Double.POSITIVE_INFINITY;
         }
 
@@ -70,8 +70,8 @@ public class Variable extends Expression {
         try {
             result = Double.parseDouble(scanner.next());
         } catch (NumberFormatException e) {
-            System.err.println("WARNING: Evaluating expression with invalid variable value " +
-                               "results in the value being infinite");
+            System.err.println("WARNING: Evaluating expression with invalid variable value "
+                               + "results in the value being infinite");
             result = Double.POSITIVE_INFINITY;
         } finally {
             scanner.close();
@@ -95,8 +95,8 @@ public class Variable extends Expression {
     @Override
     public Expression derivative(String var) {
         if (name == null) {
-            System.err.println("WARNING: Differentiation of a null named variable " +
-                               "results in a value being infinite");
+            System.err.println("WARNING: Differentiation of a null named variable "
+                               + "results in a value being infinite");
             return new Number(Double.POSITIVE_INFINITY);
         }
         return new Number(var.equals(name) ? 1 : 0);
