@@ -2,7 +2,6 @@ package ru.nsu.nmashkin.task113;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-
 import org.junit.jupiter.api.Test;
 
 class MainTest {

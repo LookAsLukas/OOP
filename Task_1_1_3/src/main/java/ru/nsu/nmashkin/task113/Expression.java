@@ -65,9 +65,9 @@ public abstract class Expression {
                 }
             }
 
-            tokens.push(hasLetters ?
-                        new Variable(tokValue) :
-                        new Number(Double.parseDouble(tokValue)));
+            tokens.push(hasLetters
+                        ? new Variable(tokValue)
+                        : new Number(Double.parseDouble(tokValue)));
         }
 
         result = tokens.pop();

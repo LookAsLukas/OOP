@@ -1,7 +1,7 @@
 package ru.nsu.nmashkin.task113;
 
 /**
- * Addition
+ * Addition.
  */
 public class Add extends Expression {
 
