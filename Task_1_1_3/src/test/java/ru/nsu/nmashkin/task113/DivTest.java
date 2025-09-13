@@ -1,7 +1,7 @@
 package ru.nsu.nmashkin.task113;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -20,12 +20,6 @@ class DivTest {
     }
 
     @Test
-    void eval_null() {
-        Expression e = new Div(null, null);
-        assertEquals(Double.POSITIVE_INFINITY, e.eval(""));
-    }
-
-    @Test
     void derivative_bound() {
         Expression e = new Div(new Variable("x"), new Variable("y"));
         assertEquals(new Div(new Sub(new Mul(new Number(1), new Variable("y")),
@@ -41,12 +35,6 @@ class DivTest {
                                      new Mul(new Variable("x"), new Number(0))),
                              new Mul(new Variable("y"), new Variable("y"))),
                      e.derivative("z"));
-    }
-
-    @Test
-    void derivative_null() {
-        Expression e = new Div(null, null);
-        assertNull(e.derivative(""));
     }
 
     @Test
@@ -74,12 +62,6 @@ class DivTest {
     }
 
     @Test
-    void simplify_null() {
-        Expression e = new Div(null, null);
-        assertNull(e.simplify());
-    }
-
-    @Test
     void zero_division() {
         Expression e = new Div(new Number(1), new Number(0));
         assertEquals(Double.POSITIVE_INFINITY, e.eval(""));
@@ -88,6 +70,11 @@ class DivTest {
     @Test
     void zero_by_zero_division() {
         Expression e = new Div(new Number(0), new Number(0));
-        assertEquals(Double.POSITIVE_INFINITY, e.eval(""));
+        assertThrows(RuntimeException.class, () -> { e.eval(""); });
+    }
+
+    @Test
+    void construct_null() {
+        assertThrows(RuntimeException.class, () -> { new Div(null, null); });
     }
 }

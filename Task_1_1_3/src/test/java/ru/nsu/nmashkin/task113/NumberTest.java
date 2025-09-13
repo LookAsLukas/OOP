@@ -1,6 +1,7 @@
 package ru.nsu.nmashkin.task113;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,6 @@ class NumberTest {
 
     @Test
     void nan() {
-        Expression e = new Number(Double.NaN);
-        assertEquals(Double.POSITIVE_INFINITY, e.eval(""));
+        assertThrows(RuntimeException.class, () -> { new Number(Double.NaN); });
     }
 }

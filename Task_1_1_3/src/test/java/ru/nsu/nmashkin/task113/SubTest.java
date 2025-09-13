@@ -1,7 +1,7 @@
 package ru.nsu.nmashkin.task113;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -20,12 +20,6 @@ class SubTest {
     }
 
     @Test
-    void eval_null() {
-        Expression e = new Sub(null, null);
-        assertEquals(Double.POSITIVE_INFINITY, e.eval(""));
-    }
-
-    @Test
     void derivative_bound() {
         Expression e = new Sub(new Variable("x"), new Variable("y"));
         assertEquals(new Sub(new Number(1), new Number(0)),
@@ -37,12 +31,6 @@ class SubTest {
         Expression e = new Sub(new Variable("x"), new Variable("y"));
         assertEquals(new Sub(new Number(0), new Number(0)),
                      e.derivative("z"));
-    }
-
-    @Test
-    void derivative_null() {
-        Expression e = new Sub(null, null);
-        assertNull(e.derivative(""));
     }
 
     @Test
@@ -64,8 +52,7 @@ class SubTest {
     }
 
     @Test
-    void simplify_null() {
-        Expression e = new Sub(null, null);
-        assertNull(e.simplify());
+    void construct_null() {
+        assertThrows(RuntimeException.class, () -> { new Sub(null, null); });
     }
 }

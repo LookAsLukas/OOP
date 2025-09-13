@@ -6,15 +6,10 @@ package ru.nsu.nmashkin.task113;
 public class Div extends Expression {
 
     /**
-     * Set operands.
-     *
-     * @param e1 operand 1
-     * @param e2 operand 2
+     * {@inheritDoc}
      */
-    public Div(Expression e1, Expression e2) {
-        children = new Expression[2];
-        children[0] = e1;
-        children[1] = e2;
+    public Div(Expression op1, Expression op2) {
+        super(op1, op2);
     }
 
     /**
@@ -22,17 +17,8 @@ public class Div extends Expression {
      */
     @Override
     public double eval(String vars) {
-        if (children[0] == null || children[1] == null) {
-            System.err.println("WARNING: Evaluating expression with null operands "
-                               + "results in the value being infinite");
-            return Double.POSITIVE_INFINITY;
-        }
         if (children[0].eval(vars) == 0 && children[1].eval(vars) == 0) {
-            System.err.println("WARNING: Zero by zero division is defined to result in infinity");
-            return Double.POSITIVE_INFINITY;
-        }
-        if (children[1].eval(vars) == 0) {
-            System.err.println("WARNING: Zero division has occurred");
+            throw new RuntimeException("NaN value has occurred in the process of evaluation");
         }
         return children[0].eval(vars) / children[1].eval(vars);
     }
@@ -41,31 +27,7 @@ public class Div extends Expression {
      * {@inheritDoc}
      */
     @Override
-    public void print() {
-        System.out.print("(");
-        if (children[0] == null) {
-            System.out.print("null");
-        } else {
-            children[0].print();
-        }
-        System.out.print(" / ");
-        if (children[1] == null) {
-            System.out.print("null");
-        } else {
-            children[1].print();
-        }
-        System.out.print(")");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public Expression derivative(String var) {
-        if (children[0] == null || children[1] == null) {
-            System.err.println("WARNING: Taking derivative of a null");
-            return null;
-        }
         return new Div(new Sub(new Mul(children[0].derivative(var), children[1]),
                                new Mul(children[0], children[1].derivative(var))),
                        new Mul(children[1], children[1]));
@@ -76,11 +38,6 @@ public class Div extends Expression {
      */
     @Override
     public Expression simplify() {
-        if (children[0] == null || children[1] == null) {
-            System.err.println("WARNING: Simplifying a null");
-            return null;
-        }
-
         Expression newExp = new Div(children[0].simplify(), children[1].simplify());
         Expression[] newExpChildren = newExp.getChildren();
         if (newExpChildren[0].getClass() == Number.class

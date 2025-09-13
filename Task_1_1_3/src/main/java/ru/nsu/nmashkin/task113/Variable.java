@@ -14,23 +14,7 @@ public class Variable extends Expression {
      * @param varName provided name
      */
     public Variable(String varName) {
-        if (varName.isEmpty()) {
-            System.err.println("WARNING: Invalid variable name defaults to null");
-            name = null;
-            return;
-        }
-        if (Character.isDigit(varName.charAt(0))) {
-            System.err.println("WARNING: Invalid variable name defaults to null");
-            name = null;
-            return;
-        }
-        for (char ch : varName.toCharArray()) {
-            if (!Character.isAlphabetic(ch) && !Character.isDigit(ch)) {
-                System.err.println("WARNING: Invalid variable name defaults to null");
-                name = null;
-                return;
-            }
-        }
+        super(varName);
         name = varName;
     }
 
@@ -48,12 +32,6 @@ public class Variable extends Expression {
      */
     @Override
     public double eval(String vars) {
-        if (name == null) {
-            System.err.println("WARNING: Evaluating expression containing null variable name"
-                               + "results in the value being infinite");
-            return Double.POSITIVE_INFINITY;
-        }
-
         Scanner scanner = new Scanner(vars);
         scanner.useDelimiter("[; =]+");
         while (scanner.hasNext() && !scanner.next().equals(name)) {
@@ -61,18 +39,14 @@ public class Variable extends Expression {
         }
 
         if (!scanner.hasNext()) {
-            System.err.println("WARNING: Evaluating expression without providing variable value "
-                               + "results in the value being infinite");
-            return Double.POSITIVE_INFINITY;
+            throw new RuntimeException("No value provided for a variable");
         }
 
         double result;
         try {
             result = Double.parseDouble(scanner.next());
         } catch (NumberFormatException e) {
-            System.err.println("WARNING: Evaluating expression with invalid variable value "
-                               + "results in the value being infinite");
-            result = Double.POSITIVE_INFINITY;
+            throw new RuntimeException("Invalid variable value provided");
         } finally {
             scanner.close();
         }
@@ -84,21 +58,11 @@ public class Variable extends Expression {
      */
     @Override
     public void print() {
-        if (name == null) {
-            System.err.println("WARNING: Printing a null variable name");
-            System.out.println("{null}");
-            return;
-        }
         System.out.print(name);
     }
 
     @Override
     public Expression derivative(String var) {
-        if (name == null) {
-            System.err.println("WARNING: Differentiation of a null named variable "
-                               + "results in a value being infinite");
-            return new Number(Double.POSITIVE_INFINITY);
-        }
         return new Number(var.equals(name) ? 1 : 0);
     }
 

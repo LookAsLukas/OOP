@@ -1,7 +1,7 @@
 package ru.nsu.nmashkin.task113;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -10,19 +10,15 @@ class VariableTest {
     @Test
     void eval_no_value() {
         Expression e = new Variable("x");
-        assertEquals(Double.POSITIVE_INFINITY, e.eval(""));
+        RuntimeException ex = assertThrows(RuntimeException.class, () -> { e.eval(""); });
+        assertEquals("No value provided for a variable", ex.getMessage());
     }
 
     @Test
     void eval_invalid_value() {
         Expression e = new Variable("x");
-        assertEquals(Double.POSITIVE_INFINITY, e.eval("x = y"));
-    }
-
-    @Test
-    void eval_null() {
-        Expression e = new Variable("");
-        assertEquals(Double.POSITIVE_INFINITY, e.eval(""));
+        RuntimeException ex = assertThrows(RuntimeException.class, () -> { e.eval("x = _"); });
+        assertEquals("Invalid variable value provided", ex.getMessage());
     }
 
     @Test
@@ -38,20 +34,20 @@ class VariableTest {
     }
 
     @Test
-    void derivative_null_name() {
-        Expression e = new Variable("");
-        assertEquals(new Number(Double.POSITIVE_INFINITY), e.derivative(""));
+    void construct_empty() {
+        RuntimeException ex = assertThrows(RuntimeException.class, () -> { new Variable(""); });
+        assertEquals("Cannot create a Variable with an empty name", ex.getMessage());
     }
 
     @Test
-    void invalid_name_digit() {
-        Variable v = new Variable("1");
-        assertNull(v.getName());
+    void construct_digit() {
+        RuntimeException ex = assertThrows(RuntimeException.class, () -> { new Variable("1"); });
+        assertEquals("Variable name cannot start with a digit", ex.getMessage());
     }
 
     @Test
-    void invalid_name_jibberish() {
-        Variable v = new Variable("%$;:'\"");
-        assertNull(v.getName());
+    void construct_non_alphanumeric() {
+        RuntimeException ex = assertThrows(RuntimeException.class, () -> { new Variable("_"); });
+        assertEquals("Variable name must be alphanumeric", ex.getMessage());
     }
 }

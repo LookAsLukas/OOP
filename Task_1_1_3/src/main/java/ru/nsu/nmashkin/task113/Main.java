@@ -15,11 +15,6 @@ public class Main {
         Scanner in = new Scanner(System.in);
         System.out.print("Enter an expression: ");
         Expression e = Expression.fromString(in.nextLine());
-        if (e == null) {
-            System.err.println("\nERROR: Invalid expression");
-            in.close();
-            return;
-        }
 
         System.out.print("\nFull form: ");
         e.print();

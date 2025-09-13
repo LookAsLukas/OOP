@@ -39,7 +39,7 @@ public class Parser {
                     output.add(new Token(operators.pop()));
                 }
                 if (operators.isEmpty()) {
-                    return null;
+                    throw new RuntimeException("Invalid brackets pairing in the expression");
                 }
                 operators.pop();
             } else if (Character.isDigit(ch)) {
@@ -76,14 +76,14 @@ public class Parser {
                 output.add(new Token(val));
                 i--;
             } else {
-                return null;
+                throw new RuntimeException("Unrecognised character detected");
             }
         }
 
         while (!operators.isEmpty()) {
             Operator op = operators.pop();
             if (op == Operator.LPR) {
-                return null;
+                throw new RuntimeException("Invalid brackets pairing in the expression");
             }
             output.add(new Token(op));
         }

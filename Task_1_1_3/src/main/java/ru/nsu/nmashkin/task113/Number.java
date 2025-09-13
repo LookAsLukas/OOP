@@ -7,16 +7,12 @@ public class Number extends Expression {
     private final double value;
 
     /**
-     * Make a Number from a double. NaN is made into infinity.
+     * Make a Number from a double.
      *
      * @param val source
      */
     public Number(double val) {
-        if (Double.isNaN(val)) {
-            System.err.println("WARNING: Initializing a Number with NaN defaults to infinity");
-            value = Double.POSITIVE_INFINITY;
-            return;
-        }
+        super(val);
         value = val;
     }
 

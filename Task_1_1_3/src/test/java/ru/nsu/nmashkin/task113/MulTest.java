@@ -1,7 +1,7 @@
 package ru.nsu.nmashkin.task113;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -20,12 +20,6 @@ class MulTest {
     }
 
     @Test
-    void eval_null() {
-        Expression e = new Mul(null, null);
-        assertEquals(Double.POSITIVE_INFINITY, e.eval(""));
-    }
-
-    @Test
     void derivative_bound_var() {
         Expression e = new Mul(new Variable("x"), new Variable("y"));
         assertEquals(new Add(new Mul(new Number(1), new Variable("y")),
@@ -39,12 +33,6 @@ class MulTest {
         assertEquals(new Add(new Mul(new Number(0), new Variable("y")),
                              new Mul(new Variable("x"), new Number(0))),
                      e.derivative("z"));
-    }
-
-    @Test
-    void derivative_null() {
-        Expression e = new Mul(null, null);
-        assertNull(e.derivative(""));
     }
 
     @Test
@@ -84,8 +72,7 @@ class MulTest {
     }
 
     @Test
-    void simplify_null() {
-        Expression e = new Mul(null, null);
-        assertNull(e.derivative(""));
+    void construct_null() {
+        assertThrows(RuntimeException.class, () -> { new Mul(null, null); });
     }
 }
