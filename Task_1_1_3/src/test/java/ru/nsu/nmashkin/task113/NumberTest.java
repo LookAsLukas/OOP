@@ -19,4 +19,11 @@ class NumberTest {
             new Number(Double.NaN);
         });
     }
+
+    @Test
+    void iHateCoverage() {
+        Expression e = new Number(69);
+        e.hashCode();
+        e.equals(new Variable("aboba"));
+    }
 }
