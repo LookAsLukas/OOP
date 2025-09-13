@@ -59,6 +59,8 @@ class AddTest {
 
     @Test
     void construct_null() {
-        assertThrows(RuntimeException.class, () -> { new Add(null, null); });
+        assertThrows(RuntimeException.class, () -> {
+            new Add(null, null);
+        });
     }
 }

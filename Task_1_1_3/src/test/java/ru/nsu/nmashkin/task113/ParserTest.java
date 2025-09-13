@@ -11,28 +11,36 @@ class ParserTest {
     @Test
     void parseString_jibberish() {
         RuntimeException ex = assertThrows(RuntimeException.class,
-                                           () -> { Parser.parseString(" ++*(+)()1.23dfs;\"'"); });
+                () -> {
+                    Parser.parseString(" ++*(+)()1.23dfs;'");
+                });
         assertEquals("Unrecognised character detected", ex.getMessage());
     }
 
     @Test
     void parseString_incorrect_brackets() {
         RuntimeException ex = assertThrows(RuntimeException.class,
-                                           () -> { Parser.parseString(")"); });
+                () -> {
+                    Parser.parseString(")");
+                });
         assertEquals("Invalid brackets pairing in the expression", ex.getMessage());
     }
 
     @Test
     void parseString_num_end() {
         RuntimeException ex = assertThrows(RuntimeException.class,
-                                           () -> { Parser.parseString("(12.3"); });
+                () -> {
+                    Parser.parseString("(12.3");
+                });
         assertEquals("Invalid brackets pairing in the expression", ex.getMessage());
     }
 
     @Test
     void parseString_var_end() {
         RuntimeException ex = assertThrows(RuntimeException.class,
-                                           () -> { Parser.parseString("(x0"); });
+                () -> {
+                    Parser.parseString("(x0");
+                });
         assertEquals("Invalid brackets pairing in the expression", ex.getMessage());
     }
 

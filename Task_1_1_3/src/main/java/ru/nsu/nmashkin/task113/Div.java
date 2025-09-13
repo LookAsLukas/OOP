@@ -6,7 +6,10 @@ package ru.nsu.nmashkin.task113;
 public class Div extends Expression {
 
     /**
-     * {@inheritDoc}
+     * Construct an operator.
+     *
+     * @param op1 operand 1
+     * @param op2 operand 2
      */
     public Div(Expression op1, Expression op2) {
         super(op1, op2);

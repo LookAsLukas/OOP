@@ -19,15 +19,6 @@ public class Variable extends Expression {
     }
 
     /**
-     * Get the variable name.
-     *
-     * @return name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override

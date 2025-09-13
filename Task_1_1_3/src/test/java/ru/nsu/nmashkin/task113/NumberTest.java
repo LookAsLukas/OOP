@@ -15,6 +15,8 @@ class NumberTest {
 
     @Test
     void nan() {
-        assertThrows(RuntimeException.class, () -> { new Number(Double.NaN); });
+        assertThrows(RuntimeException.class, () -> {
+            new Number(Double.NaN);
+        });
     }
 }

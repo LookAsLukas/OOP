@@ -73,6 +73,8 @@ class MulTest {
 
     @Test
     void construct_null() {
-        assertThrows(RuntimeException.class, () -> { new Mul(null, null); });
+        assertThrows(RuntimeException.class, () -> {
+            new Mul(null, null);
+        });
     }
 }

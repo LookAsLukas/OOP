@@ -35,7 +35,7 @@ public abstract class Expression {
      * @param op1 operand 1
      * @param op2 operand 2
      */
-    public Expression(Expression op1, Expression op2) {
+    protected Expression(Expression op1, Expression op2) {
         if (op1 == null || op2 == null) {
             throw new RuntimeException("Cannot create an Expression with null operands");
         }
