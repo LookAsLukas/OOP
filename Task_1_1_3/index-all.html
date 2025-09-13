@@ -56,9 +56,6 @@ loadScripts(document, 'script');</script>
 <div class="block">Addition.</div>
 </dd>
 <dt><a href="ru/nsu/nmashkin/task113/Add.html#%3Cinit%3E(ru.nsu.nmashkin.task113.Expression,ru.nsu.nmashkin.task113.Expression)" class="member-name-link">Add(Expression, Expression)</a> - Constructor for class ru.nsu.nmashkin.task113.<a href="ru/nsu/nmashkin/task113/Add.html" title="class in ru.nsu.nmashkin.task113">Add</a></dt>
-<dd>
-<div class="block">Set operands.</div>
-</dd>
 <dt><a href="ru/nsu/nmashkin/task113/Operator.html#ADD" class="member-name-link">ADD</a> - Enum constant in enum class ru.nsu.nmashkin.task113.<a href="ru/nsu/nmashkin/task113/Operator.html" title="enum class in ru.nsu.nmashkin.task113">Operator</a></dt>
 <dd>&nbsp;</dd>
 </dl>
@@ -104,9 +101,6 @@ loadScripts(document, 'script');</script>
 <div class="block">Division.</div>
 </dd>
 <dt><a href="ru/nsu/nmashkin/task113/Div.html#%3Cinit%3E(ru.nsu.nmashkin.task113.Expression,ru.nsu.nmashkin.task113.Expression)" class="member-name-link">Div(Expression, Expression)</a> - Constructor for class ru.nsu.nmashkin.task113.<a href="ru/nsu/nmashkin/task113/Div.html" title="class in ru.nsu.nmashkin.task113">Div</a></dt>
-<dd>
-<div class="block">Set operands.</div>
-</dd>
 <dt><a href="ru/nsu/nmashkin/task113/Operator.html#DIV" class="member-name-link">DIV</a> - Enum constant in enum class ru.nsu.nmashkin.task113.<a href="ru/nsu/nmashkin/task113/Operator.html" title="enum class in ru.nsu.nmashkin.task113">Operator</a></dt>
 <dd>&nbsp;</dd>
 </dl>
@@ -170,8 +164,14 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Any expression.</div>
 </dd>
-<dt><a href="ru/nsu/nmashkin/task113/Expression.html#%3Cinit%3E()" class="member-name-link">Expression()</a> - Constructor for class ru.nsu.nmashkin.task113.<a href="ru/nsu/nmashkin/task113/Expression.html" title="class in ru.nsu.nmashkin.task113">Expression</a></dt>
+<dt><a href="ru/nsu/nmashkin/task113/Expression.html#%3Cinit%3E(double)" class="member-name-link">Expression(double)</a> - Constructor for class ru.nsu.nmashkin.task113.<a href="ru/nsu/nmashkin/task113/Expression.html" title="class in ru.nsu.nmashkin.task113">Expression</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="ru/nsu/nmashkin/task113/Expression.html#%3Cinit%3E(java.lang.String)" class="member-name-link">Expression(String)</a> - Constructor for class ru.nsu.nmashkin.task113.<a href="ru/nsu/nmashkin/task113/Expression.html" title="class in ru.nsu.nmashkin.task113">Expression</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="ru/nsu/nmashkin/task113/Expression.html#%3Cinit%3E(ru.nsu.nmashkin.task113.Expression,ru.nsu.nmashkin.task113.Expression)" class="member-name-link">Expression(Expression, Expression)</a> - Constructor for class ru.nsu.nmashkin.task113.<a href="ru/nsu/nmashkin/task113/Expression.html" title="class in ru.nsu.nmashkin.task113">Expression</a></dt>
+<dd>
+<div class="block">Construct an operator.</div>
+</dd>
 </dl>
 <h2 class="title" id="I:F">F</h2>
 <dl class="index">
@@ -183,9 +183,7 @@ loadScripts(document, 'script');</script>
 <h2 class="title" id="I:G">G</h2>
 <dl class="index">
 <dt><a href="ru/nsu/nmashkin/task113/Expression.html#getChildren()" class="member-name-link">getChildren()</a> - Method in class ru.nsu.nmashkin.task113.<a href="ru/nsu/nmashkin/task113/Expression.html" title="class in ru.nsu.nmashkin.task113">Expression</a></dt>
-<dd>
-<div class="block">Get operands.</div>
-</dd>
+<dd>&nbsp;</dd>
 <dt><a href="ru/nsu/nmashkin/task113/Variable.html#getName()" class="member-name-link">getName()</a> - Method in class ru.nsu.nmashkin.task113.<a href="ru/nsu/nmashkin/task113/Variable.html" title="class in ru.nsu.nmashkin.task113">Variable</a></dt>
 <dd>
 <div class="block">Get the variable name.</div>
@@ -240,9 +238,6 @@ loadScripts(document, 'script');</script>
 <div class="block">Multiplication.</div>
 </dd>
 <dt><a href="ru/nsu/nmashkin/task113/Mul.html#%3Cinit%3E(ru.nsu.nmashkin.task113.Expression,ru.nsu.nmashkin.task113.Expression)" class="member-name-link">Mul(Expression, Expression)</a> - Constructor for class ru.nsu.nmashkin.task113.<a href="ru/nsu/nmashkin/task113/Mul.html" title="class in ru.nsu.nmashkin.task113">Mul</a></dt>
-<dd>
-<div class="block">Set operands.</div>
-</dd>
 <dt><a href="ru/nsu/nmashkin/task113/Operator.html#MUL" class="member-name-link">MUL</a> - Enum constant in enum class ru.nsu.nmashkin.task113.<a href="ru/nsu/nmashkin/task113/Operator.html" title="enum class in ru.nsu.nmashkin.task113">Operator</a></dt>
 <dd>&nbsp;</dd>
 </dl>
@@ -276,27 +271,11 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Parse a string with an arithmetic expression.</div>
 </dd>
-<dt><a href="ru/nsu/nmashkin/task113/Add.html#print()" class="member-name-link">print()</a> - Method in class ru.nsu.nmashkin.task113.<a href="ru/nsu/nmashkin/task113/Add.html" title="class in ru.nsu.nmashkin.task113">Add</a></dt>
-<dd>
-<div class="block">Print the expression.</div>
-</dd>
-<dt><a href="ru/nsu/nmashkin/task113/Div.html#print()" class="member-name-link">print()</a> - Method in class ru.nsu.nmashkin.task113.<a href="ru/nsu/nmashkin/task113/Div.html" title="class in ru.nsu.nmashkin.task113">Div</a></dt>
-<dd>
-<div class="block">Print the expression.</div>
-</dd>
 <dt><a href="ru/nsu/nmashkin/task113/Expression.html#print()" class="member-name-link">print()</a> - Method in class ru.nsu.nmashkin.task113.<a href="ru/nsu/nmashkin/task113/Expression.html" title="class in ru.nsu.nmashkin.task113">Expression</a></dt>
 <dd>
 <div class="block">Print the expression.</div>
 </dd>
-<dt><a href="ru/nsu/nmashkin/task113/Mul.html#print()" class="member-name-link">print()</a> - Method in class ru.nsu.nmashkin.task113.<a href="ru/nsu/nmashkin/task113/Mul.html" title="class in ru.nsu.nmashkin.task113">Mul</a></dt>
-<dd>
-<div class="block">Print the expression.</div>
-</dd>
 <dt><a href="ru/nsu/nmashkin/task113/Number.html#print()" class="member-name-link">print()</a> - Method in class ru.nsu.nmashkin.task113.<a href="ru/nsu/nmashkin/task113/Number.html" title="class in ru.nsu.nmashkin.task113">Number</a></dt>
-<dd>
-<div class="block">Print the expression.</div>
-</dd>
-<dt><a href="ru/nsu/nmashkin/task113/Sub.html#print()" class="member-name-link">print()</a> - Method in class ru.nsu.nmashkin.task113.<a href="ru/nsu/nmashkin/task113/Sub.html" title="class in ru.nsu.nmashkin.task113">Sub</a></dt>
 <dd>
 <div class="block">Print the expression.</div>
 </dd>
@@ -347,9 +326,6 @@ loadScripts(document, 'script');</script>
 <div class="block">Subtraction.</div>
 </dd>
 <dt><a href="ru/nsu/nmashkin/task113/Sub.html#%3Cinit%3E(ru.nsu.nmashkin.task113.Expression,ru.nsu.nmashkin.task113.Expression)" class="member-name-link">Sub(Expression, Expression)</a> - Constructor for class ru.nsu.nmashkin.task113.<a href="ru/nsu/nmashkin/task113/Sub.html" title="class in ru.nsu.nmashkin.task113">Sub</a></dt>
-<dd>
-<div class="block">Set operands.</div>
-</dd>
 <dt><a href="ru/nsu/nmashkin/task113/Operator.html#SUB" class="member-name-link">SUB</a> - Enum constant in enum class ru.nsu.nmashkin.task113.<a href="ru/nsu/nmashkin/task113/Operator.html" title="enum class in ru.nsu.nmashkin.task113">Operator</a></dt>
 <dd>&nbsp;</dd>
 </dl>

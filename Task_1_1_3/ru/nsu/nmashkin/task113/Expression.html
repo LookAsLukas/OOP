@@ -104,11 +104,22 @@ loadScripts(document, 'script');</script>
 <section class="constructor-summary" id="constructor-summary">
 <h2>Constructor Summary</h2>
 <div class="caption"><span>Constructors</span></div>
-<div class="summary-table two-column-summary">
-<div class="table-header col-first">Constructor</div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier</div>
+<div class="table-header col-second">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">Expression</a>()</code></div>
+<div class="col-first even-row-color"><code>protected </code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(double)" class="member-name-link">Expression</a><wbr>(double&nbsp;val)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected </code></div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.String)" class="member-name-link">Expression</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;varName)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>&nbsp;</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(ru.nsu.nmashkin.task113.Expression,ru.nsu.nmashkin.task113.Expression)" class="member-name-link">Expression</a><wbr>(<a href="Expression.html" title="class in ru.nsu.nmashkin.task113">Expression</a>&nbsp;op1,
+ <a href="Expression.html" title="class in ru.nsu.nmashkin.task113">Expression</a>&nbsp;op2)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Construct an operator.</div>
+</div>
 </div>
 </section>
 </li>
@@ -138,14 +149,12 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Make an Expression from string.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Expression.html" title="class in ru.nsu.nmashkin.task113">Expression</a>[]</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="Expression.html" title="class in ru.nsu.nmashkin.task113">Expression</a>[]</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getChildren()" class="member-name-link">getChildren</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Get operands.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#print()" class="member-name-link">print</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#print()" class="member-name-link">print</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Print the expression.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract <a href="Expression.html" title="class in ru.nsu.nmashkin.task113">Expression</a></code></div>
@@ -185,9 +194,28 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;()">
+<section class="detail" id="&lt;init&gt;(java.lang.String)">
 <h3>Expression</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Expression</span>()</div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="element-name">Expression</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;varName)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(double)">
+<h3>Expression</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="element-name">Expression</span><wbr><span class="parameters">(double&nbsp;val)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(ru.nsu.nmashkin.task113.Expression,ru.nsu.nmashkin.task113.Expression)">
+<h3>Expression</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Expression</span><wbr><span class="parameters">(<a href="Expression.html" title="class in ru.nsu.nmashkin.task113">Expression</a>&nbsp;op1,
+ <a href="Expression.html" title="class in ru.nsu.nmashkin.task113">Expression</a>&nbsp;op2)</span></div>
+<div class="block">Construct an operator.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>op1</code> - operand 1</dd>
+<dd><code>op2</code> - operand 2</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -202,7 +230,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="fromString(java.lang.String)">
 <h3>fromString</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Expression.html" title="class in ru.nsu.nmashkin.task113">Expression</a></span>&nbsp;<span class="element-name">fromString</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;str)</span></div>
-<div class="block">Make an Expression from string. If fails, return null.</div>
+<div class="block">Make an Expression from string.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>str</code> - expression string</dd>
@@ -214,12 +242,14 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getChildren()">
 <h3>getChildren</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Expression.html" title="class in ru.nsu.nmashkin.task113">Expression</a>[]</span>&nbsp;<span class="element-name">getChildren</span>()</div>
-<div class="block">Get operands.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>operands</dd>
-</dl>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="Expression.html" title="class in ru.nsu.nmashkin.task113">Expression</a>[]</span>&nbsp;<span class="element-name">getChildren</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="print()">
+<h3>print</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">print</span>()</div>
+<div class="block">Print the expression.</div>
 </section>
 </li>
 <li>
@@ -236,17 +266,10 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="print()">
-<h3>print</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">print</span>()</div>
-<div class="block">Print the expression.</div>
-</section>
-</li>
-<li>
 <section class="detail" id="derivative(java.lang.String)">
 <h3>derivative</h3>
 <div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="Expression.html" title="class in ru.nsu.nmashkin.task113">Expression</a></span>&nbsp;<span class="element-name">derivative</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;var)</span></div>
-<div class="block">Take the derivative with respect to var. If fails, return null.</div>
+<div class="block">Take the derivative with respect to var.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>var</code> - derivation variable</dd>
@@ -259,7 +282,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="simplify()">
 <h3>simplify</h3>
 <div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="Expression.html" title="class in ru.nsu.nmashkin.task113">Expression</a></span>&nbsp;<span class="element-name">simplify</span>()</div>
-<div class="block">Simplify the expression if possible. If fails, return null.</div>
+<div class="block">Simplify the expression if possible.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>simplified result</dd>
