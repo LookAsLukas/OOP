@@ -1,8 +1,11 @@
 package ru.nsu.nmashkin.task113;
 
+/**
+ * Custom exception class for Parser.
+ */
 public class ParserException extends RuntimeException {
     /**
-     * Custom exception class for Parser.
+     * Exception constructor.
      *
      * @param message exception message
      */

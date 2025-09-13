@@ -1,8 +1,11 @@
 package ru.nsu.nmashkin.task113;
 
+/**
+ * Custom exception class for Expression.
+ */
 public class ExpressionException extends RuntimeException {
     /**
-     * Custom exception class for Expression.
+     * Exception constructor.
      *
      * @param message exception message
      */
