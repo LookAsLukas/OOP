@@ -21,7 +21,7 @@ class NumberTest {
     }
 
     @Test
-    void iHateCoverage() {
+    void i_hate_coverage() {
         Expression e = new Number(69);
         e.hashCode();
         e.equals(new Variable("aboba"));
