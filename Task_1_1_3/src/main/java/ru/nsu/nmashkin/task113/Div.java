@@ -21,7 +21,7 @@ public class Div extends Expression {
     @Override
     public double eval(String vars) {
         if (children[0].eval(vars) == 0 && children[1].eval(vars) == 0) {
-            throw new RuntimeException("NaN value has occurred in the process of evaluation");
+            throw new ExpressionException("NaN value has occurred in the process of evaluation");
         }
         return children[0].eval(vars) / children[1].eval(vars);
     }
@@ -47,12 +47,10 @@ public class Div extends Expression {
             && newExpChildren[1].getClass() == Number.class) {
             return new Number(newExpChildren[0].eval("") / newExpChildren[1].eval(""));
         }
-        if (newExpChildren[0].getClass() == Number.class
-            && newExpChildren[0].eval("") == 0) {
+        if (newExpChildren[0].equals(new Number(0))) {
             return new Number(0);
         }
-        if (newExpChildren[1].getClass() == Number.class
-            && newExpChildren[1].eval("") == 1) {
+        if (newExpChildren[1].equals(new Number(1))) {
             return newExpChildren[0];
         }
         return newExp;

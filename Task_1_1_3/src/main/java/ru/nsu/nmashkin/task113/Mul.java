@@ -43,18 +43,14 @@ public class Mul extends Expression {
             && newExpChildren[1].getClass() == Number.class) {
             return new Number(newExpChildren[0].eval("") * newExpChildren[1].eval(""));
         }
-        if (newExpChildren[0].getClass() == Number.class
-            && newExpChildren[0].eval("") == 0
-            || newExpChildren[1].getClass() == Number.class
-            && newExpChildren[1].eval("") == 0) {
+        if (newExpChildren[0].equals(new Number(0))
+            || newExpChildren[1].equals(new Number(0))) {
             return new Number(0);
         }
-        if (newExpChildren[0].getClass() == Number.class
-            && newExpChildren[0].eval("") == 1) {
+        if (newExpChildren[0].equals(new Number(1))) {
             return newExpChildren[1];
         }
-        if (newExpChildren[1].getClass() == Number.class
-            && newExpChildren[1].eval("") == 1) {
+        if (newExpChildren[1].equals(new Number(1))) {
             return newExpChildren[0];
         }
         return newExp;

@@ -10,7 +10,7 @@ class VariableTest {
     @Test
     void eval_no_value() {
         Expression e = new Variable("x");
-        RuntimeException ex = assertThrows(RuntimeException.class, () -> {
+        ExpressionException ex = assertThrows(ExpressionException.class, () -> {
             e.eval("");
         });
         assertEquals("No value provided for a variable", ex.getMessage());
@@ -19,7 +19,7 @@ class VariableTest {
     @Test
     void eval_invalid_value() {
         Expression e = new Variable("x");
-        RuntimeException ex = assertThrows(RuntimeException.class, () -> {
+        ExpressionException ex = assertThrows(ExpressionException.class, () -> {
             e.eval("x = _");
         });
         assertEquals("Invalid variable value provided", ex.getMessage());
@@ -39,7 +39,7 @@ class VariableTest {
 
     @Test
     void construct_empty() {
-        RuntimeException ex = assertThrows(RuntimeException.class, () -> {
+        ExpressionException ex = assertThrows(ExpressionException.class, () -> {
             new Variable("");
         });
         assertEquals("Cannot create a Variable with an empty name", ex.getMessage());
@@ -47,7 +47,7 @@ class VariableTest {
 
     @Test
     void construct_digit() {
-        RuntimeException ex = assertThrows(RuntimeException.class, () -> {
+        ExpressionException ex = assertThrows(ExpressionException.class, () -> {
             new Variable("1");
         });
         assertEquals("Variable name cannot start with a digit", ex.getMessage());
@@ -55,7 +55,7 @@ class VariableTest {
 
     @Test
     void construct_non_alphanumeric() {
-        RuntimeException ex = assertThrows(RuntimeException.class, () -> {
+        ExpressionException ex = assertThrows(ExpressionException.class, () -> {
             new Variable("_");
         });
         assertEquals("Variable name must be alphanumeric", ex.getMessage());

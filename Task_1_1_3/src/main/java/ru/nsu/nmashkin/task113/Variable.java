@@ -1,5 +1,6 @@
 package ru.nsu.nmashkin.task113;
 
+import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -30,14 +31,14 @@ public class Variable extends Expression {
         }
 
         if (!scanner.hasNext()) {
-            throw new RuntimeException("No value provided for a variable");
+            throw new ExpressionException("No value provided for a variable");
         }
 
         double result;
         try {
             result = Double.parseDouble(scanner.next());
         } catch (NumberFormatException e) {
-            throw new RuntimeException("Invalid variable value provided");
+            throw new ExpressionException("Invalid variable value provided");
         } finally {
             scanner.close();
         }
@@ -79,5 +80,13 @@ public class Variable extends Expression {
 
         Variable o = (Variable) obj;
         return name.equals(o.name);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

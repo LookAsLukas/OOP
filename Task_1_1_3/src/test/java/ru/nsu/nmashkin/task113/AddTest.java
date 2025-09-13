@@ -59,7 +59,7 @@ class AddTest {
 
     @Test
     void construct_null() {
-        assertThrows(RuntimeException.class, () -> {
+        assertThrows(ExpressionException.class, () -> {
             new Add(null, null);
         });
     }

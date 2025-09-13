@@ -53,7 +53,7 @@ class SubTest {
 
     @Test
     void construct_null() {
-        assertThrows(RuntimeException.class, () -> {
+        assertThrows(ExpressionException.class, () -> {
             new Sub(null, null);
         });
     }

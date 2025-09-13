@@ -1,5 +1,7 @@
 package ru.nsu.nmashkin.task113;
 
+import java.util.Objects;
+
 /**
  * Number.
  */
@@ -62,5 +64,13 @@ public class Number extends Expression {
 
         Number o = (Number) obj;
         return value == o.value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 }

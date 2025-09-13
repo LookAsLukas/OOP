@@ -70,14 +70,14 @@ class DivTest {
     @Test
     void zero_by_zero_division() {
         Expression e = new Div(new Number(0), new Number(0));
-        assertThrows(RuntimeException.class, () -> {
+        assertThrows(ExpressionException.class, () -> {
             e.eval("");
         });
     }
 
     @Test
     void construct_null() {
-        assertThrows(RuntimeException.class, () -> {
+        assertThrows(ExpressionException.class, () -> {
             new Div(null, null);
         });
     }

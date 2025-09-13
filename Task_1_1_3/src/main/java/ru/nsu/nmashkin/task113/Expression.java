@@ -1,5 +1,7 @@
 package ru.nsu.nmashkin.task113;
 
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -11,21 +13,21 @@ public abstract class Expression {
 
     protected Expression(String varName) {
         if (varName.isEmpty()) {
-            throw new RuntimeException("Cannot create a Variable with an empty name");
+            throw new ExpressionException("Cannot create a Variable with an empty name");
         }
         if (Character.isDigit(varName.charAt(0))) {
-            throw new RuntimeException("Variable name cannot start with a digit");
+            throw new ExpressionException("Variable name cannot start with a digit");
         }
         for (char ch : varName.toCharArray()) {
             if (!Character.isAlphabetic(ch) && !Character.isDigit(ch)) {
-                throw new RuntimeException("Variable name must be alphanumeric");
+                throw new ExpressionException("Variable name must be alphanumeric");
             }
         }
     }
 
     protected Expression(double val) {
         if (Double.isNaN(val)) {
-            throw new RuntimeException("Number value cannot be NaN");
+            throw new ExpressionException("Number value cannot be NaN");
         }
     }
 
@@ -37,7 +39,7 @@ public abstract class Expression {
      */
     protected Expression(Expression op1, Expression op2) {
         if (op1 == null || op2 == null) {
-            throw new RuntimeException("Cannot create an Expression with null operands");
+            throw new ExpressionException("Cannot create an Expression with null operands");
         }
         children = new Expression[2];
         children[0] = op1;
@@ -61,12 +63,12 @@ public abstract class Expression {
 
             if (tok.isOperator()) {
                 if (tokens.isEmpty()) {
-                    throw new RuntimeException("Invalid operator or operand placement");
+                    throw new ExpressionException("Invalid operator or operand placement");
                 }
                 Expression op1 = tokens.pop();
 
                 if (tokens.isEmpty()) {
-                    throw new RuntimeException("Invalid operator or operand placement");
+                    throw new ExpressionException("Invalid operator or operand placement");
                 }
                 Expression op2 = tokens.pop();
 
@@ -78,7 +80,7 @@ public abstract class Expression {
                     default -> null;
                 };
                 if (exp == null) {
-                    throw new RuntimeException("Unreachable");
+                    throw new ExpressionException("Unreachable");
                 }
 
                 tokens.push(exp);
@@ -100,7 +102,7 @@ public abstract class Expression {
 
         result = tokens.pop();
         if (!tokens.isEmpty()) {
-            throw new RuntimeException("Invalid operator or operand placement");
+            throw new ExpressionException("Invalid operator or operand placement");
         }
         return result;
     }
@@ -118,6 +120,16 @@ public abstract class Expression {
         System.out.print(" + ");
         children[1].print();
         System.out.print(")");
+    }
+
+    /**
+     * Get hash code.
+     *
+     * @return hash code
+     */
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(getChildren());
     }
 
     /**

@@ -10,7 +10,7 @@ class ParserTest {
 
     @Test
     void parseString_jibberish() {
-        RuntimeException ex = assertThrows(RuntimeException.class,
+        ParserException ex = assertThrows(ParserException.class,
                 () -> {
                     Parser.parseString(" ++*(+)()1.23dfs;'");
                 });
@@ -19,7 +19,7 @@ class ParserTest {
 
     @Test
     void parseString_incorrect_brackets() {
-        RuntimeException ex = assertThrows(RuntimeException.class,
+        ParserException ex = assertThrows(ParserException.class,
                 () -> {
                     Parser.parseString(")");
                 });
@@ -28,7 +28,7 @@ class ParserTest {
 
     @Test
     void parseString_num_end() {
-        RuntimeException ex = assertThrows(RuntimeException.class,
+        ParserException ex = assertThrows(ParserException.class,
                 () -> {
                     Parser.parseString("(12.3");
                 });
@@ -37,7 +37,7 @@ class ParserTest {
 
     @Test
     void parseString_var_end() {
-        RuntimeException ex = assertThrows(RuntimeException.class,
+        ParserException ex = assertThrows(ParserException.class,
                 () -> {
                     Parser.parseString("(x0");
                 });

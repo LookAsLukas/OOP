@@ -9,7 +9,7 @@ class ExpressionTest {
 
     @Test
     void fromString_incorrect_brackets_1() {
-        RuntimeException ex = assertThrows(RuntimeException.class,
+        ParserException ex = assertThrows(ParserException.class,
                 () -> {
                     Expression.fromString("((x)");
                 });
@@ -18,7 +18,7 @@ class ExpressionTest {
 
     @Test
     void fromString_incorrect_brackets_2() {
-        RuntimeException ex = assertThrows(RuntimeException.class,
+        ParserException ex = assertThrows(ParserException.class,
                 () -> {
                     Expression.fromString("(x))");
                 });
@@ -27,7 +27,7 @@ class ExpressionTest {
 
     @Test
     void fromString_incorrect_operators_1() {
-        RuntimeException ex = assertThrows(RuntimeException.class,
+        ExpressionException ex = assertThrows(ExpressionException.class,
                 () -> {
                     Expression.fromString("x+");
                 });
@@ -36,7 +36,7 @@ class ExpressionTest {
 
     @Test
     void fromString_incorrect_operators_2() {
-        RuntimeException ex = assertThrows(RuntimeException.class,
+        ExpressionException ex = assertThrows(ExpressionException.class,
                 () -> {
                     Expression.fromString("x++y");
                 });
@@ -45,7 +45,7 @@ class ExpressionTest {
 
     @Test
     void fromString_incorrect_operators_3() {
-        RuntimeException ex = assertThrows(RuntimeException.class,
+        ExpressionException ex = assertThrows(ExpressionException.class,
                 () -> {
                     Expression.fromString("+x");
                 });
@@ -54,7 +54,7 @@ class ExpressionTest {
 
     @Test
     void fromString_incorrect_operators_4() {
-        RuntimeException ex = assertThrows(RuntimeException.class,
+        ExpressionException ex = assertThrows(ExpressionException.class,
                 () -> {
                     Expression.fromString("+");
                 });
@@ -63,7 +63,7 @@ class ExpressionTest {
 
     @Test
     void fromString_incorrect_operands() {
-        RuntimeException ex = assertThrows(RuntimeException.class,
+        ExpressionException ex = assertThrows(ExpressionException.class,
                 () -> {
                     Expression.fromString("(x+y)1");
                 });
@@ -72,7 +72,7 @@ class ExpressionTest {
 
     @Test
     void fromString_incorrect_variable() {
-        RuntimeException ex = assertThrows(RuntimeException.class,
+        ExpressionException ex = assertThrows(ExpressionException.class,
                 () -> {
                     Expression.fromString("1y + 3");
                 });
@@ -81,7 +81,7 @@ class ExpressionTest {
 
     @Test
     void fromString_jibberish() {
-        RuntimeException ex = assertThrows(RuntimeException.class,
+        ParserException ex = assertThrows(ParserException.class,
                 () -> {
                     Expression.fromString("+=28jsh; ");
                 });
