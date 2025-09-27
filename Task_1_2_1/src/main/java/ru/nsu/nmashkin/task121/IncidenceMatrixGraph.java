@@ -4,29 +4,27 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Queue;
 
 /**
  * Implementation of a Graph via incidence matrix.
  */
 public class IncidenceMatrixGraph implements Graph {
     private class Edge {
-        int v1;
-        int v2;
+        Object v1;
+        Object v2;
 
-        private Edge(int v1, int v2) {
+        private Edge(Object v1, Object v2) {
             this.v1 = v1;
             this.v2 = v2;
         }
 
-        private int start() {
+        private Object start() {
             return v1;
         }
 
-        private int end() {
+        private Object end() {
             return v2;
         }
 
@@ -43,7 +41,7 @@ public class IncidenceMatrixGraph implements Graph {
             }
 
             Edge edge = (Edge) o;
-            return v1 == edge.v1 && v2 == edge.v2;
+            return v1.equals(edge.v1) && v2.equals(edge.v2);
         }
 
         /**
@@ -67,7 +65,7 @@ public class IncidenceMatrixGraph implements Graph {
         }
     }
 
-    private final List<Integer> vertices;
+    private final List<Object> vertices;
     private List<Edge> edges;
     private int[][] incidenceMatrix;
 
@@ -84,7 +82,7 @@ public class IncidenceMatrixGraph implements Graph {
      * {@inheritDoc}
      */
     @Override
-    public void addVertex(int v) {
+    public void addVertex(Object v) {
         if (!vertices.contains(v)) {
             vertices.add(v);
             resizeIncidenceMatrix();
@@ -95,7 +93,7 @@ public class IncidenceMatrixGraph implements Graph {
      * {@inheritDoc}
      */
     @Override
-    public void removeVertex(int v) {
+    public void removeVertex(Object v) {
         int index = vertices.indexOf(v);
         if (index == -1) {
             return;
@@ -104,7 +102,7 @@ public class IncidenceMatrixGraph implements Graph {
         vertices.remove(index);
         List<Edge> newEdges = new ArrayList<>();
         for (Edge e : edges) {
-            if (e.start() != v && e.end() != v) {
+            if (e.start().equals(v) && e.end().equals(v)) {
                 newEdges.add(e);
             }
         }
@@ -129,7 +127,7 @@ public class IncidenceMatrixGraph implements Graph {
      * {@inheritDoc}
      */
     @Override
-    public void addEdge(int v1, int v2) {
+    public void addEdge(Object v1, Object v2) {
         if (!vertices.contains(v1) || !vertices.contains(v2)) {
             return;
         }
@@ -145,9 +143,9 @@ public class IncidenceMatrixGraph implements Graph {
      * {@inheritDoc}
      */
     @Override
-    public void removeEdge(int v1, int v2) {
+    public void removeEdge(Object v1, Object v2) {
         for (int i = 0; i < edges.size(); i++) {
-            if (edges.get(i).start() == v1 && edges.get(i).end() == v2) {
+            if (edges.get(i).start().equals(v1) && edges.get(i).end().equals(v2)) {
                 edges.remove(edges.get(i));
                 break;
             }
@@ -159,13 +157,21 @@ public class IncidenceMatrixGraph implements Graph {
      * {@inheritDoc}
      */
     @Override
-    public List<Integer> getNeighbors(int v) {
+    public List<Object> getVertices() {
+        return vertices;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Object> getNeighbors(Object v) {
         int vertexIndex = vertices.indexOf(v);
         if (vertexIndex == -1) {
             return null;
         }
 
-        List<Integer> neighbors = new ArrayList<>();
+        List<Object> neighbors = new ArrayList<>();
         for (int i = 0; i < edges.size(); i++) {
             if (incidenceMatrix[vertexIndex][i] == 1) {
                 Edge e = edges.get(i);
@@ -186,15 +192,15 @@ public class IncidenceMatrixGraph implements Graph {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.trim().split("\\s+");
-                if (parts.length >= 2) {
-                    int v1 = Integer.parseInt(parts[0]);
-                    int v2 = Integer.parseInt(parts[1]);
+                if (parts.length == 2) {
+                    Object v1 = parts[0];
+                    Object v2 = parts[1];
                     addVertex(v1);
                     addVertex(v2);
                     addEdge(v1, v2);
                 }
             }
-        } catch (IOException | NumberFormatException e) {
+        } catch (IOException e) {
             throw new GraphLoadException(e.getMessage());
         }
     }
@@ -224,57 +230,5 @@ public class IncidenceMatrixGraph implements Graph {
             sb.append(e).append("\n");
         }
         return sb.toString();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<Integer> topologicalSort() throws GraphSortException {
-        int n = vertices.size();
-        int[] penetrations = new int[n];
-
-        for (int i = 0; i < edges.size(); i++) {
-            for (int vertexIdx = 0; vertexIdx < n; vertexIdx++) {
-                if (incidenceMatrix[vertexIdx][i] == -1) {
-                    penetrations[vertexIdx]++;
-                }
-            }
-        }
-
-        Queue<Integer> queue = new LinkedList<>();
-        for (int i = 0; i < n; i++) {
-            if (penetrations[i] == 0) {
-                queue.add(i);
-            }
-        }
-
-        List<Integer> sorted = new ArrayList<>();
-        while (!queue.isEmpty()) {
-            int u = queue.poll();
-            sorted.add(vertices.get(u));
-            for (int i = 0; i < edges.size(); i++) {
-                if (incidenceMatrix[u][i] == 1) {
-                    int vertexIdx = -1;
-                    for (int j = 0; j < n; j++) {
-                        if (incidenceMatrix[j][i] == -1) {
-                            vertexIdx = j;
-                            break;
-                        }
-                    }
-                    if (vertexIdx != -1) {
-                        penetrations[vertexIdx]--;
-                        if (penetrations[vertexIdx] == 0) {
-                            queue.add(vertexIdx);
-                        }
-                    }
-                }
-            }
-        }
-
-        if (sorted.size() != n) {
-            throw new GraphSortException("Graph has cycles");
-        }
-        return sorted;
     }
 }

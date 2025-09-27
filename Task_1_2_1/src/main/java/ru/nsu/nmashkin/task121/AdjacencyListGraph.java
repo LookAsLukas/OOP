@@ -4,18 +4,15 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 
 /**
  * Implementation of a Graph via adjacency lists.
  */
 public class AdjacencyListGraph implements Graph {
-    private final Map<Integer, List<Integer>> adjList;
+    private final Map<Object, List<Object>> adjList;
 
     /**
      * Initialize the Graph.
@@ -28,7 +25,7 @@ public class AdjacencyListGraph implements Graph {
      * {@inheritDoc}
      */
     @Override
-    public void addVertex(int v) {
+    public void addVertex(Object v) {
         adjList.putIfAbsent(v, new ArrayList<>());
     }
 
@@ -36,10 +33,10 @@ public class AdjacencyListGraph implements Graph {
      * {@inheritDoc}
      */
     @Override
-    public void removeVertex(int v) {
+    public void removeVertex(Object v) {
         adjList.remove(v);
-        for (List<Integer> neighbors : adjList.values()) {
-            neighbors.remove(Integer.valueOf(v));
+        for (List<Object> neighbors : adjList.values()) {
+            neighbors.remove(v);
         }
     }
 
@@ -47,7 +44,7 @@ public class AdjacencyListGraph implements Graph {
      * {@inheritDoc}
      */
     @Override
-    public void addEdge(int v1, int v2) {
+    public void addEdge(Object v1, Object v2) {
         if (!adjList.containsKey(v1) || !adjList.containsKey(v2)) {
             return;
         }
@@ -62,10 +59,10 @@ public class AdjacencyListGraph implements Graph {
      * {@inheritDoc}
      */
     @Override
-    public void removeEdge(int v1, int v2) {
-        List<Integer> neighbors = adjList.get(v1);
+    public void removeEdge(Object v1, Object v2) {
+        List<Object> neighbors = adjList.get(v1);
         if (neighbors != null) {
-            neighbors.remove(Integer.valueOf(v2));
+            neighbors.remove(v2);
         }
     }
 
@@ -73,7 +70,15 @@ public class AdjacencyListGraph implements Graph {
      * {@inheritDoc}
      */
     @Override
-    public List<Integer> getNeighbors(int v) {
+    public List<Object> getVertices() {
+        return new ArrayList<>(adjList.keySet());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Object> getNeighbors(Object v) {
         if (!adjList.containsKey(v)) {
             return null;
         }
@@ -90,15 +95,15 @@ public class AdjacencyListGraph implements Graph {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.trim().split("\\s+");
-                if (parts.length >= 2) {
-                    int v1 = Integer.parseInt(parts[0]);
-                    int v2 = Integer.parseInt(parts[1]);
+                if (parts.length == 2) {
+                    Object v1 = parts[0];
+                    Object v2 = parts[1];
                     addVertex(v1);
                     addVertex(v2);
                     addEdge(v1, v2);
                 }
             }
-        } catch (IOException | NumberFormatException e) {
+        } catch (IOException e) {
             throw new GraphLoadException(e.getMessage());
         }
     }
@@ -122,49 +127,9 @@ public class AdjacencyListGraph implements Graph {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (Map.Entry<Integer, List<Integer>> entry : adjList.entrySet()) {
+        for (Map.Entry<Object, List<Object>> entry : adjList.entrySet()) {
             sb.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
         }
         return sb.toString();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<Integer> topologicalSort() throws GraphSortException {
-        Map<Integer, Integer> penetrations = new HashMap<>();
-        for (Integer v : adjList.keySet()) {
-            penetrations.put(v, 0);
-        }
-        for (List<Integer> neighbors : adjList.values()) {
-            for (Integer neighbor : neighbors) {
-                penetrations.put(neighbor, penetrations.getOrDefault(neighbor, 0) + 1);
-            }
-        }
-
-        Queue<Integer> queue = new LinkedList<>();
-        for (Map.Entry<Integer, Integer> entry : penetrations.entrySet()) {
-            if (entry.getValue() == 0) {
-                queue.add(entry.getKey());
-            }
-        }
-
-        List<Integer> sorted = new ArrayList<>();
-        while (!queue.isEmpty()) {
-            int v = queue.poll();
-            sorted.add(v);
-            for (Integer neighbor : adjList.getOrDefault(v, Collections.emptyList())) {
-                penetrations.put(neighbor, penetrations.get(neighbor) - 1);
-                if (penetrations.get(neighbor) == 0) {
-                    queue.add(neighbor);
-                }
-            }
-        }
-
-        if (sorted.size() != adjList.size()) {
-            throw new GraphSortException("Graph has cycles");
-        }
-        return sorted;
     }
 }

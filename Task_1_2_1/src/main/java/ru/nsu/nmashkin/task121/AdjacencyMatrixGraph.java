@@ -5,16 +5,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 /**
  * Implementation of a Graph via adjacency matrix.
  */
 public class AdjacencyMatrixGraph implements Graph {
     private boolean[][] adjMatrix;
-    private final List<Integer> vertices;
+    private final List<Object> vertices;
 
     /**
      * Initialize the Graph.
@@ -28,7 +26,7 @@ public class AdjacencyMatrixGraph implements Graph {
      * {@inheritDoc}
      */
     @Override
-    public void addVertex(int v) {
+    public void addVertex(Object v) {
         if (vertices.contains(v)) {
             return;
         }
@@ -46,7 +44,7 @@ public class AdjacencyMatrixGraph implements Graph {
      * {@inheritDoc}
      */
     @Override
-    public void removeVertex(int v) {
+    public void removeVertex(Object v) {
         int index = vertices.indexOf(v);
         if (index == -1) {
             return;
@@ -78,7 +76,7 @@ public class AdjacencyMatrixGraph implements Graph {
      * {@inheritDoc}
      */
     @Override
-    public void addEdge(int v1, int v2) {
+    public void addEdge(Object v1, Object v2) {
         int i = vertices.indexOf(v1);
         int j = vertices.indexOf(v2);
         if (i == -1 || j == -1) {
@@ -92,7 +90,7 @@ public class AdjacencyMatrixGraph implements Graph {
      * {@inheritDoc}
      */
     @Override
-    public void removeEdge(int v1, int v2) {
+    public void removeEdge(Object v1, Object v2) {
         int i = vertices.indexOf(v1);
         int j = vertices.indexOf(v2);
         if (i == -1 || j == -1) {
@@ -106,13 +104,22 @@ public class AdjacencyMatrixGraph implements Graph {
      * {@inheritDoc}
      */
     @Override
-    public List<Integer> getNeighbors(int v) {
+    public List<Object> getVertices() {
+        return vertices;
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Object> getNeighbors(Object v) {
         int index = vertices.indexOf(v);
         if (index == -1) {
             return null;
         }
 
-        List<Integer> neighbors = new ArrayList<>();
+        List<Object> neighbors = new ArrayList<>();
         for (int j = 0; j < vertices.size(); j++) {
             if (adjMatrix[index][j]) {
                 neighbors.add(vertices.get(j));
@@ -132,15 +139,15 @@ public class AdjacencyMatrixGraph implements Graph {
             adjMatrix = new boolean[0][0];
             while ((line = br.readLine()) != null) {
                 String[] parts = line.trim().split("\\s+");
-                if (parts.length >= 2) {
-                    int v1 = Integer.parseInt(parts[0]);
-                    int v2 = Integer.parseInt(parts[1]);
+                if (parts.length == 2) {
+                    Object v1 = parts[0];
+                    Object v2 = parts[1];
                     addVertex(v1);
                     addVertex(v2);
                     addEdge(v1, v2);
                 }
             }
-        } catch (IOException | NumberFormatException e) {
+        } catch (IOException e) {
             throw new GraphLoadException(e.getMessage());
         }
     }
@@ -171,48 +178,5 @@ public class AdjacencyMatrixGraph implements Graph {
             sb.append("\n");
         }
         return sb.toString();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<Integer> topologicalSort() throws GraphSortException {
-        int n = vertices.size();
-        int[] penetrations = new int[n];
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (adjMatrix[i][j]) {
-                    penetrations[j]++;
-                }
-            }
-        }
-
-        Queue<Integer> queue = new LinkedList<>();
-        for (int i = 0; i < n; i++) {
-            if (penetrations[i] == 0) {
-                queue.add(i);
-            }
-        }
-
-        List<Integer> sorted = new ArrayList<>();
-        while (!queue.isEmpty()) {
-            int u = queue.poll();
-            sorted.add(vertices.get(u));
-            for (int v = 0; v < n; v++) {
-                if (adjMatrix[u][v]) {
-                    penetrations[v]--;
-                    if (penetrations[v] == 0) {
-                        queue.add(v);
-                    }
-                }
-            }
-        }
-
-        if (sorted.size() != n) {
-            throw new GraphSortException("Graph has cycles");
-        }
-        return sorted;
     }
 }

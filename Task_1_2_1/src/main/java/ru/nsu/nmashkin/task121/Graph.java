@@ -11,14 +11,14 @@ public interface Graph {
      *
      * @param v vertex to be added
      */
-    void addVertex(int v);
+    void addVertex(Object v);
 
     /**
      * Remove a vertex from the Graph.
      *
      * @param v vertex to be removed
      */
-    void removeVertex(int v);
+    void removeVertex(Object v);
 
     /**
      * Add an edge to the Graph.
@@ -26,7 +26,7 @@ public interface Graph {
      * @param v1 starting vertex
      * @param v2 ending vertex
      */
-    void addEdge(int v1, int v2);
+    void addEdge(Object v1, Object v2);
 
     /**
      * Remove an edge from the Graph.
@@ -34,7 +34,14 @@ public interface Graph {
      * @param v1 starting vertex
      * @param v2 ending vertex
      */
-    void removeEdge(int v1, int v2);
+    void removeEdge(Object v1, Object v2);
+
+    /**
+     * Get the list of all vertices.
+     *
+     * @return the said list
+     */
+    List<Object> getVertices();
 
     /**
      * Get a list of all neighbouring vertices.
@@ -43,7 +50,7 @@ public interface Graph {
      * @param v vertex, whose neighbors will be returned
      * @return list of neighbors, null if there is no such vertex v
      */
-    List<Integer> getNeighbors(int v);
+    List<Object> getNeighbors(Object v);
 
     /**
      * Load graph from a file.
@@ -74,12 +81,4 @@ public interface Graph {
      * @return string representation
      */
     String toString();
-
-    /**
-     * Order the vertices.
-     *
-     * @return order
-     * @throws GraphSortException if the Graph has Cycles
-     */
-    List<Integer> topologicalSort() throws GraphSortException;
 }
