@@ -9,13 +9,14 @@ import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class CommonTests {
+class CommonTests {
     static Stream<Graph> graphTypes() {
         return Stream.of(new AdjacencyMatrixGraph(),
                          new IncidenceMatrixGraph(),
                          new AdjacencyListGraph());
     }
 
+    /
     static Graph newClone(Graph g) {
         if (g instanceof AdjacencyMatrixGraph) {
             return new AdjacencyMatrixGraph();
