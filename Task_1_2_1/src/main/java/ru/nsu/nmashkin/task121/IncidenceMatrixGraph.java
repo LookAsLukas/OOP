@@ -113,10 +113,10 @@ public class IncidenceMatrixGraph implements Graph {
     }
 
     private void resizeIncidenceMatrix() {
-        int vCount = vertices.size();
-        int eCount = edges.size();
-        incidenceMatrix = new int[vCount][eCount];
-        for (int i = 0; i < eCount; i++) {
+        int vertexCount = vertices.size();
+        int edgeCount = edges.size();
+        incidenceMatrix = new int[vertexCount][edgeCount];
+        for (int i = 0; i < edgeCount; i++) {
             Edge e = edges.get(i);
             int v1Index = vertices.indexOf(e.start());
             int v2Index = vertices.indexOf(e.end());
@@ -160,14 +160,14 @@ public class IncidenceMatrixGraph implements Graph {
      */
     @Override
     public List<Integer> getNeighbors(int v) {
-        int vIndex = vertices.indexOf(v);
-        if (vIndex == -1) {
+        int vertexIndex = vertices.indexOf(v);
+        if (vertexIndex == -1) {
             return null;
         }
 
         List<Integer> neighbors = new ArrayList<>();
         for (int i = 0; i < edges.size(); i++) {
-            if (incidenceMatrix[vIndex][i] == 1) {
+            if (incidenceMatrix[vertexIndex][i] == 1) {
                 Edge e = edges.get(i);
                 neighbors.add(e.end());
             }
@@ -235,16 +235,18 @@ public class IncidenceMatrixGraph implements Graph {
         int[] penetrations = new int[n];
 
         for (int i = 0; i < edges.size(); i++) {
-            for (int vIdx = 0; vIdx < n; vIdx++) {
-                if (incidenceMatrix[vIdx][i] == -1) {
-                    penetrations[vIdx]++;
+            for (int vertexIdx = 0; vertexIdx < n; vertexIdx++) {
+                if (incidenceMatrix[vertexIdx][i] == -1) {
+                    penetrations[vertexIdx]++;
                 }
             }
         }
 
         Queue<Integer> queue = new LinkedList<>();
         for (int i = 0; i < n; i++) {
-            if (penetrations[i] == 0) queue.add(i);
+            if (penetrations[i] == 0) {
+                queue.add(i);
+            }
         }
 
         List<Integer> sorted = new ArrayList<>();
@@ -253,17 +255,17 @@ public class IncidenceMatrixGraph implements Graph {
             sorted.add(vertices.get(u));
             for (int i = 0; i < edges.size(); i++) {
                 if (incidenceMatrix[u][i] == 1) {
-                    int vIdx = -1;
+                    int vertexIdx = -1;
                     for (int j = 0; j < n; j++) {
                         if (incidenceMatrix[j][i] == -1) {
-                            vIdx = j;
+                            vertexIdx = j;
                             break;
                         }
                     }
-                    if (vIdx != -1) {
-                        penetrations[vIdx]--;
-                        if (penetrations[vIdx] == 0) {
-                            queue.add(vIdx);
+                    if (vertexIdx != -1) {
+                        penetrations[vertexIdx]--;
+                        if (penetrations[vertexIdx] == 0) {
+                            queue.add(vertexIdx);
                         }
                     }
                 }

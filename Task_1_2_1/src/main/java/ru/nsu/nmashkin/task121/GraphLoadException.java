@@ -5,7 +5,9 @@ package ru.nsu.nmashkin.task121;
  */
 public class GraphLoadException extends GraphException {
     /**
-     * {@inheritDoc}
+     * Create an Exception.
+     *
+     * @param message exception message
      */
     public GraphLoadException(String message) {
         super(message);

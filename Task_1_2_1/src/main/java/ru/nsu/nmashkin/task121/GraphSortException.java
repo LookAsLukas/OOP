@@ -5,7 +5,9 @@ package ru.nsu.nmashkin.task121;
  */
 public class GraphSortException extends RuntimeException {
     /**
-     * {@inheritDoc}
+     * Create an Exception.
+     *
+     * @param message exception message
      */
     public GraphSortException(String message) {
         super(message);

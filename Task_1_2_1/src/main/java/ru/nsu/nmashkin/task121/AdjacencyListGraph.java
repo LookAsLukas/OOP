@@ -145,7 +145,9 @@ public class AdjacencyListGraph implements Graph {
 
         Queue<Integer> queue = new LinkedList<>();
         for (Map.Entry<Integer, Integer> entry : penetrations.entrySet()) {
-            if (entry.getValue() == 0) queue.add(entry.getKey());
+            if (entry.getValue() == 0) {
+                queue.add(entry.getKey());
+            }
         }
 
         List<Integer> sorted = new ArrayList<>();
