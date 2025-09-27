@@ -14,7 +14,8 @@ import java.util.Queue;
  */
 public class IncidenceMatrixGraph implements Graph {
     private class Edge {
-        int v1, v2;
+        int v1;
+        int v2;
 
         private Edge(int v1, int v2) {
             this.v1 = v1;
