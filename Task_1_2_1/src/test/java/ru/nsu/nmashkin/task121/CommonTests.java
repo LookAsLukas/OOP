@@ -16,7 +16,6 @@ class CommonTests {
                          new AdjacencyListGraph());
     }
 
-    /
     static Graph newClone(Graph g) {
         if (g instanceof AdjacencyMatrixGraph) {
             return new AdjacencyMatrixGraph();
