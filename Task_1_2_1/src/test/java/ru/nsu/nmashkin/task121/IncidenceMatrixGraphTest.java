@@ -1,6 +1,7 @@
 package ru.nsu.nmashkin.task121;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +23,7 @@ class IncidenceMatrixGraphTest {
         g.addVertex(1);
         g.addEdge(0, 1);
         g.addEdge(1, 1);
-        g.addEdge(2, 3);
+        assertThrows(GraphException.class, () -> g.addEdge(2, 3));
         g.addEdge(0, 1);
         assertEquals("Vertices: [0, 1]\nEdges:\n(0, 1)\n(1, 1)\n", g.toString());
     }
