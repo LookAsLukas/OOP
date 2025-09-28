@@ -1,5 +1,7 @@
 package ru.nsu.nmashkin.task121;
 
+import jdk.jshell.spi.ExecutionControl;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -80,7 +82,7 @@ public class AdjacencyMatrixGraph implements Graph {
         int i = vertices.indexOf(v1);
         int j = vertices.indexOf(v2);
         if (i == -1 || j == -1) {
-            return;
+            throw new GraphException("Cannot have a non existent vertex on the end of the edge");
         }
 
         adjMatrix[i][j] = true;
@@ -163,6 +165,14 @@ public class AdjacencyMatrixGraph implements Graph {
 
         AdjacencyMatrixGraph other = (AdjacencyMatrixGraph) o;
         return vertices.equals(other.vertices) && Arrays.deepEquals(adjMatrix, other.adjMatrix);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        throw new GraphException("hashCode for Graph is not implemented");
     }
 
     /**

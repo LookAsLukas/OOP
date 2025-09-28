@@ -129,7 +129,7 @@ public class IncidenceMatrixGraph implements Graph {
     @Override
     public void addEdge(Object v1, Object v2) {
         if (!vertices.contains(v1) || !vertices.contains(v2)) {
-            return;
+            throw new GraphException("Cannot have a non existent vertex on the end of the edge");
         }
         if (edges.contains(new Edge(v1, v2))) {
             return;
@@ -216,6 +216,14 @@ public class IncidenceMatrixGraph implements Graph {
 
         IncidenceMatrixGraph other = (IncidenceMatrixGraph) o;
         return vertices.equals(other.vertices) && edges.equals(other.edges);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        throw new GraphException("hashCode for Graph is not implemented");
     }
 
     /**

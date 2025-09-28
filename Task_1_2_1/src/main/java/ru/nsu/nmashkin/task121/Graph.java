@@ -75,6 +75,13 @@ public interface Graph {
     boolean equals(Object o);
 
     /**
+     * Not implemented.
+     *
+     * @return nothing
+     */
+    int hashCode();
+
+    /**
      * Get a string representation of the Graph.
      * Different implementations may have different representations.
      *

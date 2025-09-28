@@ -46,7 +46,7 @@ public class AdjacencyListGraph implements Graph {
     @Override
     public void addEdge(Object v1, Object v2) {
         if (!adjList.containsKey(v1) || !adjList.containsKey(v2)) {
-            return;
+            throw new GraphException("Cannot have a non existent vertex on the end of the edge");
         }
         if (adjList.get(v1).contains(v2)) {
             return;
@@ -119,6 +119,14 @@ public class AdjacencyListGraph implements Graph {
 
         AdjacencyListGraph other = (AdjacencyListGraph) o;
         return adjList.equals(other.adjList);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        throw new GraphException("hashCode for Graph is not implemented");
     }
 
     /**
