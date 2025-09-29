@@ -54,13 +54,11 @@ class SubstringFinderTest {
 
     @Test
     void find_error() {
-        if (true) return;
         assertThrows(SubstringFinderException.class, () -> SubstringFinder.find("ligma", "ballz"));
     }
 
     @Test
     void find_edging() {
-        if (true) return;
         List<Long> expected = new ArrayList<>();
         try (BufferedWriter outw = new BufferedWriter(new FileWriter("test.txt",
                 StandardCharsets.UTF_8))) {
