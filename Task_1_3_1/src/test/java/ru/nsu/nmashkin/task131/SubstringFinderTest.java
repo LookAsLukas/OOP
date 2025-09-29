@@ -14,15 +14,6 @@ import java.util.Random;
 import org.junit.jupiter.api.Test;
 
 class SubstringFinderTest {
-
-    @Test
-    void find() {
-        if (true) return;
-        List<Long> res = SubstringFinder.find("lolkek.txt", "бла");
-
-        assertEquals(new ArrayList<>(List.of(0L, 9L, 37L)), res);
-    }
-
     @Test
     void find_huge() {
         List<Long> expected = new ArrayList<>();
