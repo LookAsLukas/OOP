@@ -28,10 +28,10 @@ public class SubstringFinder {
             char[] chunk = new char[4096];
             int chunkLen;
             long chunkCount = 0;
+            int targetInd = 0;
+            long potentialMatchInd = -1;
 
             while ((chunkLen = inr.read(chunk)) != -1) {
-                int targetInd = 0;
-                long potentialMatchInd = -1;
                 for (int i = 0; i < chunkLen; i++) {
                     if (target[targetInd] == chunk[i]) {
                         if (potentialMatchInd == -1) {
