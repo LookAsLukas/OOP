@@ -28,7 +28,7 @@ class SubstringFinderTest {
         try (BufferedWriter outw = new BufferedWriter(new FileWriter("test.txt",
                 StandardCharsets.UTF_8))) {
             Random random = new Random();
-            for (long i = 0; i < 1500; i++) {
+            for (long i = 0; i < 69420; i++) {
                 double lol = random.nextDouble();
                 if (lol < 0.48) {
                     outw.append("лол");
@@ -52,5 +52,25 @@ class SubstringFinderTest {
     @Test
     void find_error() {
         assertThrows(SubstringFinderException.class, () -> SubstringFinder.find("ligma", "ballz"));
+    }
+
+    @Test
+    void find_edging() {
+        List<Long> expected = new ArrayList<>();
+        try (BufferedWriter outw = new BufferedWriter(new FileWriter("test.txt",
+                StandardCharsets.UTF_8))) {
+            for (long i = 0; i < 4095; i++) {
+                outw.append("ф");
+            }
+            outw.append("бла");
+        } catch (IOException e) {
+            System.err.println("Something went wrong\n");
+        }
+
+        expected.add(4095L);
+        assertEquals(expected, SubstringFinder.find("test.txt", "бла"));
+
+        File file = new File("test.txt");
+        file.delete();
     }
 }
