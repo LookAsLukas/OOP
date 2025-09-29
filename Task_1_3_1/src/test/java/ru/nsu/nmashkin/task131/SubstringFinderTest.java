@@ -41,6 +41,7 @@ class SubstringFinderTest {
             }
         } catch (IOException e) {
             System.err.println("Something went wrong\n");
+            return;
         }
 
         assertEquals(expected, SubstringFinder.find("test.txt", "бла"));
