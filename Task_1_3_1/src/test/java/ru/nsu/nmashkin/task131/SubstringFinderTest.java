@@ -25,7 +25,6 @@ class SubstringFinderTest {
 
     @Test
     void find_huge() {
-        if (true) return;
         List<Long> expected = new ArrayList<>();
         try (BufferedWriter outw = new BufferedWriter(new FileWriter("test.txt",
                 StandardCharsets.UTF_8))) {
