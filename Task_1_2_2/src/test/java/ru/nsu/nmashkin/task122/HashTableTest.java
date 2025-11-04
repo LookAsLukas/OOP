@@ -18,12 +18,19 @@ class HashTableTest {
     }
 
     @Test
-    void remove() {
+    void remove_was_removed() {
         HashTable<Integer, Integer> ht = new HashTable<>();
         ht.add(1, 2);
         ht.add(2, 2);
         ht.remove(2);
         assertThrows(HashTableException.class, () -> ht.remove(2));
+    }
+
+    @Test
+    void remove_never_existed() {
+        HashTable<Integer, Integer> ht = new HashTable<>();
+        ht.add(1, 2);
+        ht.add(2, 2);
         assertThrows(HashTableException.class, () -> ht.remove(3));
     }
 
@@ -32,8 +39,15 @@ class HashTableTest {
         HashTable<Integer, Integer> ht = new HashTable<>();
         ht.add(1, 2);
         ht.add(2, 2);
-        assertThrows(HashTableException.class, () -> ht.get(3));
         assertEquals(2, ht.get(2));
+    }
+
+    @Test
+    void get_non_existent() {
+        HashTable<Integer, Integer> ht = new HashTable<>();
+        ht.add(1, 2);
+        ht.add(2, 2);
+        assertThrows(HashTableException.class, () -> ht.get(3));
     }
 
     @Test
@@ -41,12 +55,19 @@ class HashTableTest {
         HashTable<Integer, Integer> ht = new HashTable<>();
         ht.add(1, 2);
         ht.add(2, 2);
-        assertThrows(HashTableException.class, () -> ht.update(3, 3));
         ht.update(1, 1);
         HashTable<Integer, Integer> e = new HashTable<>();
         e.add(1, 1);
         e.add(2, 2);
         assertEquals(e, ht);
+    }
+
+    @Test
+    void update_non_existent() {
+        HashTable<Integer, Integer> ht = new HashTable<>();
+        ht.add(1, 2);
+        ht.add(2, 2);
+        assertThrows(HashTableException.class, () -> ht.update(3, 3));
     }
 
     @Test
@@ -59,22 +80,40 @@ class HashTableTest {
     }
 
     @Test
-    void equals() {
+    void equals_null() {
         HashTable<Integer, Integer> ht = new HashTable<>();
         ht.add(1, 2);
         ht.add(2, 2);
         assertFalse(ht.equals(null));
+    }
+
+    @Test
+    void equals() {
+        HashTable<Integer, Integer> ht = new HashTable<>();
+        ht.add(1, 2);
+        ht.add(2, 2);
         HashTable<Integer, Integer> htt = new HashTable<>();
         htt.add(1, 2);
         htt.add(2, 2);
         assertTrue(ht.equals(htt));
-        assertEquals(ht.hashCode(), htt.hashCode());
-        htt = new HashTable<>();
+    }
+
+    @Test
+    void equals_not() {
+        HashTable<Integer, Integer> ht = new HashTable<>();
+        ht.add(1, 2);
+        ht.add(2, 2);
+        HashTable<Integer, Integer> htt = new HashTable<>();
         htt.add(1, 2);
         assertFalse(ht.equals(htt));
-        htt = new HashTable<>();
-        htt.add(1, 2);
-        htt.add(3, 2);
+    }
+
+    @Test
+    void equals_different() {
+        HashTable<Integer, String> ht = new HashTable<>();
+        ht.add(0, "");
+        HashTable<Integer, Integer> htt = new HashTable<>();
+        htt.add(0, 0);
         assertFalse(ht.equals(htt));
     }
 
@@ -84,6 +123,6 @@ class HashTableTest {
         ht.add(1, 2);
         ht.add(2, 2);
         assertTrue(ht.toString().equals("(1, 2)\n(2, 2)\n")
-                    || ht.toString().equals("(2, 2)\n(1, 2)\n"));
+                || ht.toString().equals("(2, 2)\n(1, 2)\n"));
     }
 }

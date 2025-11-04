@@ -1,12 +1,12 @@
 package ru.nsu.nmashkin.task122;
 
+import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
-import java.util.Vector;
 
 /**
  * HashTable class.
@@ -86,12 +86,12 @@ public class HashTable<K, V> implements Iterable<HashTable.Pair<K, V>> {
             oreshekInd = 0;
             expectedModCount = modCount;
 
-            while (churchhellaInd < verevka.capacity()
-                    && (verevka.elementAt(churchhellaInd) == null
-                    || verevka.elementAt(churchhellaInd).isEmpty())) {
+            while (churchhellaInd < verevka.size()
+                    && (verevka.get(churchhellaInd) == null
+                    || verevka.get(churchhellaInd).isEmpty())) {
                 churchhellaInd++;
             }
-            if (churchhellaInd == verevka.capacity()) {
+            if (churchhellaInd == verevka.size()) {
                 churchhellaInd = -1;
             }
         }
@@ -120,20 +120,20 @@ public class HashTable<K, V> implements Iterable<HashTable.Pair<K, V>> {
                 throw new NoSuchElementException("");
             }
 
-            Pair<K, V> result = verevka.elementAt(churchhellaInd).get(oreshekInd);
+            Pair<K, V> result = verevka.get(churchhellaInd).get(oreshekInd);
 
             oreshekInd++;
-            if (oreshekInd < verevka.elementAt(churchhellaInd).size()) {
+            if (oreshekInd < verevka.get(churchhellaInd).size()) {
                 return result;
             }
 
             oreshekInd = 0;
             do {
                 churchhellaInd++;
-            } while (churchhellaInd < verevka.capacity()
-                    && (verevka.elementAt(churchhellaInd) == null
-                    || verevka.elementAt(churchhellaInd).isEmpty()));
-            if (churchhellaInd == verevka.capacity()) {
+            } while (churchhellaInd < verevka.size()
+                    && (verevka.get(churchhellaInd) == null
+                    || verevka.get(churchhellaInd).isEmpty()));
+            if (churchhellaInd == verevka.size()) {
                 churchhellaInd = -1;
             }
 
@@ -141,25 +141,25 @@ public class HashTable<K, V> implements Iterable<HashTable.Pair<K, V>> {
         }
     }
 
-    private Vector<List<Pair<K, V>>> verevka;
+    private ArrayList<List<Pair<K, V>>> verevka;
     private int count;
     private int modCount;
 
     private int getChurchhellaInd(K key) {
-        return key.hashCode() % verevka.capacity();
+        return key.hashCode() % verevka.size();
     }
 
-    private int getChurchhellaInd(K key, Vector<List<Pair<K, V>>> verevka) {
-        return key.hashCode() % verevka.capacity();
+    private int getChurchhellaInd(K key, ArrayList<List<Pair<K, V>>> verevka) {
+        return key.hashCode() % verevka.size();
     }
 
     private void resize() {
-        if (count < 0.69 * verevka.capacity()) {
+        if (count < 0.69 * verevka.size()) {
             return;
         }
 
-        Vector<List<Pair<K, V>>> verevkaPokrepche = new Vector<>(verevka.capacity() * 2);
-        for (int i = 0; i < verevkaPokrepche.capacity(); i++) {
+        ArrayList<List<Pair<K, V>>> verevkaPokrepche = new ArrayList<>(verevka.size() * 2);
+        for (int i = 0; i < verevka.size() * 2; i++) {
             verevkaPokrepche.add(null);
         }
         for (List<Pair<K, V>> churchhella : verevka) {
@@ -168,10 +168,10 @@ public class HashTable<K, V> implements Iterable<HashTable.Pair<K, V>> {
             }
             for (Pair<K, V> oreshek : churchhella) {
                 int churchhellaPovkusneeInd = getChurchhellaInd(oreshek.el1, verevkaPokrepche);
-                if (verevkaPokrepche.elementAt(churchhellaPovkusneeInd) == null) {
+                if (verevkaPokrepche.get(churchhellaPovkusneeInd) == null) {
                     verevkaPokrepche.set(churchhellaPovkusneeInd, new LinkedList<>());
                 }
-                verevkaPokrepche.elementAt(churchhellaPovkusneeInd).add(oreshek);
+                verevkaPokrepche.get(churchhellaPovkusneeInd).add(oreshek);
             }
         }
         verevka = verevkaPokrepche;
@@ -181,7 +181,7 @@ public class HashTable<K, V> implements Iterable<HashTable.Pair<K, V>> {
      * Initialize the hash table.
      */
     public HashTable() {
-        verevka = new Vector<>(1);
+        verevka = new ArrayList<>(1);
         verevka.add(null);
         count = 0;
         modCount++;
@@ -196,13 +196,13 @@ public class HashTable<K, V> implements Iterable<HashTable.Pair<K, V>> {
      */
     public void add(K key, V value) {
         int churchhellaInd = getChurchhellaInd(key);
-        if (verevka.elementAt(churchhellaInd) == null) {
+        if (verevka.get(churchhellaInd) == null) {
             verevka.set(churchhellaInd, new LinkedList<>());
         } else if (contains(key)) {
             throw new HashTableException("Key " + key + "already exists");
         }
 
-        verevka.elementAt(churchhellaInd).add(new Pair<>(key, value));
+        verevka.get(churchhellaInd).add(new Pair<>(key, value));
         count++;
         modCount++;
         resize();
@@ -220,7 +220,7 @@ public class HashTable<K, V> implements Iterable<HashTable.Pair<K, V>> {
             throw new HashTableException("Key " + key + " does not exist");
         }
 
-        verevka.elementAt(churchhellaInd).remove(new Pair<>(key, null));
+        verevka.get(churchhellaInd).remove(new Pair<>(key, null));
         count--;
         modCount++;
     }
@@ -238,8 +238,8 @@ public class HashTable<K, V> implements Iterable<HashTable.Pair<K, V>> {
             throw new HashTableException("Key " + key + " does not exist");
         }
 
-        int oreshekInd = verevka.elementAt(churchhellaInd).indexOf(new Pair<>(key, null));
-        return verevka.elementAt(churchhellaInd).get(oreshekInd).el2;
+        int oreshekInd = verevka.get(churchhellaInd).indexOf(new Pair<>(key, null));
+        return verevka.get(churchhellaInd).get(oreshekInd).el2;
     }
 
     /**
@@ -255,8 +255,8 @@ public class HashTable<K, V> implements Iterable<HashTable.Pair<K, V>> {
             throw new HashTableException("Key " + key + " does not exist");
         }
 
-        int oreshekInd = verevka.elementAt(churchhellaInd).indexOf(new Pair<>(key, null));
-        verevka.elementAt(churchhellaInd).set(oreshekInd, new Pair<>(key, value));
+        int oreshekInd = verevka.get(churchhellaInd).indexOf(new Pair<>(key, null));
+        verevka.get(churchhellaInd).set(oreshekInd, new Pair<>(key, value));
         modCount++;
     }
 
@@ -268,10 +268,10 @@ public class HashTable<K, V> implements Iterable<HashTable.Pair<K, V>> {
      */
     public boolean contains(K key) {
         int churchhellaInd = getChurchhellaInd(key);
-        if (verevka.elementAt(churchhellaInd) == null) {
+        if (verevka.get(churchhellaInd) == null) {
             return false;
         }
-        for (Pair<K, V> oreshek : verevka.elementAt(churchhellaInd)) {
+        for (Pair<K, V> oreshek : verevka.get(churchhellaInd)) {
             if (oreshek.el1.equals(key)) {
                 return true;
             }
@@ -299,22 +299,37 @@ public class HashTable<K, V> implements Iterable<HashTable.Pair<K, V>> {
      */
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-        HashTable<K, V> hashTable = (HashTable<K, V>) o;
-        if (count != hashTable.count) {
-            return false;
-        }
+        HashTable<?, ?> other = (HashTable<?, ?>) o;
 
-        for (Pair<K, V> oreshek : this) {
-            if (!hashTable.contains(oreshek.el1)
-                || hashTable.get(oreshek.el1) != oreshek.el2) {
+        if (count != other.count) return false;
+
+        for (Pair<K, V> pair : this) {
+            K key = pair.el1;
+            V value = pair.el2;
+
+            Object otherValue = other._get(key);
+            if (!value.equals(otherValue)) {
                 return false;
             }
         }
         return true;
+    }
+
+    private Object _get(Object key) {
+        int ind = key.hashCode() % verevka.size();
+        if (verevka.get(ind) == null) {
+            return null;
+        }
+
+        for (Pair<K, V> oreshek : verevka.get(ind)) {
+            if (oreshek.el1.equals(key)) {
+                return oreshek.el2;
+            }
+        }
+        return null;
     }
 
     /**
