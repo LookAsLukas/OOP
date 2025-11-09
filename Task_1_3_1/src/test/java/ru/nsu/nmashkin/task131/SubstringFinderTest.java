@@ -52,13 +52,13 @@ class SubstringFinderTest {
                 if (i < 226) {
                     expected.add(i * 2);
                 }
-                outw.append("\uD80C\uDC04");
+                outw.append(new String(new char[]{0xD80C, 0xDC04}));
             }
         }
 
         try (InputStream in = new FileInputStream("test.txt")) {
             assertEquals(expected, SubstringFinder.find(in,
-                                                "\uD80C\uDC04\uD80C\uDC04\uD80C\uDC04"));
+                    new String(new char[]{0xD80C, 0xDC04, 0xD80C, 0xDC04, 0xD80C, 0xDC04})));
         } catch (IOException e) {
             System.err.println("Something went horribly wrong\n");
             return;
@@ -93,7 +93,7 @@ class SubstringFinderTest {
     void find_string_stream() throws IOException {
         List<Long> expected = new ArrayList<>();
         expected.add(0L);
-        InputStream in = new ByteArrayInputStream("lollollolkekekekeke".getBytes(StandardCharsets.UTF_8));
+        InputStream in = new ByteArrayInputStream("lollollolkek".getBytes(StandardCharsets.UTF_8));
         assertEquals(expected, SubstringFinder.find(in, "lollollol"));
     }
 }
