@@ -299,18 +299,24 @@ public class HashTable<K, V> implements Iterable<HashTable.Pair<K, V>> {
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         HashTable<?, ?> other = (HashTable<?, ?>) o;
 
-        if (count != other.count) return false;
+        if (count != other.count) {
+            return false;
+        }
 
         for (Pair<K, V> pair : this) {
             K key = pair.el1;
             V value = pair.el2;
 
-            Object otherValue = other._get(key);
+            Object otherValue = other.privateGet(key);
             if (!value.equals(otherValue)) {
                 return false;
             }
@@ -318,7 +324,7 @@ public class HashTable<K, V> implements Iterable<HashTable.Pair<K, V>> {
         return true;
     }
 
-    private Object _get(Object key) {
+    private Object privateGet(Object key) {
         int ind = key.hashCode() % verevka.size();
 
         if (verevka.get(ind) == null) {
