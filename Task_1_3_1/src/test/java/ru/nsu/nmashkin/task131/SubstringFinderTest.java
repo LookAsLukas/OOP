@@ -1,12 +1,14 @@
 package ru.nsu.nmashkin.task131;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +17,7 @@ import org.junit.jupiter.api.Test;
 
 class SubstringFinderTest {
     @Test
-    void find_huge() {
+    void find_huge() throws IOException {
         List<Long> expected = new ArrayList<>();
         try (BufferedWriter outw = new BufferedWriter(new FileWriter("test.txt",
                 StandardCharsets.UTF_8))) {
@@ -31,24 +33,43 @@ class SubstringFinderTest {
                     expected.add(i * 3);
                 }
             }
-        } catch (IOException e) {
-            System.err.println("Something went wrong\n");
-            return;
         }
 
-        assertEquals(expected, SubstringFinder.find("test.txt", "бла"));
+        try (InputStream in = new FileInputStream("test.txt")) {
+            assertEquals(expected, SubstringFinder.find(in, "бла"));
+        }
 
         File file = new File("test.txt");
         file.delete();
     }
 
     @Test
-    void find_error() {
-        assertThrows(SubstringFinderException.class, () -> SubstringFinder.find("ligma", "ballz"));
+    void find_repeat() throws IOException {
+        List<Long> expected = new ArrayList<>();
+        try (BufferedWriter outw = new BufferedWriter(new FileWriter("test.txt",
+                StandardCharsets.UTF_8))) {
+            for (long i = 0; i < 228; i++) {
+                if (i < 226) {
+                    expected.add(i * 2);
+                }
+                outw.append("\uD80C\uDC04");
+            }
+        }
+
+        try (InputStream in = new FileInputStream("test.txt")) {
+            assertEquals(expected, SubstringFinder.find(in,
+                                                "\uD80C\uDC04\uD80C\uDC04\uD80C\uDC04"));
+        } catch (IOException e) {
+            System.err.println("Something went horribly wrong\n");
+            return;
+        }
+
+        File file = new File("test.txt");
+        file.delete();
     }
 
     @Test
-    void find_edging() {
+    void find_edging() throws IOException{
         List<Long> expected = new ArrayList<>();
         try (BufferedWriter outw = new BufferedWriter(new FileWriter("test.txt",
                 StandardCharsets.UTF_8))) {
@@ -56,14 +77,23 @@ class SubstringFinderTest {
                 outw.append("ф");
             }
             outw.append("бла");
-        } catch (IOException e) {
-            System.err.println("Something went wrong\n");
         }
 
         expected.add(4095L);
-        assertEquals(expected, SubstringFinder.find("test.txt", "бла"));
+
+        try (InputStream in = new FileInputStream("test.txt")) {
+            assertEquals(expected, SubstringFinder.find(in, "бла"));
+        }
 
         File file = new File("test.txt");
         file.delete();
+    }
+
+    @Test
+    void find_string_stream() throws IOException {
+        List<Long> expected = new ArrayList<>();
+        expected.add(0L);
+        InputStream in = new ByteArrayInputStream("lollollolkekekekeke".getBytes(StandardCharsets.UTF_8));
+        assertEquals(expected, SubstringFinder.find(in, "lollollol"));
     }
 }
