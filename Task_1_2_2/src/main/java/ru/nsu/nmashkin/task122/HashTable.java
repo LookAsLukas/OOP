@@ -320,6 +320,7 @@ public class HashTable<K, V> implements Iterable<HashTable.Pair<K, V>> {
 
     private Object _get(Object key) {
         int ind = key.hashCode() % verevka.size();
+
         if (verevka.get(ind) == null) {
             return null;
         }
