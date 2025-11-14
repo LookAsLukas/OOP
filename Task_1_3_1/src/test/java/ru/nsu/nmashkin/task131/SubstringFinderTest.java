@@ -112,6 +112,7 @@ class SubstringFinderTest {
             }
         };
 
-        assertThrows(SubstringFinderException.class, () -> SubstringFinder.find(throwingStream, ""));
+        assertThrows(SubstringFinderException.class,
+                     () -> SubstringFinder.find(throwingStream, ""));
     }
 }
