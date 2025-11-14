@@ -21,7 +21,7 @@ public class SubstringFinder {
      * @param substring target substring
      * @return ArrayList of indexes
      */
-    public static List<Long> find(InputStream in, String substring) throws IOException {
+    public static List<Long> find(InputStream in, String substring) {
         List<Long> result = new ArrayList<>();
         char[] target = substring.toCharArray();
         int[] shiftMap = new int[256 * 256];
@@ -75,6 +75,8 @@ public class SubstringFinder {
                 currChunk ^= 1;
                 chunkCount++;
             }
+        } catch (IOException e) {
+            throw new SubstringFinderException(e.getMessage(), e.getCause());
         }
 
         return result;

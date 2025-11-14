@@ -1,6 +1,7 @@
 package ru.nsu.nmashkin.task131;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
@@ -90,10 +91,27 @@ class SubstringFinderTest {
     }
 
     @Test
-    void find_string_stream() throws IOException {
+    void find_string_stream() {
         List<Long> expected = new ArrayList<>();
         expected.add(0L);
         InputStream in = new ByteArrayInputStream("lollollolkek".getBytes(StandardCharsets.UTF_8));
         assertEquals(expected, SubstringFinder.find(in, "lollollol"));
+    }
+
+    @Test
+    void find_error() {
+        InputStream throwingStream = new InputStream() {
+            @Override
+            public int read() throws IOException {
+                throw new IOException("lol");
+            }
+
+            @Override
+            public int read(byte[] b, int off, int len) throws IOException {
+                throw new IOException("lol");
+            }
+        };
+
+        assertThrows(SubstringFinderException.class, () -> SubstringFinder.find(throwingStream, ""));
     }
 }
