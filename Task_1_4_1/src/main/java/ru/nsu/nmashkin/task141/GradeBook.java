@@ -23,7 +23,8 @@ public class GradeBook {
         maxAmounts.put(AssessmentType.EXAM, new int[]{19, 3, 3, 2, 5, 3, 2, 1, 0});
         maxAmounts.put(AssessmentType.DIFFERENTIATED_CREDIT, new int[]{35, 3, 3, 6, 5, 4, 6, 4, 4});
         maxAmounts.put(AssessmentType.CREDIT, new int[]{7, 3, 2, 0, 0, 0, 0, 1, 1});
-        maxAmounts.put(AssessmentType.PRACTICE_REPORT_DEFENSE, new int[]{3, 0, 0, 0, 0, 0, 0, 1, 2});
+        maxAmounts.put(AssessmentType.PRACTICE_REPORT_DEFENSE,
+                       new int[]{3, 0, 0, 0, 0, 0, 0, 1, 2});
         maxAmounts.put(AssessmentType.THESIS_DEFENSE, new int[]{1, 0, 0, 0, 0, 0, 0, 0, 1});
     }
 
@@ -104,7 +105,7 @@ public class GradeBook {
                 .toList();
         return allLastGrades.stream()
                 .filter(assessment -> assessment.grade() == Grade.EXCELLENT)
-                .count() / (double)allLastGrades.size() >= 0.75
+                .count() / (double) allLastGrades.size() >= 0.75
                 && allLastGrades.stream()
                 .filter(assessment -> assessment.type() == AssessmentType.DIFFERENTIATED_CREDIT
                                                  || assessment.type() == AssessmentType.EXAM)
