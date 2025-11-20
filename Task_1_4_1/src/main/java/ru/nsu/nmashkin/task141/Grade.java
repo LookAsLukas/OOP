@@ -1,23 +1,18 @@
 package ru.nsu.nmashkin.task141;
 
-public class Grade {
-    private final int max;
-    private int curr;
+public enum Grade {
+    EXCELLENT(5),
+    GOOD(4),
+    SATISFACTORY(3),
+    FAIL(2);
 
-    public Grade(int curr, int max) {
-        this.max = max;
-        this.curr = curr;
+    private final int val;
+
+    Grade(int val) {
+        this.val = val;
     }
 
-    public Grade(int max) {
-        this.max = max;
-    }
-
-    public int getMax() {
-        return max;
-    }
-
-    public int getCurr() {
-        return curr;
+    public int getVal() {
+        return val;
     }
 }
