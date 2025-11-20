@@ -1,5 +1,8 @@
 package ru.nsu.nmashkin.task141;
 
+/**
+ * Grade enum for GradeBook.
+ */
 public enum Grade {
     EXCELLENT(5),
     GOOD(4),
@@ -12,6 +15,11 @@ public enum Grade {
         this.val = val;
     }
 
+    /**
+     * Get the numeric value.
+     *
+     * @return the numeric value
+     */
     public int getVal() {
         return val;
     }

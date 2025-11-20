@@ -1,15 +1,20 @@
 package ru.nsu.nmashkin.task141;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+/**
+ * GradeBook class.
+ */
 public class GradeBook {
     private final Map<AssessmentType, int[]> maxAmounts = new HashMap<>();
     private final int currentSemester;
     private final boolean isPaidEducation;
-    private List<Assessment> assessments = new ArrayList<>();
+    private final List<Assessment> assessments = new ArrayList<>();
 
     private void setMaxAmounts() {
         maxAmounts.put(AssessmentType.ASSIGNMENT, new int[]{15, 2, 2, 3, 2, 2, 2, 2, 0});
@@ -22,13 +27,30 @@ public class GradeBook {
         maxAmounts.put(AssessmentType.THESIS_DEFENSE, new int[]{1, 0, 0, 0, 0, 0, 0, 0, 1});
     }
 
+    /**
+     * Constructor for GradeBook.
+     *
+     * @param currentSemester student's current semester
+     * @param isPaidEducation is the education paid
+     */
     public GradeBook(int currentSemester, boolean isPaidEducation) {
         this.currentSemester = currentSemester;
         this.isPaidEducation = isPaidEducation;
         setMaxAmounts();
     }
 
+    /**
+     * Attempt to add an Assessment. Fails if Assessment's semester is higher
+     * than current semester or if too many Assessments.
+     *
+     * @param assessment Assessment to add
+     * @return true if successful
+     */
     public boolean addAssessment(Assessment assessment) {
+        if (assessment.semester() > currentSemester) {
+            return false;
+        }
+
         long sameCount = assessments.stream()
                             .filter(a -> a.type() == assessment.type()
                                                     && a.semester() == assessment.semester())
@@ -41,6 +63,11 @@ public class GradeBook {
         return true;
     }
 
+    /**
+     * Get average grade.
+     *
+     * @return average grade
+     */
     public double getCurrentAverage() {
         return assessments.stream()
                 .filter(assessment -> assessment.semester() <= currentSemester)
@@ -49,6 +76,11 @@ public class GradeBook {
                 .orElse(0.0);
     }
 
+    /**
+     * Can the student transfer to budget.
+     *
+     * @return true if yes
+     */
     public boolean canTransferToBudget() {
         if (!isPaidEducation || currentSemester == 1) {
             return false;
@@ -61,6 +93,11 @@ public class GradeBook {
                                                    || assessment.grade() == Grade.GOOD);
     }
 
+    /**
+     * Can the student get red diploma.
+     *
+     * @return true if yes
+     */
     public boolean canGetRedDiploma() {
         List<Assessment> allLastGrades = maxAmounts.keySet().stream()
                 .flatMap(this::getLastGrades)
@@ -79,6 +116,11 @@ public class GradeBook {
                 .grade() == Grade.EXCELLENT;
     }
 
+    /**
+     * Can the student get increased scolarship.
+     *
+     * @return true if yes
+     */
     public boolean canGetIncreasedScholarship() {
         if (currentSemester == 1) {
             return false;
@@ -94,12 +136,13 @@ public class GradeBook {
 
     private Stream<Assessment> getLastGrades(AssessmentType assessmentType) {
         int lastSemester = getLastGradeSemester(assessmentType);
-        Stream<Assessment> existing = assessments.stream()
-                        .filter(assessment -> assessment.semester() == lastSemester
-                                                         && assessment.type() == assessmentType);
-        return Stream.concat(existing,
+        List<Assessment> existing = assessments.stream()
+                .filter(assessment -> assessment.semester() == lastSemester
+                                                 && assessment.type() == assessmentType)
+                .toList();
+        return Stream.concat(existing.stream(),
             Stream.generate(() -> new Assessment(assessmentType, lastSemester, Grade.EXCELLENT))
-                .limit(maxAmounts.get(assessmentType)[lastSemester] - existing.count()));
+                .limit(maxAmounts.get(assessmentType)[lastSemester] - existing.size()));
     }
 
     private int getLastGradeSemester(AssessmentType assessmentType) {
@@ -108,40 +151,5 @@ public class GradeBook {
                 .filter(i -> maxAmounts.get(assessmentType)[i] != 0)
                 .findFirst()
                 .orElse(-1);
-    }
-
-    private boolean hasNoSatisfactoryGradesInSession(List<Assessment> sessionAssessments) {
-        return sessionAssessments.stream()
-                .noneMatch(assessment -> assessment.grade() == Grade.SATISFACTORY);
-    }
-
-    private boolean hasExcellentGradePercentage() {
-        long totalGrades = assessments.stream()
-                .filter(assessment -> assessment.semester() <= currentSemester)
-                .count();
-
-        long excellentGrades = assessments.stream()
-                .filter(assessment -> assessment.semester() <= currentSemester)
-                .filter(assessment -> assessment.grade() == Grade.EXCELLENT)
-                .count();
-
-        return totalGrades > 0 && (double)excellentGrades / totalGrades >= 0.75;
-    }
-
-    private boolean hasNoSatisfactoryFinalGrades() {
-        return assessments.stream()
-                .filter(this::isFinalAssessment)
-                .noneMatch(assessment -> assessment.grade() == Grade.SATISFACTORY);
-    }
-
-    private boolean isFinalAssessment(Assessment assessment) {
-        return assessment.type() == AssessmentType.EXAM ||
-                assessment.type() == AssessmentType.DIFFERENTIATED_CREDIT;
-    }
-
-    private List<Assessment> getCurrentSemesterAssessments() {
-        return assessments.stream()
-                .filter(assessment -> assessment.semester() == currentSemester)
-                .collect(Collectors.toList());
     }
 }
