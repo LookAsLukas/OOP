@@ -14,7 +14,7 @@ public class GradeBook {
     private final List<Assessment> assessments = new ArrayList<>();
     private final String studentFirstName;
     private final String studentLastName;
-    private final int SRN;
+    private final int srn;
 
     private void setMaxAmounts() {
         maxAmounts.put(AssessmentType.ASSIGNMENT, new int[]{15, 2, 2, 3, 2, 2, 2, 2, 0});
@@ -38,12 +38,12 @@ public class GradeBook {
                      boolean isPaidEducation,
                      String studentFirstName,
                      String studentLastName,
-                     int SRN) {
+                     int srn) {
         this.currentSemester = currentSemester;
         this.isPaidEducation = isPaidEducation;
         this.studentFirstName = studentFirstName;
         this.studentLastName = studentLastName;
-        this.SRN = SRN;
+        this.srn = srn;
         setMaxAmounts();
     }
 
@@ -55,16 +55,16 @@ public class GradeBook {
      */
     public void addAssessment(Assessment assessment) {
         if (assessment.semester() > currentSemester) {
-            throw new GradeBookException("Assessment's semester cannot be higher " +
-                    "than current semester");
+            throw new GradeBookException("Assessment's semester cannot be higher "
+                    + "than current semester");
         }
 
         long sameTypeAndSemesterCount = assessments.stream()
             .filter(a -> a.type() == assessment.type() && a.semester() == assessment.semester())
             .count();
         if (sameTypeAndSemesterCount >= maxAmounts.get(assessment.type())[assessment.semester()]) {
-            throw new GradeBookException("Too many assessments of type " + assessment.type() +
-                    "in semester " + assessment.semester());
+            throw new GradeBookException("Too many assessments of type " + assessment.type()
+                    + "in semester " + assessment.semester());
         }
 
         assessments.add(assessment);
