@@ -7,4 +7,4 @@ package ru.nsu.nmashkin.task141;
  * @param semester semester of the assessment
  * @param grade grade for the assessment
  */
-public record Assessment(AssessmentType type, int semester, Grade grade) {}
+public record Assessment(AssessmentType type, String subjectName, int semester, Grade grade) {}

@@ -1,9 +1,6 @@
 package ru.nsu.nmashkin.task141;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -15,6 +12,9 @@ public class GradeBook {
     private final int currentSemester;
     private final boolean isPaidEducation;
     private final List<Assessment> assessments = new ArrayList<>();
+    private final String studentFirstName;
+    private final String studentLastName;
+    private final int SRN;
 
     private void setMaxAmounts() {
         maxAmounts.put(AssessmentType.ASSIGNMENT, new int[]{15, 2, 2, 3, 2, 2, 2, 2, 0});
@@ -34,9 +34,16 @@ public class GradeBook {
      * @param currentSemester student's current semester
      * @param isPaidEducation is the education paid
      */
-    public GradeBook(int currentSemester, boolean isPaidEducation) {
+    public GradeBook(int currentSemester,
+                     boolean isPaidEducation,
+                     String studentFirstName,
+                     String studentLastName,
+                     int SRN) {
         this.currentSemester = currentSemester;
         this.isPaidEducation = isPaidEducation;
+        this.studentFirstName = studentFirstName;
+        this.studentLastName = studentLastName;
+        this.SRN = SRN;
         setMaxAmounts();
     }
 
@@ -45,23 +52,22 @@ public class GradeBook {
      * than current semester or if too many Assessments.
      *
      * @param assessment Assessment to add
-     * @return true if successful
      */
-    public boolean addAssessment(Assessment assessment) {
+    public void addAssessment(Assessment assessment) {
         if (assessment.semester() > currentSemester) {
-            return false;
+            throw new GradeBookException("Assessment's semester cannot be higher " +
+                    "than current semester");
         }
 
-        long sameCount = assessments.stream()
-                            .filter(a -> a.type() == assessment.type()
-                                                    && a.semester() == assessment.semester())
-                            .count();
-        if (sameCount >= maxAmounts.get(assessment.type())[assessment.semester()]) {
-            return false;
+        long sameTypeAndSemesterCount = assessments.stream()
+            .filter(a -> a.type() == assessment.type() && a.semester() == assessment.semester())
+            .count();
+        if (sameTypeAndSemesterCount >= maxAmounts.get(assessment.type())[assessment.semester()]) {
+            throw new GradeBookException("Too many assessments of type " + assessment.type() +
+                    "in semester " + assessment.semester());
         }
 
         assessments.add(assessment);
-        return true;
     }
 
     /**
@@ -71,7 +77,6 @@ public class GradeBook {
      */
     public double getCurrentAverage() {
         return assessments.stream()
-                .filter(assessment -> assessment.semester() <= currentSemester)
                 .mapToInt(assessment -> assessment.grade().getVal())
                 .average()
                 .orElse(0.0);
@@ -113,12 +118,12 @@ public class GradeBook {
                 && assessments.stream()
                 .filter(assessment -> assessment.type() == AssessmentType.THESIS_DEFENSE)
                 .findFirst()
-                .orElse(new Assessment(AssessmentType.THESIS_DEFENSE, 8, Grade.EXCELLENT))
+                .orElse(new Assessment(AssessmentType.THESIS_DEFENSE, "", 8, Grade.EXCELLENT))
                 .grade() == Grade.EXCELLENT;
     }
 
     /**
-     * Can the student get increased scolarship.
+     * Can the student get increased scholarship.
      *
      * @return true if yes
      */
@@ -142,7 +147,7 @@ public class GradeBook {
                                                  && assessment.type() == assessmentType)
                 .toList();
         return Stream.concat(existing.stream(),
-            Stream.generate(() -> new Assessment(assessmentType, lastSemester, Grade.EXCELLENT))
+            Stream.generate(() -> new Assessment(assessmentType, "", lastSemester, Grade.EXCELLENT))
                 .limit(maxAmounts.get(assessmentType)[lastSemester] - existing.size()));
     }
 
