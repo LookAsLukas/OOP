@@ -88,8 +88,11 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int,boolean)" class="member-name-link">GradeBook</a><wbr>(int&nbsp;currentSemester,
- boolean&nbsp;isPaidEducation)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int,boolean,java.lang.String,java.lang.String,int)" class="member-name-link">GradeBook</a><wbr>(int&nbsp;currentSemester,
+ boolean&nbsp;isPaidEducation,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;studentFirstName,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;studentLastName,
+ int&nbsp;SRN)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Constructor for GradeBook.</div>
 </div>
@@ -107,7 +110,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addAssessment(ru.nsu.nmashkin.task141.Assessment)" class="member-name-link">addAssessment</a><wbr>(<a href="Assessment.html" title="class in ru.nsu.nmashkin.task141">Assessment</a>&nbsp;assessment)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Attempt to add an Assessment.</div>
@@ -115,7 +118,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#canGetIncreasedScholarship()" class="member-name-link">canGetIncreasedScholarship</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Can the student get increased scolarship.</div>
+<div class="block">Can the student get increased scholarship.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#canGetRedDiploma()" class="member-name-link">canGetRedDiploma</a>()</code></div>
@@ -150,10 +153,13 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(int,boolean)">
+<section class="detail" id="&lt;init&gt;(int,boolean,java.lang.String,java.lang.String,int)">
 <h3>GradeBook</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">GradeBook</span><wbr><span class="parameters">(int&nbsp;currentSemester,
- boolean&nbsp;isPaidEducation)</span></div>
+ boolean&nbsp;isPaidEducation,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;studentFirstName,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;studentLastName,
+ int&nbsp;SRN)</span></div>
 <div class="block">Constructor for GradeBook.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -173,14 +179,12 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="addAssessment(ru.nsu.nmashkin.task141.Assessment)">
 <h3>addAssessment</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">addAssessment</span><wbr><span class="parameters">(<a href="Assessment.html" title="class in ru.nsu.nmashkin.task141">Assessment</a>&nbsp;assessment)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addAssessment</span><wbr><span class="parameters">(<a href="Assessment.html" title="class in ru.nsu.nmashkin.task141">Assessment</a>&nbsp;assessment)</span></div>
 <div class="block">Attempt to add an Assessment. Fails if Assessment's semester is higher
  than current semester or if too many Assessments.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>assessment</code> - Assessment to add</dd>
-<dt>Returns:</dt>
-<dd>true if successful</dd>
 </dl>
 </section>
 </li>
@@ -221,7 +225,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="canGetIncreasedScholarship()">
 <h3>canGetIncreasedScholarship</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">canGetIncreasedScholarship</span>()</div>
-<div class="block">Can the student get increased scolarship.</div>
+<div class="block">Can the student get increased scholarship.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>true if yes</dd>

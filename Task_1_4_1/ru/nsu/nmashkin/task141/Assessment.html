@@ -82,7 +82,7 @@ loadScripts(document, 'script');</script>
 <dd><code><span id="param-grade">grade</span></code> - grade for the assessment</dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public record </span><span class="element-name type-name-label">Assessment</span>(<a href="AssessmentType.html" title="enum class in ru.nsu.nmashkin.task141">AssessmentType</a>&nbsp;type, int&nbsp;semester, <a href="Grade.html" title="enum class in ru.nsu.nmashkin.task141">Grade</a>&nbsp;grade)
+<div class="type-signature"><span class="modifiers">public record </span><span class="element-name type-name-label">Assessment</span>(<a href="AssessmentType.html" title="enum class in ru.nsu.nmashkin.task141">AssessmentType</a>&nbsp;type, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;subjectName, int&nbsp;semester, <a href="Grade.html" title="enum class in ru.nsu.nmashkin.task141">Grade</a>&nbsp;grade)
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Record.html" title="class or interface in java.lang" class="external-link">Record</a></span></div>
 <div class="block">Assessment class for GradeBook.</div>
 </section>
@@ -96,7 +96,8 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(ru.nsu.nmashkin.task141.AssessmentType,int,ru.nsu.nmashkin.task141.Grade)" class="member-name-link">Assessment</a><wbr>(<a href="AssessmentType.html" title="enum class in ru.nsu.nmashkin.task141">AssessmentType</a>&nbsp;type,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(ru.nsu.nmashkin.task141.AssessmentType,java.lang.String,int,ru.nsu.nmashkin.task141.Grade)" class="member-name-link">Assessment</a><wbr>(<a href="AssessmentType.html" title="enum class in ru.nsu.nmashkin.task141">AssessmentType</a>&nbsp;type,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;subjectName,
  int&nbsp;semester,
  <a href="Grade.html" title="enum class in ru.nsu.nmashkin.task141">Grade</a>&nbsp;grade)</code></div>
 <div class="col-last even-row-color">
@@ -136,14 +137,19 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-semester"><code>semester</code></a> record component.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#subjectName()" class="member-name-link">subjectName</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the value of the <code>subjectName</code> record component.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns a string representation of this record class.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="AssessmentType.html" title="enum class in ru.nsu.nmashkin.task141">AssessmentType</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#type()" class="member-name-link">type</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="AssessmentType.html" title="enum class in ru.nsu.nmashkin.task141">AssessmentType</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#type()" class="member-name-link">type</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-type"><code>type</code></a> record component.</div>
 </div>
 </div>
@@ -164,15 +170,17 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(ru.nsu.nmashkin.task141.AssessmentType,int,ru.nsu.nmashkin.task141.Grade)">
+<section class="detail" id="&lt;init&gt;(ru.nsu.nmashkin.task141.AssessmentType,java.lang.String,int,ru.nsu.nmashkin.task141.Grade)">
 <h3>Assessment</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Assessment</span><wbr><span class="parameters">(<a href="AssessmentType.html" title="enum class in ru.nsu.nmashkin.task141">AssessmentType</a>&nbsp;type,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;subjectName,
  int&nbsp;semester,
  <a href="Grade.html" title="enum class in ru.nsu.nmashkin.task141">Grade</a>&nbsp;grade)</span></div>
 <div class="block">Creates an instance of a <code>Assessment</code> record class.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>type</code> - the value for the <a href="#param-type"><code>type</code></a> record component</dd>
+<dd><code>subjectName</code> - the value for the <code>subjectName</code> record component</dd>
 <dd><code>semester</code> - the value for the <a href="#param-semester"><code>semester</code></a> record component</dd>
 <dd><code>grade</code> - the value for the <a href="#param-grade"><code>grade</code></a> record component</dd>
 </dl>
@@ -235,6 +243,17 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the value of the <a href="#param-type"><code>type</code></a> record component</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="subjectName()">
+<h3>subjectName</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">subjectName</span>()</div>
+<div class="block">Returns the value of the <code>subjectName</code> record component.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the value of the <code>subjectName</code> record component</dd>
 </dl>
 </section>
 </li>
