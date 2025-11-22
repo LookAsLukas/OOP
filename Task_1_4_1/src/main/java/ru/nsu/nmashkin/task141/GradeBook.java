@@ -11,7 +11,7 @@ import java.util.stream.Stream;
  * GradeBook class.
  */
 public class GradeBook {
-    private final Map<AssessmentType, int[]> maxAmounts = new HashMap<>();
+    private final Map<AssessmentType, Map<Semester, Integer>> maxAmounts = new HashMap<>();
     private final int currentSemester;
     private final boolean isPaidEducation;
     private final List<Assessment> assessments = new ArrayList<>();
@@ -20,15 +20,24 @@ public class GradeBook {
     private final int srn;
 
     private void setMaxAmounts() {
-        maxAmounts.put(AssessmentType.ASSIGNMENT, new int[]{15, 2, 2, 3, 2, 2, 2, 2, 0});
-        maxAmounts.put(AssessmentType.CONTROL_WORK, new int[]{13, 3, 3, 2, 1, 2, 2, 0, 0});
-        maxAmounts.put(AssessmentType.COLLOQUIUM, new int[]{2, 1, 1, 0, 0, 0, 0, 0, 0});
-        maxAmounts.put(AssessmentType.EXAM, new int[]{19, 3, 3, 2, 5, 3, 2, 1, 0});
-        maxAmounts.put(AssessmentType.DIFFERENTIATED_CREDIT, new int[]{35, 3, 3, 6, 5, 4, 6, 4, 4});
-        maxAmounts.put(AssessmentType.CREDIT, new int[]{7, 3, 2, 0, 0, 0, 0, 1, 1});
-        maxAmounts.put(AssessmentType.PRACTICE_REPORT_DEFENSE,
-                       new int[]{3, 0, 0, 0, 0, 0, 0, 1, 2});
-        maxAmounts.put(AssessmentType.THESIS_DEFENSE, new int[]{1, 0, 0, 0, 0, 0, 0, 0, 1});
+        int[][] template = {
+            {15, 2, 2, 3, 2, 2, 2, 2, 0},
+            {13, 3, 3, 2, 1, 2, 2, 0, 0},
+            {2, 1, 1, 0, 0, 0, 0, 0, 0},
+            {19, 3, 3, 2, 5, 3, 2, 1, 0},
+            {35, 3, 3, 6, 5, 4, 6, 4, 4},
+            {7, 3, 2, 0, 0, 0, 0, 1, 1},
+            {3, 0, 0, 0, 0, 0, 0, 1, 2},
+            {1, 0, 0, 0, 0, 0, 0, 0, 1},
+        };
+
+        for (int i = 0; i < template.length; i++) {
+            maxAmounts.put(AssessmentType.fromIndex(i), new HashMap<>());
+            for (int j = 0; j < template[i].length; j++) {
+                maxAmounts.get(AssessmentType.fromIndex(i))
+                        .put(Semester.fromIndex(j), template[i][j]);
+            }
+        }
     }
 
     /**
@@ -65,7 +74,8 @@ public class GradeBook {
         long sameTypeAndSemesterCount = assessments.stream()
             .filter(a -> a.type() == assessment.type() && a.semester() == assessment.semester())
             .count();
-        if (sameTypeAndSemesterCount >= maxAmounts.get(assessment.type())[assessment.semester()]) {
+        if (sameTypeAndSemesterCount >= maxAmounts.get(assessment.type())
+                                        .get(Semester.fromIndex(assessment.semester()))) {
             throw new GradeBookException("Too many assessments of type " + assessment.type()
                     + "in semester " + assessment.semester());
         }
@@ -151,13 +161,14 @@ public class GradeBook {
                 .toList();
         return Stream.concat(existing.stream(),
             Stream.generate(() -> new Assessment(assessmentType, "", lastSemester, Grade.EXCELLENT))
-                .limit(maxAmounts.get(assessmentType)[lastSemester] - existing.size()));
+                .limit(maxAmounts.get(assessmentType).get(Semester.fromIndex(lastSemester))
+                        - existing.size()));
     }
 
     private int getLastGradeSemester(AssessmentType assessmentType) {
-        return IntStream.range(0, maxAmounts.get(assessmentType).length)
-                .map(i -> maxAmounts.get(assessmentType).length - 1 - i)
-                .filter(i -> maxAmounts.get(assessmentType)[i] != 0)
+        return IntStream.range(0, maxAmounts.get(assessmentType).size())
+                .map(i -> maxAmounts.get(assessmentType).size() - 1 - i)
+                .filter(i -> maxAmounts.get(assessmentType).get(Semester.fromIndex(i)) != 0)
                 .findFirst()
                 .orElse(-1);
     }
