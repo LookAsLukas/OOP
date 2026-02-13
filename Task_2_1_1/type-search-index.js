@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"ru.nsu.nmashkin.task211","l":"MultiThreaded"},{"p":"ru.nsu.nmashkin.task211","l":"ParallelStream"},{"p":"ru.nsu.nmashkin.task211","l":"PrimeChecker"},{"p":"ru.nsu.nmashkin.task211","l":"Sequential"}];updateSearchResults();
