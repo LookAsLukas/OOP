@@ -23,7 +23,9 @@ public class MultiThreaded {
 
             threads[i] = new Thread(() -> {
                 for (int j = start; j < end; j++) {
-                    if (result.get()) break;
+                    if (result.get()) {
+                        break;
+                    }
                     if (!PrimeChecker.isPrime(numbers[j])) {
                         result.set(true);
                         break;

@@ -2,15 +2,15 @@ package ru.nsu.nmashkin.task211;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.Test;
 
 class TestBenchmark {
     private int[] generatePrimes() {
         List<Integer> result = new ArrayList<>();
         for (int i = 6700000; i < 6800000; i++) {
-            if (PrimeChecker.isPrime(i)){
+            if (PrimeChecker.isPrime(i)) {
                 result.add(i);
             }
         }
@@ -24,7 +24,7 @@ class TestBenchmark {
 
         long start = System.nanoTime();
         assertFalse(Sequential.hasNonPrime(nums));
-        long timeSequential = System.nanoTime() - start;
+        final long timeSequential = System.nanoTime() - start;
 
         final int numThreads = 10;
         long[] timeMultiThreaded = new long[numThreads];
@@ -36,7 +36,7 @@ class TestBenchmark {
 
         start = System.nanoTime();
         assertFalse(ParallelStream.hasNonPrime(nums));
-        long timeParallelStream = System.nanoTime() - start;
+        final long timeParallelStream = System.nanoTime() - start;
 
         double divisor = 1000000;
         System.out.println("Sequential: " + (double) timeSequential / divisor);
