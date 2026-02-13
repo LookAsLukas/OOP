@@ -45,4 +45,9 @@ class CommonTests {
         assertTrue(PrimeChecker.isPrime(2));
         assertFalse(PrimeChecker.isPrime(100));
     }
+
+    @Test
+    void parallelStreamForCoverage() {
+        ParallelStream.hasNonPrime(new int[]{1});
+    }
 }
