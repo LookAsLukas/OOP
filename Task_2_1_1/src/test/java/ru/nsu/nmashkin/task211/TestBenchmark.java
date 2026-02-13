@@ -1,11 +1,10 @@
 package ru.nsu.nmashkin.task211;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
+import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class TestBenchmark {
     private int[] generatePrimes() {
@@ -43,7 +42,8 @@ class TestBenchmark {
         System.out.println("Sequential: " + (double) timeSequential / divisor);
         System.out.println("MultiThreaded:");
         for (int threadCnt = 1; threadCnt <= numThreads; threadCnt++) {
-            System.out.println("  " + threadCnt + " --> " + (double) timeMultiThreaded[threadCnt - 1] / divisor);
+            System.out.println("  " + threadCnt + " --> "
+                    + (double) timeMultiThreaded[threadCnt - 1] / divisor);
         }
         System.out.println("ParallelStream: " + (double) timeParallelStream / divisor);
     }

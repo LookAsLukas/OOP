@@ -36,7 +36,7 @@ public class MultiThreaded {
         for (Thread thread : threads) {
             try {
                 thread.join();
-            } catch (InterruptedException _) {
+            } catch (InterruptedException e) {
                 System.err.println("MultiThreaded.hasNonPrime(): Could not join thread");
             }
         }

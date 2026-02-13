@@ -1,6 +1,15 @@
 package ru.nsu.nmashkin.task211;
 
+/**
+ * Check if the number is prime.
+ */
 public class PrimeChecker {
+    /**
+     * Check if the number is prime.
+     *
+     * @param n number
+     * @return is n prime
+     */
     public static boolean isPrime(int n) {
         if (n <= 1) {
             return false;
