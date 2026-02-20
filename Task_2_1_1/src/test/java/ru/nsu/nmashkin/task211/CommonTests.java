@@ -39,6 +39,20 @@ class CommonTests {
         assertFalse(func.apply(nums));
     }
 
+    @ParameterizedTest
+    @MethodSource("provideArgs")
+    void hasNonPrime_empty(Function<List<Integer>, Boolean> func) {
+        List<Integer> nums = List.of();
+        assertFalse(func.apply(nums));
+    }
+
+    @ParameterizedTest
+    @MethodSource("provideArgs")
+    void hasNonPrime_one(Function<List<Integer>, Boolean> func) {
+        List<Integer> nums = List.of(67);
+        assertFalse(func.apply(nums));
+    }
+
     @Test
     void isPrime() {
         assertFalse(PrimeChecker.isPrime(1));

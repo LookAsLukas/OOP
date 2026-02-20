@@ -39,12 +39,13 @@ class TestBenchmark {
         final long timeParallelStream = System.nanoTime() - start;
 
         double divisor = 1000000;
-        System.out.println("Sequential: " + (double) timeSequential / divisor);
-        System.out.println("MultiThreaded:");
+        System.out.println((double) timeSequential / divisor);
         for (int threadCnt = 1; threadCnt <= numThreads; threadCnt++) {
-            System.out.println("  " + threadCnt + " --> "
-                    + (double) timeMultiThreaded[threadCnt - 1] / divisor);
+            System.out.println((double) timeMultiThreaded[threadCnt - 1] / divisor);
         }
-        System.out.println("ParallelStream: " + (double) timeParallelStream / divisor);
+        System.out.println((double) timeParallelStream / divisor);
+        for (int prime : nums) {
+            System.out.print(prime + ", ");
+        }
     }
 }
