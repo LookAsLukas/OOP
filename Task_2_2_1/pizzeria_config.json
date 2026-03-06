@@ -1,0 +1,12 @@
+{
+  "bakers": [
+    {"cookingTimeSeconds": 3},
+    {"cookingTimeSeconds": 4},
+    {"cookingTimeSeconds": 5}
+  ],
+  "couriers": [
+    {"capacity": 2},
+    {"capacity": 3}
+  ],
+  "storageCapacity": 10
+}
