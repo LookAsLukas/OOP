@@ -14,11 +14,11 @@ public class Order {
      * Enum for state of order.
      */
     public enum OrderState {
-        QUEUED,           // в очереди
-        COOKING,          // готовится
-        IN_STORAGE,       // на складе
-        DELIVERING,       // доставляется
-        COMPLETED,        // завершен
+        QUEUED,
+        COOKING,
+        IN_STORAGE,
+        DELIVERING,
+        COMPLETED,
     }
 
     /**
@@ -61,7 +61,8 @@ public class Order {
     }
 
     /**
-     * @inheritDoc
+     * .
+     * @return .
      */
     @Override
     public String toString() {
@@ -69,7 +70,9 @@ public class Order {
     }
 
     /**
-     * @inheritDoc
+     * .
+     * @param o   the reference object with which to compare.
+     * @return .
      */
     @Override
     public boolean equals(Object o) {
@@ -84,7 +87,8 @@ public class Order {
     }
 
     /**
-     * @inheritDoc
+     * .
+     * @return .
      */
     @Override
     public int hashCode() {

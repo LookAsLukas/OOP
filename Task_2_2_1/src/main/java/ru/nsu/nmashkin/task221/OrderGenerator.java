@@ -22,7 +22,7 @@ public class OrderGenerator implements Runnable{
     }
 
     /**
-     * @inheritDoc
+     * .
      */
     @Override
     public void run() {

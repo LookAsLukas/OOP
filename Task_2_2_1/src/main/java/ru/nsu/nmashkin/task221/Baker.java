@@ -41,7 +41,7 @@ public class Baker implements Runnable {
     }
 
     /**
-     * @inheritDoc
+     * .
      */
     @Override
     public void run() {
