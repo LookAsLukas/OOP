@@ -45,6 +45,7 @@ public class Order {
 
     /**
      * .
+     *
      * @return .
      */
     public OrderState getState() {
@@ -62,6 +63,7 @@ public class Order {
 
     /**
      * .
+     *
      * @return .
      */
     @Override
@@ -71,6 +73,7 @@ public class Order {
 
     /**
      * .
+     *
      * @param o   the reference object with which to compare.
      * @return .
      */
@@ -88,6 +91,7 @@ public class Order {
 
     /**
      * .
+     *
      * @return .
      */
     @Override

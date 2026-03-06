@@ -18,6 +18,7 @@ public class Baker implements Runnable {
 
     /**
      * .
+     *
      * @param orderQueue .
      */
     public void setOrderQueue(OrderQueue orderQueue) {
@@ -26,6 +27,7 @@ public class Baker implements Runnable {
 
     /**
      * .
+     *
      * @param storage .
      */
     public void setStorage(Storage storage) {
@@ -34,6 +36,7 @@ public class Baker implements Runnable {
 
     /**
      * .
+     *
      * @return .
      */
     public int getCookingTimeSeconds() {

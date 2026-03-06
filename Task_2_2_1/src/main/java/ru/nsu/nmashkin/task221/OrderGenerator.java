@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * Order Generator.
  */
-public class OrderGenerator implements Runnable{
+public class OrderGenerator implements Runnable {
     private final Random random = new Random();
     private final OrderQueue orderQueue;
     private final int orderCnt;

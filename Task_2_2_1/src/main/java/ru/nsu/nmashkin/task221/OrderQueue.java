@@ -13,11 +13,15 @@ public class OrderQueue {
 
     /**
      * .
+     *
      * @param order .
      */
     public void addOrder(Order order) {
         synchronized (monitor) {
-            if (!acceptingOrders) return;
+            if (!acceptingOrders) {
+                return;
+            }
+
             orders.add(order);
             monitor.notify();
         }
@@ -25,6 +29,7 @@ public class OrderQueue {
 
     /**
      * .
+     *
      * @return .
      * @throws InterruptedException .
      */

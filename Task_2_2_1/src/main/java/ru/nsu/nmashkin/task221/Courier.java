@@ -18,6 +18,7 @@ public class Courier implements Runnable {
 
     /**
      * .
+     *
      * @param storage .
      */
     public void setStorage(Storage storage) {
@@ -26,6 +27,7 @@ public class Courier implements Runnable {
 
     /**
      * .
+     *
      * @return .
      */
     public int getCapacity() {
