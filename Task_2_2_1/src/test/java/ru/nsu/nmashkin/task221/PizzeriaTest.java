@@ -7,6 +7,6 @@ class PizzeriaTest {
     @Test
     void pizzeria() {
         // Just for coverage
-        Pizzeria.main(new String[]{"100"});
+        Pizzeria.main(new String[]{"pizzeria_config.json"});
     }
 }

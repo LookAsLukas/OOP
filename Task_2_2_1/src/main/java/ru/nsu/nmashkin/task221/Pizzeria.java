@@ -12,20 +12,18 @@ public class Pizzeria {
     /**
      * .
      *
-     * @param args .
+     * @param args args[0] - config name.
      */
     public static void main(String[] args) {
         try {
-            int orderCnt = Integer.parseInt(args[0]);
-
             ObjectMapper mapper = new ObjectMapper();
             PizzeriaConfig config = mapper.readValue(
-                    new File("pizzeria_config.json"),
+                    new File(args[0]),
                     PizzeriaConfig.class
             );
 
             Storage storage = new Storage(config.getStorageCapacity());
-            OrderQueue queue = new OrderQueue();
+            OrderQueue queue = new OrderQueue(storage);
 
             List<Thread> bakerThreads = new ArrayList<>();
             List<Thread> courierThreads = new ArrayList<>();
@@ -46,13 +44,12 @@ public class Pizzeria {
                 thread.start();
             }
 
-            OrderGenerator generator = new OrderGenerator(orderCnt, queue);
+            OrderGenerator generator = new OrderGenerator(config.getOrderCount(), queue);
             Thread generatorThread = new Thread(generator);
             generatorThread.start();
-            generatorThread.join();
 
+            generatorThread.join();
             queue.stopAcceptingOrders();
-            storage.noMoreOrders();
 
             for (Thread thread : bakerThreads) {
                 thread.join();

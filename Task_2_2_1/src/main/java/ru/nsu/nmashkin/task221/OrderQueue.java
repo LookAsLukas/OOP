@@ -9,7 +9,17 @@ import java.util.Queue;
 public class OrderQueue {
     private final Queue<Order> orders = new LinkedList<>();
     private final Object monitor = new Object();
+    private final Storage storage;
     private boolean acceptingOrders = true;
+
+    /**
+     * .
+     *
+     * @param storage .
+     */
+    public OrderQueue(Storage storage) {
+        this.storage = storage;
+    }
 
     /**
      * .
@@ -41,7 +51,12 @@ public class OrderQueue {
             if (!acceptingOrders && orders.isEmpty()) {
                 return null;
             }
-            return orders.poll();
+
+            Order result = orders.poll();
+            if (!acceptingOrders && orders.isEmpty()) {
+                storage.noMoreOrders();
+            }
+            return result;
         }
     }
 

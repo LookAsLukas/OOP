@@ -8,5 +8,6 @@
     {"capacity": 2},
     {"capacity": 3}
   ],
-  "storageCapacity": 10
+  "storageCapacity": 10,
+  "orderCount": 100
 }

@@ -9,6 +9,7 @@ public class PizzeriaConfig {
     private List<Baker> bakers;
     private List<Courier> couriers;
     private int storageCapacity;
+    private int orderCount;
 
     /**
      * Get bakers.
@@ -35,5 +36,14 @@ public class PizzeriaConfig {
      */
     public int getStorageCapacity() {
         return storageCapacity;
+    }
+
+    /**
+     * Get orderCount.
+     *
+     * @return .
+     */
+    public int getOrderCount() {
+        return orderCount;
     }
 }
