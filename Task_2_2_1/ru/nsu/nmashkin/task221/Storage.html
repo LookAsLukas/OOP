@@ -88,7 +88,8 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int)" class="member-name-link">Storage</a><wbr>(int&nbsp;capacity)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int,int)" class="member-name-link">Storage</a><wbr>(int&nbsp;capacity,
+ int&nbsp;bakerCnt)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Storage constructor.</div>
 </div>
@@ -112,13 +113,18 @@ loadScripts(document, 'script');</script>
 <div class="block">Add pizza to storage.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#noMoreOrders()" class="member-name-link">noMoreOrders</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#bakerStopped()" class="member-name-link">bakerStopped</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Baker reports that he has stopper working.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#noMoreOrders()" class="member-name-link">noMoreOrders</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Promise that there will be no orders added to the order queue.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Queue.html" title="class or interface in java.util" class="external-link">Queue</a>&lt;<a href="Order.html" title="class in ru.nsu.nmashkin.task221">Order</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#takePizzas(int)" class="member-name-link">takePizzas</a><wbr>(int&nbsp;maxCount)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Queue.html" title="class or interface in java.util" class="external-link">Queue</a>&lt;<a href="Order.html" title="class in ru.nsu.nmashkin.task221">Order</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#takePizzas(int)" class="member-name-link">takePizzas</a><wbr>(int&nbsp;maxCount)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Take up to maxCount pizzas from storage.</div>
 </div>
 </div>
@@ -139,9 +145,10 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(int)">
+<section class="detail" id="&lt;init&gt;(int,int)">
 <h3>Storage</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Storage</span><wbr><span class="parameters">(int&nbsp;capacity)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Storage</span><wbr><span class="parameters">(int&nbsp;capacity,
+ int&nbsp;bakerCnt)</span></div>
 <div class="block">Storage constructor.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -192,6 +199,13 @@ loadScripts(document, 'script');</script>
 <h3>noMoreOrders</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">noMoreOrders</span>()</div>
 <div class="block">Promise that there will be no orders added to the order queue.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="bakerStopped()">
+<h3>bakerStopped</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">bakerStopped</span>()</div>
+<div class="block">Baker reports that he has stopper working.</div>
 </section>
 </li>
 </ul>
