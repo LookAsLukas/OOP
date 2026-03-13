@@ -10,7 +10,7 @@ class StorageTest {
 
     @Test
     void addPizza() {
-        Storage storage = new Storage(100);
+        Storage storage = new Storage(100, 0);
         try {
             Order order = new Order(0, 67);
             storage.addPizza(order);
@@ -22,7 +22,7 @@ class StorageTest {
 
     @Test
     void takePizzas() {
-        Storage storage = new Storage(100);
+        Storage storage = new Storage(100, 0);
         try {
             Order order = new Order(0, 67);
             storage.addPizza(order);
@@ -37,7 +37,7 @@ class StorageTest {
 
     @Test
     void noMoreOrders() {
-        Storage storage = new Storage(100);
+        Storage storage = new Storage(100, 0);
         try {
             Order order = new Order(0, 67);
             storage.addPizza(order);

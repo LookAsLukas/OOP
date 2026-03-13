@@ -22,7 +22,7 @@ public class Pizzeria {
                     PizzeriaConfig.class
             );
 
-            Storage storage = new Storage(config.getStorageCapacity());
+            Storage storage = new Storage(config.getStorageCapacity(), config.getBakers().size());
             OrderQueue queue = new OrderQueue(storage);
 
             List<Thread> bakerThreads = new ArrayList<>();

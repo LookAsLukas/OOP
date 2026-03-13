@@ -9,7 +9,7 @@ class OrderQueueTest {
 
     @Test
     void takeOrder() {
-        OrderQueue queue = new OrderQueue(new Storage(69));
+        OrderQueue queue = new OrderQueue(new Storage(69, 0));
         try {
             Order order = new Order(0, 67);
             queue.addOrder(order);
@@ -21,7 +21,7 @@ class OrderQueueTest {
 
     @Test
     void stopAcceptingOrders() {
-        OrderQueue queue = new OrderQueue(new Storage(69));
+        OrderQueue queue = new OrderQueue(new Storage(69, 0));
         try {
             Order order = new Order(0, 67);
             queue.addOrder(order);

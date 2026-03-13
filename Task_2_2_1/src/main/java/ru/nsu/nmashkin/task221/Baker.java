@@ -52,6 +52,7 @@ public class Baker implements Runnable {
             try {
                 Order order = orderQueue.takeOrder();
                 if (order == null) {
+                    storage.bakerStopped();
                     break;
                 }
 
@@ -62,6 +63,7 @@ public class Baker implements Runnable {
                 storage.addPizza(order);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
+                storage.bakerStopped();
                 break;
             }
         }

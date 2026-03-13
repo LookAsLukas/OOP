@@ -2,6 +2,7 @@ package ru.nsu.nmashkin.task221;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Storage class.
@@ -11,14 +12,16 @@ public class Storage {
     private final Queue<Order> pizzas = new LinkedList<>();
     private final Object monitor = new Object();
     private boolean ordersComing = true;
+    private final AtomicInteger bakerCnt = new AtomicInteger();
 
     /**
      * Storage constructor.
      *
      * @param capacity .
      */
-    public Storage(int capacity) {
+    public Storage(int capacity, int bakerCnt) {
         this.capacity = capacity;
+        this.bakerCnt.set(bakerCnt);
     }
 
     /**
@@ -32,6 +35,7 @@ public class Storage {
             while (pizzas.size() >= capacity) {
                 monitor.wait();
             }
+
             pizzas.add(order);
             order.setState(Order.OrderState.IN_STORAGE);
             monitor.notifyAll();
@@ -47,11 +51,11 @@ public class Storage {
      */
     public Queue<Order> takePizzas(int maxCount) throws InterruptedException {
         synchronized (monitor) {
-            while (pizzas.isEmpty() && ordersComing) {
+            while (pizzas.isEmpty() && (ordersComing || bakerCnt.get() != 0)) {
                 monitor.wait();
             }
 
-            if (!ordersComing && pizzas.isEmpty()) {
+            if (!ordersComing && pizzas.isEmpty() && bakerCnt.get() == 0) {
                 return null;
             }
 
@@ -79,5 +83,12 @@ public class Storage {
             ordersComing = false;
             monitor.notifyAll();
         }
+    }
+
+    /**
+     * Baker reports that he has stopper working.
+     */
+    public void bakerStopped() {
+        bakerCnt.decrementAndGet();
     }
 }
