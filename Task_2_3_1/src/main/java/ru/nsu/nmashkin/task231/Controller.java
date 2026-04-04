@@ -93,7 +93,7 @@ public class Controller {
                 case BODY -> gc.setFill(Color.GREEN);
                 case HEAD -> gc.setFill(Color.DARKGREEN);
                 case TAIL -> gc.setFill(Color.LIGHTGREEN);
-                default -> {}
+                default -> { }
             }
 
             gc.fillRect((part.coords().x() + 0.2) * model.getCellSize(),
@@ -113,7 +113,7 @@ public class Controller {
             case S, DOWN  -> model.setDirection(Direction.DOWN);
             case A, LEFT  -> model.setDirection(Direction.LEFT);
             case D, RIGHT -> model.setDirection(Direction.RIGHT);
-            default -> {}
+            default -> { }
         }
     }
 }
