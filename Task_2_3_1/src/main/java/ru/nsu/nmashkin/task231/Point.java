@@ -1,7 +1,5 @@
 package ru.nsu.nmashkin.task231;
 
-import javax.annotation.processing.Generated;
-
 /**
  * .
  */

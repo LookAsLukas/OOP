@@ -112,6 +112,12 @@ public class Model {
         return null;
     }
 
+    /**
+     * .
+     *
+     * @param direction .
+     * @return .
+     */
     public boolean setDirection(Direction direction) {
         if (direction == Direction.UP && this.direction == Direction.DOWN
                 || direction == Direction.DOWN && this.direction == Direction.UP

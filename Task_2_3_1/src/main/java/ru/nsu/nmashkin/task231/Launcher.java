@@ -1,7 +1,7 @@
 package ru.nsu.nmashkin.task231;
 
-import javax.annotation.processing.Generated;
 import javafx.application.Application;
+import javax.annotation.processing.Generated;
 
 /**
  * .

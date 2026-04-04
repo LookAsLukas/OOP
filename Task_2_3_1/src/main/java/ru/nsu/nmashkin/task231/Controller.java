@@ -1,6 +1,5 @@
 package ru.nsu.nmashkin.task231;
 
-import javax.annotation.processing.Generated;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -10,6 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javax.annotation.processing.Generated;
 
 /**
  * .
@@ -22,7 +22,7 @@ public class Controller {
     private Model model;
     private AnimationTimer gameLoop;
     private long lastTick = 0L;
-    private final long TICK_DURATION = 250_000_000L;
+    private final long tickDuration = 250_000_000L;
 
     @FXML
     private void initialize() {
@@ -30,7 +30,7 @@ public class Controller {
         gameLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                if (now - lastTick >= TICK_DURATION) {
+                if (now - lastTick >= tickDuration) {
                     MoveResult result = model.move();
                     if (result != MoveResult.NEUTRAL) {
                         stop();
@@ -93,6 +93,7 @@ public class Controller {
                 case BODY -> gc.setFill(Color.GREEN);
                 case HEAD -> gc.setFill(Color.DARKGREEN);
                 case TAIL -> gc.setFill(Color.LIGHTGREEN);
+                default -> {}
             }
 
             gc.fillRect((part.coords().x() + 0.2) * model.getCellSize(),
@@ -103,6 +104,7 @@ public class Controller {
 
     /**
      * .
+     *
      * @param e event.
      */
     public void handleKeyPress(KeyEvent e) {
@@ -111,6 +113,7 @@ public class Controller {
             case S, DOWN  -> model.setDirection(Direction.DOWN);
             case A, LEFT  -> model.setDirection(Direction.LEFT);
             case D, RIGHT -> model.setDirection(Direction.RIGHT);
+            default -> {}
         }
     }
 }
