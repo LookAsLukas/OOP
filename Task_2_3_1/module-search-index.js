@@ -1,0 +1,1 @@
+moduleSearchIndex = [{"l":"ru.nsu.nmashkin.task231"}];updateSearchResults();
