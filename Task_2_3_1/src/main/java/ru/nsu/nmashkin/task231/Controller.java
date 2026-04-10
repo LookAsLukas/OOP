@@ -1,5 +1,6 @@
 package ru.nsu.nmashkin.task231;
 
+import java.util.HashMap;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -23,10 +24,23 @@ public class Controller {
     private AnimationTimer gameLoop;
     private long lastTick = 0L;
     private final long tickDuration = 250_000_000L;
+    private GraphicsContext gc;
 
     @FXML
     private void initialize() {
-        model = new Model(10, 10, 50, Direction.UP, 5, 20);
+        HashMap<SnakePartType, Color> snakeColoring = new HashMap<>();
+        snakeColoring.put(SnakePartType.HEAD, Color.DARKGREEN);
+        snakeColoring.put(SnakePartType.BODY, Color.GREEN);
+        snakeColoring.put(SnakePartType.TAIL, Color.LIGHTGREEN);
+
+        HashMap<SnakePartType, Color> botColoring = new HashMap<>();
+        botColoring.put(SnakePartType.HEAD, Color.DARKBLUE);
+        botColoring.put(SnakePartType.BODY, Color.BLUE);
+        botColoring.put(SnakePartType.TAIL, Color.LIGHTBLUE);
+
+        model = new Model(10, 10, 50,
+                Direction.UP, 5, 20,
+                snakeColoring, botColoring);
         gameLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -42,6 +56,8 @@ public class Controller {
                 }
             }
         };
+
+        gc = canvas.getGraphicsContext2D();
         render();
         canvas.requestFocus();
         gameLoop.start();
@@ -67,10 +83,20 @@ public class Controller {
     }
 
     private void render() {
-        GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-        // Draw grid lines
+        drawGrid();
+        drawFoods();
+        if (model.getBot().isDead()) {
+            drawBot();
+            drawSnake();
+        } else {
+            drawSnake();
+            drawBot();
+        }
+    }
+
+    private void drawGrid() {
         gc.setStroke(Color.LIGHTGRAY);
         for (int i = 0; i <= model.getGridHeight(); i++) {
             gc.strokeLine(0, i * model.getCellSize(), canvas.getWidth(), i * model.getCellSize());
@@ -78,27 +104,34 @@ public class Controller {
         for (int i = 0; i <= model.getGridWidth(); i++) {
             gc.strokeLine(i * model.getCellSize(), 0, i * model.getCellSize(), canvas.getHeight());
         }
+    }
 
-        // Draw food
+    private void drawFoods() {
         for (Food food : model.getFoods()) {
             gc.setFill(Color.RED);
             gc.fillRect((food.coords().x() + 0.4) * model.getCellSize(),
                     (food.coords().y() + 0.4) * model.getCellSize(),
                     0.2 * model.getCellSize(), 0.2 * model.getCellSize());
         }
+    }
 
-        // Draw snake
-        for (SnakePart part : model.getSnake()) {
-            switch (part.type()) {
-                case BODY -> gc.setFill(Color.GREEN);
-                case HEAD -> gc.setFill(Color.DARKGREEN);
-                case TAIL -> gc.setFill(Color.LIGHTGREEN);
-                default -> { }
-            }
+    private void drawSnake() {
+        for (SnakePart part : model.getSnake().getParts()) {
+            gc.setFill(model.getSnake().getColoring().get(part.type()));
 
-            gc.fillRect((part.coords().x() + 0.2) * model.getCellSize(),
-                    (part.coords().y() + 0.2) * model.getCellSize(),
-                    0.6 * model.getCellSize(), 0.6 * model.getCellSize());
+            gc.fillRect((part.coords().x() + 0.15) * model.getCellSize(),
+                    (part.coords().y() + 0.15) * model.getCellSize(),
+                    0.7  * model.getCellSize(), 0.7 * model.getCellSize());
+        }
+    }
+
+    private void drawBot() {
+        for (SnakePart part : model.getBot().getParts()) {
+            gc.setFill(model.getBot().getColoring().get(part.type()));
+
+            gc.fillRect((part.coords().x() + 0.25) * model.getCellSize(),
+                    (part.coords().y() + 0.25) * model.getCellSize(),
+                    0.5 * model.getCellSize(), 0.5 * model.getCellSize());
         }
     }
 

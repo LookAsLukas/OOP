@@ -9,5 +9,6 @@ import javax.annotation.processing.Generated;
 public enum MoveResult {
     LOSE,
     WIN,
+    TIE,
     NEUTRAL,
 }

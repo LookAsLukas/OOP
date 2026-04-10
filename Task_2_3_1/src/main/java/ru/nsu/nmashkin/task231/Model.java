@@ -1,10 +1,10 @@
 package ru.nsu.nmashkin.task231;
 
-import java.util.Deque;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Random;
 import java.util.Set;
+import javafx.scene.paint.Color;
 import javax.annotation.processing.Generated;
 
 /**
@@ -16,91 +16,116 @@ public class Model {
     private final int gridHeight;
     private final int cellSize;
     private final int maxScore;
-    private final Deque<SnakePart> snake = new LinkedList<>();
+    private final Snake snake;
+    private final Snake bot;
+    private final BotLogic botLogic;
     private final Set<Food> foods = new HashSet<>();
+    private final Set<Point> freeCells = new HashSet<>();
     private Direction direction;
     private Direction requestedDirection;
     private int score = 0;
+    private int botScore = 0;
 
     /**
      * .
      *
-     * @param gridWidth .
+     * @param gridWidth  .
      * @param gridHeight .
-     * @param cellSize .
-     * @param direction .
-     * @param foodCount .
-     * @param maxScore .
+     * @param cellSize   .
+     * @param direction  .
+     * @param foodCount  .
+     * @param maxScore   .
      */
     public Model(int gridWidth, int gridHeight, int cellSize,
-                 Direction direction, int foodCount, int maxScore) {
+                 Direction direction, int foodCount, int maxScore,
+                 HashMap<SnakePartType, Color> snakeColoring,
+                 HashMap<SnakePartType, Color> botColoring) {
+        for (int x = 0; x < gridWidth; x++) {
+            for (int y = 0; y < gridHeight; y++) {
+                Point point = new Point(x, y);
+                freeCells.add(point);
+            }
+        }
+
         this.gridWidth = gridWidth;
         this.gridHeight = gridHeight;
         this.cellSize = cellSize;
         this.requestedDirection = direction;
         this.maxScore = maxScore;
 
-        snake.push(new SnakePart(new Point(gridWidth / 2, gridHeight / 2), SnakePartType.HEAD));
+        Point snakeStart = new Point(gridWidth / 4, gridHeight / 2);
+        snake = new Snake(snakeStart, snakeColoring, gridWidth, gridHeight);
+        freeCells.remove(snakeStart);
+
+        Point botStart = new Point(3 * gridWidth / 4, gridHeight / 2);
+        bot = new Snake(botStart, botColoring, gridWidth, gridHeight);
+        freeCells.remove(botStart);
 
         for (int i = 0; i < foodCount; i++) {
             generateNewFood();
         }
+
+        botLogic = new BotLogic(bot, foods);
     }
 
     /**
-     * Move the snake.
+     * Move the snake and the bot.
      *
      * @return move result.
      */
-    @Generated("Untestable because it is hard")
+    @Generated("Untestable because heavily affected by foods (rng)")
     public MoveResult move() {
-        assert snake.peek() != null;
+        direction = requestedDirection;
 
-        this.direction = this.requestedDirection;
-
-        SnakePart currHead = snake.pop();
-        Point newHeadCoords = currHead.coords().applyDirection(direction);
-        if (isSnake(newHeadCoords) || isOutOfBounds(newHeadCoords)) {
-            snake.push(currHead);
-            return MoveResult.LOSE;
+        if (!snake.move(direction)) {
+            snake.kill();
         }
 
-        snake.push(new SnakePart(currHead.coords(),
-                snake.isEmpty() ? SnakePartType.TAIL : SnakePartType.BODY));
-        snake.push(new SnakePart(newHeadCoords, SnakePartType.HEAD));
+        if (!bot.move(botLogic.getNextDirection())) {
+            bot.kill();
+        }
 
-        Food food = getFood(newHeadCoords);
-        if (food == null) {
-            snake.removeLast();
-            if (snake.size() > 1) {
-                SnakePart tail = snake.removeLast();
-                snake.addLast(new SnakePart(tail.coords(), SnakePartType.TAIL));
-            }
-        } else {
-            score++;
-            if (score >= maxScore) {
-                return MoveResult.WIN;
-            }
+        if (bot.isDead() && snake.isDead()) {
+            return MoveResult.TIE;
+        }
 
-            foods.remove(food);
-            generateNewFood();
+        if (!snake.isDead()) {
+            Point newHeadCoords = snake.head().coords();
+            freeCells.remove(newHeadCoords);
+            Food food = getFood(newHeadCoords);
+            if (food == null) {
+                freeCells.add(snake.tail().coords());
+                snake.shrink();
+            } else {
+                score++;
+                if (score >= maxScore) {
+                    return MoveResult.WIN;
+                }
+
+                foods.remove(food);
+                generateNewFood();
+            }
+        }
+
+        if (!bot.isDead()) {
+            Point newBotHeadCoords = bot.head().coords();
+            freeCells.remove(newBotHeadCoords);
+            Food food = getFood(newBotHeadCoords);
+            if (food == null) {
+                freeCells.add(bot.tail().coords());
+                bot.shrink();
+            } else {
+                botScore++;
+                if (botScore >= maxScore) {
+                    return MoveResult.LOSE;
+                }
+
+                foods.remove(food);
+                generateNewFood();
+            }
         }
 
         return MoveResult.NEUTRAL;
-    }
-
-    private boolean isSnake(Point point) {
-        for (SnakePart part : snake) {
-            if (part.coords().equals(point)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean isOutOfBounds(Point point) {
-        return point.x() < 0 || point.x() >= gridWidth
-                || point.y() < 0 || point.y() >= gridHeight;
     }
 
     private Food getFood(Point point) {
@@ -116,45 +141,22 @@ public class Model {
      * .
      *
      * @param direction .
-     * @return .
      */
-    public boolean setDirection(Direction direction) {
+    public void setDirection(Direction direction) {
         if (direction == Direction.UP && this.direction == Direction.DOWN
                 || direction == Direction.DOWN && this.direction == Direction.UP
                 || direction == Direction.LEFT && this.direction == Direction.RIGHT
                 || direction == Direction.RIGHT && this.direction == Direction.LEFT) {
-            return false;
+            return;
         }
 
         this.requestedDirection = direction;
-        return true;
     }
 
     private void generateNewFood() {
-        int freeCount = 0;
-        for (int x = 0; x < gridWidth; x++) {
-            for (int y = 0; y < gridHeight; y++) {
-                Point point = new Point(x, y);
-                if (!isSnake(point) && getFood(point) == null) {
-                    freeCount++;
-                }
-            }
-        }
-
-        int pos = random.nextInt(0, freeCount);
-        for (int x = 0; x < gridWidth; x++) {
-            for (int y = 0; y < gridHeight; y++) {
-                Point point = new Point(x, y);
-                if (pos == 0) {
-                    foods.add(new Food(point));
-                    return;
-                }
-
-                if (!isSnake(point) && getFood(point) == null) {
-                    pos--;
-                }
-            }
-        }
+        Point newFoodCell = freeCells.toArray(Point[]::new)[random.nextInt(freeCells.size())];
+        foods.add(new Food(newFoodCell));
+        freeCells.remove(newFoodCell);
     }
 
     /**
@@ -162,8 +164,8 @@ public class Model {
      *
      * @return .
      */
-    @Generated("Untested because getted")
-    public Deque<SnakePart> getSnake() {
+    @Generated("Untested because getter")
+    public Snake getSnake() {
         return snake;
     }
 
@@ -172,7 +174,17 @@ public class Model {
      *
      * @return .
      */
-    @Generated("Untested because getted")
+    @Generated("Untested because getter")
+    public Snake getBot() {
+        return bot;
+    }
+
+    /**
+     * .
+     *
+     * @return .
+     */
+    @Generated("Untested because getter")
     public int getGridHeight() {
         return gridHeight;
     }
@@ -182,7 +194,7 @@ public class Model {
      *
      * @return .
      */
-    @Generated("Untested because getted")
+    @Generated("Untested because getter")
     public int getGridWidth() {
         return gridWidth;
     }
@@ -192,7 +204,7 @@ public class Model {
      *
      * @return .
      */
-    @Generated("Untested because getted")
+    @Generated("Untested because getter")
     public int getCellSize() {
         return cellSize;
     }
@@ -202,7 +214,7 @@ public class Model {
      *
      * @return .
      */
-    @Generated("Untested because getted")
+    @Generated("Untested because getter")
     public Set<Food> getFoods() {
         return foods;
     }
@@ -212,7 +224,7 @@ public class Model {
      *
      * @return .
      */
-    @Generated("Untested because getted")
+    @Generated("Untested because getter")
     public int getScore() {
         return score;
     }
@@ -222,7 +234,7 @@ public class Model {
      *
      * @return .
      */
-    @Generated("Untested because getted")
+    @Generated("Untested because getter")
     public Direction getDirection() {
         return direction;
     }

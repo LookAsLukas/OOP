@@ -18,7 +18,7 @@ val junitVersion = "5.12.1"
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(24)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
@@ -37,8 +37,9 @@ javafx {
 }
 
 dependencies {
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
-    implementation("org.junit.jupiter:junit-jupiter-api:5.12.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.12.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.12.1")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     implementation("javax.annotation:javax.annotation-api:1.3.2")
 }
 

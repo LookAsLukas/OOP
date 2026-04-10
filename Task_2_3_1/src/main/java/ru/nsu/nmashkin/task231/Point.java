@@ -18,4 +18,14 @@ public record Point(int x, int y) {
             case RIGHT -> new Point(x + 1, y);
         };
     }
+
+    /**
+     * .
+     *
+     * @param other .
+     * @return .
+     */
+    public double distance(Point other) {
+        return Math.sqrt((other.x - x) * (other.x - x) + (other.y - y) * (other.y - y));
+    }
 }
