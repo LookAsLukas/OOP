@@ -10,7 +10,6 @@ import javax.annotation.processing.Generated;
 /**
  * .
  */
-@Generated("Nothing to test")
 public class View extends Application {
     /**
      * .
@@ -21,6 +20,7 @@ public class View extends Application {
      *              primary stages.
      * @throws Exception it does do so.
      */
+    @Generated("Nothing to test")
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("view.fxml"));

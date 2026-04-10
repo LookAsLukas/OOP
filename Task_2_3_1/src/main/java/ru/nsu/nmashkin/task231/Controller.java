@@ -15,7 +15,6 @@ import javax.annotation.processing.Generated;
 /**
  * .
  */
-@Generated("Nothing to test")
 public class Controller {
     @FXML
     private Canvas canvas;
@@ -140,6 +139,7 @@ public class Controller {
      *
      * @param e event.
      */
+    @Generated("Nothing to test")
     public void handleKeyPress(KeyEvent e) {
         switch (e.getCode()) {
             case W, UP    -> model.setDirection(Direction.UP);

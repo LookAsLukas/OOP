@@ -6,8 +6,8 @@ import javax.annotation.processing.Generated;
 /**
  * .
  */
-@Generated("Nothing to test")
 public class Launcher {
+    @Generated("Nothing to test")
     public static void main(String[] args) {
         Application.launch(View.class, args);
     }
