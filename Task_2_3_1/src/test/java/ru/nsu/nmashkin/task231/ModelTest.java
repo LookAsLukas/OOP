@@ -2,9 +2,8 @@ package ru.nsu.nmashkin.task231;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.Test;
-
 import java.util.HashMap;
+import org.junit.jupiter.api.Test;
 
 class ModelTest {
 
