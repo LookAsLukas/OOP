@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 import javafx.scene.paint.Color;
-import javax.annotation.processing.Generated;
 
 /**
  * .
@@ -16,11 +15,11 @@ public class Model {
     private final int gridHeight;
     private final int cellSize;
     private final int maxScore;
-    private final Snake snake;
+    private final Snake player;
     private final Snake bot;
-    private final BotLogic botLogic;
     private final Set<Food> foods = new HashSet<>();
     private final Set<Point> freeCells = new HashSet<>();
+    private final Set<Obstacle> obstacles = new HashSet<>();
     private Direction direction;
     private Direction requestedDirection;
     private int score = 0;
@@ -47,6 +46,8 @@ public class Model {
             }
         }
 
+        obstacles.add(new GridBorder(gridWidth, gridHeight));
+
         this.gridWidth = gridWidth;
         this.gridHeight = gridHeight;
         this.cellSize = cellSize;
@@ -54,18 +55,16 @@ public class Model {
         this.maxScore = maxScore;
 
         Point snakeStart = new Point(gridWidth / 4, gridHeight / 2);
-        snake = new Snake(snakeStart, snakeColoring, gridWidth, gridHeight);
+        player = new Player(snakeStart, snakeColoring, obstacles);
         freeCells.remove(snakeStart);
 
         Point botStart = new Point(3 * gridWidth / 4, gridHeight / 2);
-        bot = new Snake(botStart, botColoring, gridWidth, gridHeight);
+        bot = new PeacefulBot(botStart, botColoring, obstacles, new GeneralDirectionLogic(foods));
         freeCells.remove(botStart);
 
         for (int i = 0; i < foodCount; i++) {
             generateNewFood();
         }
-
-        botLogic = new BotLogic(bot, foods);
     }
 
     /**
@@ -73,68 +72,48 @@ public class Model {
      *
      * @return move result.
      */
-    @Generated("Untestable because heavily affected by foods (rng)")
     public MoveResult move() {
         direction = requestedDirection;
 
-        if (!snake.move(direction)) {
-            snake.kill();
+        if (player.move(direction)) {
+            freeCells.remove(player.head().coords());
+        } else {
+            player.kill();
         }
 
-        if (!bot.move(botLogic.getNextDirection())) {
+        if (bot.move(null)) {
+            freeCells.remove(bot.head().coords());
+        } else {
             bot.kill();
         }
 
-        if (bot.isDead() && snake.isDead()) {
+        if (bot.isDead() && player.isDead()) {
             return MoveResult.TIE;
         }
 
-        if (!snake.isDead()) {
-            Point newHeadCoords = snake.head().coords();
-            freeCells.remove(newHeadCoords);
-            Food food = getFood(newHeadCoords);
-            if (food == null) {
-                freeCells.add(snake.tail().coords());
-                snake.shrink();
-            } else {
-                score++;
-                if (score >= maxScore) {
-                    return MoveResult.WIN;
-                }
-
-                foods.remove(food);
-                generateNewFood();
+        Point freedUp = player.eatFood(foods);
+        if (freedUp != null) {
+            freeCells.remove(freedUp);
+        } else if (!player.isDead()) {
+            score++;
+            if (score >= maxScore) {
+                return MoveResult.WIN;
             }
+            generateNewFood();
         }
 
-        if (!bot.isDead()) {
-            Point newBotHeadCoords = bot.head().coords();
-            freeCells.remove(newBotHeadCoords);
-            Food food = getFood(newBotHeadCoords);
-            if (food == null) {
-                freeCells.add(bot.tail().coords());
-                bot.shrink();
-            } else {
-                botScore++;
-                if (botScore >= maxScore) {
-                    return MoveResult.LOSE;
-                }
-
-                foods.remove(food);
-                generateNewFood();
+        freedUp = bot.eatFood(foods);
+        if (freedUp != null) {
+            freeCells.remove(freedUp);
+        } else if (!bot.isDead()) {
+            botScore++;
+            if (botScore >= maxScore) {
+                return MoveResult.LOSE;
             }
+            generateNewFood();
         }
 
         return MoveResult.NEUTRAL;
-    }
-
-    private Food getFood(Point point) {
-        for (Food food : foods) {
-            if (point.equals(food.coords())) {
-                return food;
-            }
-        }
-        return null;
     }
 
     /**
@@ -164,9 +143,8 @@ public class Model {
      *
      * @return .
      */
-    @Generated("Untested because getter")
     public Snake getSnake() {
-        return snake;
+        return player;
     }
 
     /**
@@ -174,7 +152,6 @@ public class Model {
      *
      * @return .
      */
-    @Generated("Untested because getter")
     public Snake getBot() {
         return bot;
     }
@@ -184,7 +161,6 @@ public class Model {
      *
      * @return .
      */
-    @Generated("Untested because getter")
     public int getGridHeight() {
         return gridHeight;
     }
@@ -194,7 +170,6 @@ public class Model {
      *
      * @return .
      */
-    @Generated("Untested because getter")
     public int getGridWidth() {
         return gridWidth;
     }
@@ -204,7 +179,6 @@ public class Model {
      *
      * @return .
      */
-    @Generated("Untested because getter")
     public int getCellSize() {
         return cellSize;
     }
@@ -214,7 +188,6 @@ public class Model {
      *
      * @return .
      */
-    @Generated("Untested because getter")
     public Set<Food> getFoods() {
         return foods;
     }
@@ -224,7 +197,6 @@ public class Model {
      *
      * @return .
      */
-    @Generated("Untested because getter")
     public int getScore() {
         return score;
     }
@@ -234,7 +206,6 @@ public class Model {
      *
      * @return .
      */
-    @Generated("Untested because getter")
     public Direction getDirection() {
         return direction;
     }
