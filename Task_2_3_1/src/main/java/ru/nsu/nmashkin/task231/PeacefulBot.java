@@ -1,7 +1,10 @@
 package ru.nsu.nmashkin.task231;
 
-import java.util.*;
-
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Set;
 import javafx.scene.paint.Color;
 import javax.annotation.processing.Generated;
 
@@ -31,7 +34,7 @@ public class PeacefulBot implements Snake {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public boolean move(Direction direction) {
@@ -59,7 +62,7 @@ public class PeacefulBot implements Snake {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public boolean hitObstacle(Point point) {
@@ -69,7 +72,7 @@ public class PeacefulBot implements Snake {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public Point eatFood(Set<Food> foods) {
@@ -91,7 +94,7 @@ public class PeacefulBot implements Snake {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     @Generated("Untested because getter")
@@ -102,7 +105,7 @@ public class PeacefulBot implements Snake {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     @Generated("Untested because getter")
@@ -113,7 +116,7 @@ public class PeacefulBot implements Snake {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     @Generated("Untested because getter")
@@ -122,7 +125,7 @@ public class PeacefulBot implements Snake {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     @Generated("Untested because getter")
@@ -131,7 +134,7 @@ public class PeacefulBot implements Snake {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public void kill() {
@@ -140,7 +143,7 @@ public class PeacefulBot implements Snake {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     @Generated("Untested because getter")

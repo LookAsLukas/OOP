@@ -2,7 +2,7 @@ package ru.nsu.nmashkin.task231;
 
 import org.junit.jupiter.api.Test;
 
-public class ForCoverageTest {
+class ForCoverageTest {
 
     @Test
     void forCoverage() {

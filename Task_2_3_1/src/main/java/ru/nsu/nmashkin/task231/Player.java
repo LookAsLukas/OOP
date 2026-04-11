@@ -30,7 +30,7 @@ public class Player implements Snake {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public boolean move(Direction direction) {
@@ -54,7 +54,7 @@ public class Player implements Snake {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public boolean hitObstacle(Point point) {
@@ -64,7 +64,7 @@ public class Player implements Snake {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public Point eatFood(Set<Food> foods) {
@@ -90,7 +90,7 @@ public class Player implements Snake {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     @Generated("Untested because getter")
@@ -101,7 +101,7 @@ public class Player implements Snake {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     @Generated("Untested because getter")
@@ -112,7 +112,7 @@ public class Player implements Snake {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     @Generated("Untested because getter")
@@ -121,7 +121,7 @@ public class Player implements Snake {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     @Generated("Untested because getter")
@@ -130,7 +130,7 @@ public class Player implements Snake {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public void kill() {
@@ -139,7 +139,7 @@ public class Player implements Snake {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     @Generated("Untested because getter")

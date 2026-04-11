@@ -1,10 +1,9 @@
 package ru.nsu.nmashkin.task231;
 
-import javafx.scene.paint.Color;
-
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
+import javafx.scene.paint.Color;
 
 /**
  * Snake interface.

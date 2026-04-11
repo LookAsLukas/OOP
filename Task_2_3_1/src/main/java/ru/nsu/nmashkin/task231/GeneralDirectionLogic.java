@@ -12,8 +12,8 @@ import javafx.util.Pair;
  */
 public class GeneralDirectionLogic implements BotLogic {
     private final Set<Food> foods;
+    private final HashMap<Direction, Point> variants = new HashMap<>();
     private Snake bot;
-    HashMap<Direction, Point> variants = new HashMap<>();
 
     /**
      * .
@@ -43,7 +43,7 @@ public class GeneralDirectionLogic implements BotLogic {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public void setBot(Snake bot) {
