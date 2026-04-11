@@ -133,6 +133,10 @@ public class Model {
     }
 
     private void generateNewFood() {
+        if (freeCells.isEmpty()) {
+            return;
+        }
+
         Point newFoodCell = freeCells.toArray(Point[]::new)[random.nextInt(freeCells.size())];
         foods.add(new Food(newFoodCell));
         freeCells.remove(newFoodCell);
