@@ -1,7 +1,10 @@
 package ru.nsu.nmashkin.task231;
 
-import java.util.*;
-
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Set;
 import javafx.scene.paint.Color;
 import javax.annotation.processing.Generated;
 

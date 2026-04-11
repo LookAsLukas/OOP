@@ -8,6 +8,9 @@ import java.util.Set;
 import javafx.scene.paint.Color;
 import javax.annotation.processing.Generated;
 
+/**
+ * Bot that just minds its own business.
+ */
 public class PeacefulBot implements Snake {
     private final Deque<SnakePart> snake = new LinkedList<>();
     private final HashMap<SnakePartType, Color> coloring;
