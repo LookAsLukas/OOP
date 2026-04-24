@@ -2,9 +2,6 @@ package ru.nsu.nmashkin.task121;
 
 import java.util.List;
 
-/**
- * Interface for oriented graphs with loops allowed.
- */
 public interface Graph {
     /**
      * Add a vertex to the Graph.
