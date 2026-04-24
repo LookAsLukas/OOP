@@ -17,7 +17,7 @@ public class IncidenceMatrixGraph implements Graph {
 
         private Edge(Object v1, Object v2) {
             this.v1 = v1;
-                                                                                                                                                                 this.v2 = v2;
+	    this.v2 = v2;
         }
 
         private Object start() {
