@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import ru.nsu.nmashkin.task241.Main;
 import ru.nsu.nmashkin.task241.core.Config;
 import ru.nsu.nmashkin.task241.core.Group;
@@ -81,18 +80,18 @@ public class HtmlReportGenerator {
                                     config.getTasks().get(data.taskId()).maxScore());
 
                             output.append("<tr>")
-                                    .append("<td>").append(escapeHtml(data.student().name()))
-                                    .append("</td>") .append("<td>")
-                                    .append(escapeHtml(data.taskId())).append("</td>")
-                                    .append("<td class='").append(res.build() ? "pass" : "fail")
-                                    .append("'>").append(build).append("</td>")
-                                    .append("<td class='").append(res.docs() ? "pass" : "fail")
-                                    .append("'>").append(docs).append("</td>")
-                                    .append("<td class='").append(res.style() ? "pass" : "fail")
-                                    .append("'>").append(style).append("</td>")
-                                    .append("<td>").append(tests).append("</td>")
-                                    .append("<td><b>").append(total).append("</b></td>")
-                                    .append("</tr>\n");
+                                .append("<td>").append(escapeHtml(data.student().name()))
+                                .append("</td>") .append("<td>")
+                                .append(escapeHtml(data.taskId())).append("</td>")
+                                .append("<td class='").append(res.build() ? "pass" : "fail")
+                                .append("'>").append(build).append("</td>")
+                                .append("<td class='").append(res.docs() ? "pass" : "fail")
+                                .append("'>").append(docs).append("</td>")
+                                .append("<td class='").append(res.style() ? "pass" : "fail")
+                                .append("'>").append(style).append("</td>")
+                                .append("<td>").append(tests).append("</td>")
+                                .append("<td><b>").append(total).append("</b></td>")
+                                .append("</tr>\n");
                         } catch (IOException e) {
                             throw new UncheckedIOException(e);
                         }

@@ -78,8 +78,8 @@ public class GitService {
                     .forEach(p -> {
                         try {
                             Files.delete(p);
-                        } catch (IOException ignored) {
-
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     });
         }
