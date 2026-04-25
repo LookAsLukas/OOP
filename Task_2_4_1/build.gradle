@@ -1,0 +1,53 @@
+plugins {
+    id 'java'
+    id 'groovy'
+    id 'application'
+    id 'com.gradleup.shadow' version '8.3.0'
+}
+
+group = 'ru.nsu.nmashkin.task241'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.codehaus.groovy:groovy:3.0.19'
+    implementation 'org.codehaus.groovy:groovy-templates:3.0.19'
+
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+application {
+    mainClass = 'ru.nsu.nmashkin.task241.Main'
+}
+
+sourceSets {
+    main {
+        // Отдаём все исходники компилятору Groovy. Он умеет компилировать и Java.
+        groovy {
+            srcDirs = ['src/main/groovy', 'src/main/java']
+        }
+        // Отключаем отдельный javac, чтобы не было конфликта и циклов
+        java {
+            srcDirs = []
+        }
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
