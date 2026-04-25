@@ -81,7 +81,7 @@ public class HtmlReportGenerator {
 
                             output.append("<tr>")
                                 .append("<td>").append(escapeHtml(data.student().name()))
-                                .append("</td>") .append("<td>")
+                                .append("</td>").append("<td>")
                                 .append(escapeHtml(data.taskId())).append("</td>")
                                 .append("<td class='").append(res.build() ? "pass" : "fail")
                                 .append("'>").append(build).append("</td>")
