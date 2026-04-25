@@ -192,8 +192,10 @@ public class Config {
         sb.append("Groups: ").append(groups.keySet()).append("\n");
         sb.append("Checkpoints: ").append(checkpoints).append("\n");
         sb.append("Checks: ").append(checks.size()).append(" command(s)\n");
-        for (Check c : checks)
-            sb.append("  -> ").append(c.taskId()).append(" / ").append(c.studentNick()).append("\n");
+        for (Check c : checks) {
+            sb.append("  -> ").append(c.taskId()).append(" / ")
+                    .append(c.studentNick()).append("\n");
+        }
         sb.append("Bonuses: ").append(bonusPoints).append("\n");
         sb.append("Criteria: ").append(gradeCriteria).append("\n");
         return sb.toString();

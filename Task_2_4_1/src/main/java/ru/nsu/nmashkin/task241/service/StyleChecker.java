@@ -1,9 +1,14 @@
 package ru.nsu.nmashkin.task241.service;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -12,7 +17,8 @@ import java.util.concurrent.TimeUnit;
 public class StyleChecker {
 
     private static final String CHECKSTYLE_JAR_URL =
-            "https://github.com/checkstyle/checkstyle/releases/download/checkstyle-10.17.0/checkstyle-10.17.0-all.jar";
+            "https://github.com/checkstyle/checkstyle/releases/"
+                    + "download/checkstyle-10.17.0/checkstyle-10.17.0-all.jar";
     private static final String JAR_NAME = "checkstyle-10.17.0-all.jar";
     private final Path cacheDir;
 
@@ -78,7 +84,8 @@ public class StyleChecker {
         return Path.of(url.toURI());
     }
 
-    private boolean runCheckstyle(Path jarPath, Path configPath, Path srcDir) throws IOException, InterruptedException {
+    private boolean runCheckstyle(Path jarPath, Path configPath, Path srcDir)
+            throws IOException, InterruptedException {
         ProcessBuilder pb = new ProcessBuilder(
                 "java", "-jar", jarPath.toString(),
                 "-c", configPath.toAbsolutePath().toString(),
@@ -88,9 +95,12 @@ public class StyleChecker {
         Process proc = pb.start();
 
         StringBuilder output = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream()))) {
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(proc.getInputStream()))) {
             String line;
-            while ((line = reader.readLine()) != null) output.append(line).append("\n");
+            while ((line = reader.readLine()) != null) {
+                output.append(line).append("\n");
+            }
         }
 
         boolean finished = proc.waitFor(60, TimeUnit.SECONDS);

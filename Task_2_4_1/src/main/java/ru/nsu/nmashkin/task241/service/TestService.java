@@ -12,8 +12,8 @@ public class TestService {
     /**
      * .
      *
-     * @param passed .
-     * @param failed .
+     * @param passed  .
+     * @param failed  .
      * @param skipped .
      * @param timeout .
      */
@@ -27,7 +27,7 @@ public class TestService {
     /**
      * .
      *
-     * @param taskDir .
+     * @param taskDir    .
      * @param timeoutSec .
      * @return .
      */
@@ -56,14 +56,20 @@ public class TestService {
 
     private int extractBySelector(String html, String infoBoxSelector) {
         int start = html.indexOf(infoBoxSelector);
-        if (start == -1) return 0;
+        if (start == -1) {
+            return 0;
+        }
 
         int counterStart = html.indexOf("<div class=\"counter\">", start);
-        if (counterStart == -1) return 0;
+        if (counterStart == -1) {
+            return 0;
+        }
 
         int valueStart = counterStart + "<div class=\"counter\">".length();
         int valueEnd = html.indexOf("</div>", valueStart);
-        if (valueEnd == -1) return 0;
+        if (valueEnd == -1) {
+            return 0;
+        }
 
         try {
             return Integer.parseInt(html.substring(valueStart, valueEnd).trim());

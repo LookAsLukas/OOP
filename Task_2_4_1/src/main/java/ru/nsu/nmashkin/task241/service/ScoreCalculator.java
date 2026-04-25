@@ -1,9 +1,8 @@
 package ru.nsu.nmashkin.task241.service;
 
+import java.util.Map;
 import ru.nsu.nmashkin.task241.core.Config;
 import ru.nsu.nmashkin.task241.core.Task;
-
-import java.util.Map;
 
 /**
  * .

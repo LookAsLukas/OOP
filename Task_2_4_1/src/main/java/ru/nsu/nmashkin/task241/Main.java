@@ -39,7 +39,7 @@ public class Main {
                                   TestService.TestResult tests, ScoreCalculator.ScoreResult score) {
         static TaskCheckResult missing() {
             return new TaskCheckResult(false, false, false,
-                    new TestService.TestResult(0,0,0,false),
+                    new TestService.TestResult(0, 0, 0, false),
                     new ScoreCalculator.ScoreResult(0.0, "0", 0));
         }
     }
@@ -52,7 +52,8 @@ public class Main {
      * @param taskResult .
      * @param activityPercent .
      */
-    public record StudentData(Student student, String taskId, TaskCheckResult taskResult, double activityPercent) {}
+    public record StudentData(Student student, String taskId,
+                              TaskCheckResult taskResult, double activityPercent) {}
 
     /**
      * .
@@ -140,13 +141,7 @@ public class Main {
         }
 
         for (Path tempDir : gitCloned.values()) {
-            try {
-                if (tempDir != null) {
-                    git.cleanup(tempDir);
-                }
-            } catch (Exception ignored) {
-
-            }
+            git.cleanup(tempDir);
         }
 
         System.err.println("[INFO] Generating HTML report...");
