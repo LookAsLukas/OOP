@@ -59,7 +59,8 @@ public class Master {
             for (int i = 0; i < expectedWorkers; i++) {
                 try {
                     workerSockets[i] = serverSocket.accept();
-                    System.out.println("Slave detected: " + workerSockets[i].getRemoteSocketAddress());
+                    System.out.println("Slave detected: "
+                            + workerSockets[i].getRemoteSocketAddress());
                 } catch (IOException e) {
                     System.out.println("Not enough slaves: " + e.getMessage());
                     break;
@@ -117,7 +118,9 @@ public class Master {
                 while (!isDone.get() && !globalResult.get()) {
                     currentTask = taskQueue.poll(1, TimeUnit.SECONDS);
                     if (currentTask == null) {
-                        if (taskQueue.isEmpty()) break;
+                        if (taskQueue.isEmpty()) {
+                            break;
+                        }
                         continue;
                     }
 
@@ -130,7 +133,8 @@ public class Master {
                         if (result.hasNonPrime()) {
                             globalResult.set(true);
                         }
-                        System.out.print("Slave has completed work #" + result.taskId() + ". Works left: ");
+                        System.out.print("Slave has completed work #"
+                                + result.taskId() + ". Works left: ");
                         for (var task : taskQueue) {
                             System.out.print(task.taskId() + " ");
                         }
@@ -151,7 +155,8 @@ public class Master {
                 System.err.println("Slave is dead: " + socket.getRemoteSocketAddress());
             } finally {
                 if (currentTask != null) {
-                    System.out.println("Sun is still up in the sky, returning task to queue: " + currentTask.taskId());
+                    System.out.println("Sun is still up in the sky, returning task to queue: "
+                            + currentTask.taskId());
                     taskQueue.add(currentTask);
 
                     synchronized (lock) {

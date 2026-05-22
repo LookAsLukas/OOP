@@ -8,6 +8,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import org.junit.jupiter.api.Test;
 
+/**
+ * .
+ */
 public class MasterTest {
 
     @Test
@@ -28,13 +31,17 @@ public class MasterTest {
 
                     while (true) {
                         Object obj = in.readObject();
-                        if (obj == null) break;
+                        if (obj == null) {
+                            break;
+                        }
                         Task task = (Task) obj;
                         out.writeObject(new TaskResult(task.taskId(), false));
                         out.flush();
                     }
                 }
-            } catch (Exception ignored) {}
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
         slaveSimulator.start();
 
@@ -61,7 +68,9 @@ public class MasterTest {
 
                     while (true) {
                         Object obj = in.readObject();
-                        if (obj == null) break;
+                        if (obj == null) {
+                            break;
+                        }
                         Task task = (Task) obj;
                         boolean hasNonPrime = false;
                         for (int n : task.numbers()) {
@@ -74,7 +83,9 @@ public class MasterTest {
                         out.flush();
                     }
                 }
-            } catch (Exception ignored) {}
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
         slaveSimulator.start();
 

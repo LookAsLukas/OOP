@@ -11,6 +11,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.junit.jupiter.api.Test;
 
+/**
+ * .
+ */
 public class SlaveTest {
 
     @Test
@@ -34,7 +37,9 @@ public class SlaveTest {
 
                 out.writeObject(null);
                 out.flush();
-            } catch (Exception ignored) {}
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
         masterSimulator.start();
 
@@ -81,7 +86,9 @@ public class SlaveTest {
                 out.flush();
                 taskDoneLatch.countDown();
 
-            } catch (Exception ignored) {}
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
 
         masterDelayedThread.start();

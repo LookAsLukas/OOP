@@ -34,14 +34,16 @@ public record Slave(String masterHost, int masterPort, int threadCount) {
                         }
 
                         Task task = (Task) input;
-                        System.out.println("Work received: #" + task.taskId() + ", size: " + task.numbers().length);
+                        System.out.println("Work received: #" + task.taskId()
+                                + ", size: " + task.numbers().length);
 
                         boolean result = MultiThreaded.hasNonPrime(task.numbers(), threadCount);
 
                         TaskResult taskResult = new TaskResult(task.taskId(), result);
                         out.writeObject(taskResult);
                         out.flush();
-                        System.out.println("Work #" + task.taskId() + " is done, result: " + result);
+                        System.out.println("Work #" + task.taskId()
+                                + " is done, result: " + result);
                     }
 
                 }
