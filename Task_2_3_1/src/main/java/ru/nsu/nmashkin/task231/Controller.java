@@ -32,14 +32,19 @@ public class Controller {
         snakeColoring.put(SnakePartType.BODY, Color.GREEN);
         snakeColoring.put(SnakePartType.TAIL, Color.LIGHTGREEN);
 
-        HashMap<SnakePartType, Color> botColoring = new HashMap<>();
-        botColoring.put(SnakePartType.HEAD, Color.DARKBLUE);
-        botColoring.put(SnakePartType.BODY, Color.BLUE);
-        botColoring.put(SnakePartType.TAIL, Color.LIGHTBLUE);
+        HashMap<SnakePartType, Color> bot1Coloring = new HashMap<>();
+        bot1Coloring.put(SnakePartType.HEAD, Color.DARKBLUE);
+        bot1Coloring.put(SnakePartType.BODY, Color.BLUE);
+        bot1Coloring.put(SnakePartType.TAIL, Color.LIGHTBLUE);
+
+        HashMap<SnakePartType, Color> bot2Coloring = new HashMap<>();
+        bot2Coloring.put(SnakePartType.HEAD, Color.DARKRED);
+        bot2Coloring.put(SnakePartType.BODY, Color.RED);
+        bot2Coloring.put(SnakePartType.TAIL, Color.LIGHTCORAL);
 
         model = new Model(10, 10, 50,
                 Direction.UP, 5, 20,
-                snakeColoring, botColoring);
+                snakeColoring, bot1Coloring, bot2Coloring);
         gameLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -86,12 +91,27 @@ public class Controller {
 
         drawGrid();
         drawFoods();
-        if (model.getBot().isDead()) {
-            drawBot();
+
+        Snake player = model.getSnake();
+        Snake bot1 = model.getBot1();
+        Snake bot2 = model.getBot2();
+        if (bot1.isDead()) {
+            drawBot(bot1);
+        }
+        if (bot2.isDead()) {
+            drawBot(bot2);
+        }
+        if (player.isDead()) {
             drawSnake();
-        } else {
+        }
+        if (!player.isDead()) {
             drawSnake();
-            drawBot();
+        }
+        if (!bot1.isDead()) {
+            drawBot(bot1);
+        }
+        if (!bot2.isDead()) {
+            drawBot(bot2);
         }
     }
 
@@ -124,9 +144,9 @@ public class Controller {
         }
     }
 
-    private void drawBot() {
-        for (SnakePart part : model.getBot().getParts()) {
-            gc.setFill(model.getBot().getColoring().get(part.type()));
+    private void drawBot(Snake bot) {
+        for (SnakePart part : bot.getParts()) {
+            gc.setFill(bot.getColoring().get(part.type()));
 
             gc.fillRect((part.coords().x() + 0.25) * model.getCellSize(),
                     (part.coords().y() + 0.25) * model.getCellSize(),

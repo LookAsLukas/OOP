@@ -16,14 +16,16 @@ public class Model {
     private final int cellSize;
     private final int maxScore;
     private final Snake player;
-    private final Snake bot;
+    private final Snake bot1;
+    private final Snake bot2;
     private final Set<Food> foods = new HashSet<>();
     private final Set<Point> freeCells = new HashSet<>();
     private final Set<Obstacle> obstacles = new HashSet<>();
     private Direction direction;
     private Direction requestedDirection;
     private int score = 0;
-    private int botScore = 0;
+    private int bot1Score = 0;
+    private int bot2Score = 0;
 
     /**
      * .
@@ -38,7 +40,8 @@ public class Model {
     public Model(int gridWidth, int gridHeight, int cellSize,
                  Direction direction, int foodCount, int maxScore,
                  HashMap<SnakePartType, Color> snakeColoring,
-                 HashMap<SnakePartType, Color> botColoring) {
+                 HashMap<SnakePartType, Color> bot1Coloring,
+                 HashMap<SnakePartType, Color> bot2Coloring) {
         for (int x = 0; x < gridWidth; x++) {
             for (int y = 0; y < gridHeight; y++) {
                 Point point = new Point(x, y);
@@ -58,9 +61,13 @@ public class Model {
         player = new Player(snakeStart, snakeColoring, obstacles);
         freeCells.remove(snakeStart);
 
-        Point botStart = new Point(3 * gridWidth / 4, gridHeight / 2);
-        bot = new PeacefulBot(botStart, botColoring, obstacles, new GeneralDirectionLogic(foods));
-        freeCells.remove(botStart);
+        Point bot1Start = new Point(3 * gridWidth / 4, gridHeight / 2);
+        bot1 = new PeacefulBot(bot1Start, bot1Coloring, obstacles, new GeneralDirectionLogic(foods));
+        freeCells.remove(bot1Start);
+
+        Point bot2Start = new Point(3 * gridWidth / 4, gridHeight / 4);
+        bot2 = new EvilBot(bot2Start, bot2Coloring, obstacles, new PlayerRacerLogic(foods, player));
+        freeCells.remove(bot2Start);
 
         for (int i = 0; i < foodCount; i++) {
             generateNewFood();
@@ -81,13 +88,19 @@ public class Model {
             player.kill();
         }
 
-        if (bot.move(null)) {
-            freeCells.remove(bot.head().coords());
+        if (bot1.move(null)) {
+            freeCells.remove(bot1.head().coords());
         } else {
-            bot.kill();
+            bot1.kill();
         }
 
-        if (bot.isDead() && player.isDead()) {
+        if (bot2.move(null)) {
+            freeCells.remove(bot2.head().coords());
+        } else {
+            bot2.kill();
+        }
+
+        if (bot1.isDead() && bot2.isDead() && player.isDead()) {
             return MoveResult.TIE;
         }
 
@@ -102,12 +115,23 @@ public class Model {
             generateNewFood();
         }
 
-        freedUp = bot.eatFood(foods);
+        freedUp = bot1.eatFood(foods);
         if (freedUp != null) {
             freeCells.remove(freedUp);
-        } else if (!bot.isDead()) {
-            botScore++;
-            if (botScore >= maxScore) {
+        } else if (!bot1.isDead()) {
+            bot1Score++;
+            if (bot1Score >= maxScore) {
+                return MoveResult.LOSE;
+            }
+            generateNewFood();
+        }
+
+        freedUp = bot2.eatFood(foods);
+        if (freedUp != null) {
+            freeCells.remove(freedUp);
+        } else if (!bot2.isDead()) {
+            bot2Score++;
+            if (bot2Score >= maxScore) {
                 return MoveResult.LOSE;
             }
             generateNewFood();
@@ -156,8 +180,17 @@ public class Model {
      *
      * @return .
      */
-    public Snake getBot() {
-        return bot;
+    public Snake getBot1() {
+        return bot1;
+    }
+
+    /**
+     * .
+     *
+     * @return .
+     */
+    public Snake getBot2() {
+        return bot2;
     }
 
     /**
