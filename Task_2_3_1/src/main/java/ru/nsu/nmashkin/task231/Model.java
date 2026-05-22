@@ -62,11 +62,13 @@ public class Model {
         freeCells.remove(snakeStart);
 
         Point bot1Start = new Point(3 * gridWidth / 4, gridHeight / 2);
-        bot1 = new PeacefulBot(bot1Start, bot1Coloring, obstacles, new GeneralDirectionLogic(foods));
+        bot1 = new PeacefulBot(bot1Start, bot1Coloring,
+                obstacles, new GeneralDirectionLogic(foods));
         freeCells.remove(bot1Start);
 
         Point bot2Start = new Point(3 * gridWidth / 4, gridHeight / 4);
-        bot2 = new EvilBot(bot2Start, bot2Coloring, obstacles, new PlayerRacerLogic(foods, player));
+        bot2 = new EvilBot(bot2Start, bot2Coloring,
+                obstacles, new PlayerRacerLogic(foods, player));
         freeCells.remove(bot2Start);
 
         for (int i = 0; i < foodCount; i++) {
