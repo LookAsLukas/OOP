@@ -36,7 +36,8 @@ public record Slave(int threadCount) {
             try {
                 System.out.println("Connecting to discovered Master at " + masterAddress);
 
-                try (Socket socket = new Socket(masterAddress.getAddress(), masterAddress.getPort());
+                try (Socket socket = new Socket(masterAddress.getAddress(),
+                        masterAddress.getPort());
                      ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
                      ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
 
@@ -58,7 +59,8 @@ public record Slave(int threadCount) {
                         TaskResult taskResult = new TaskResult(task.taskId(), result);
                         out.writeObject(taskResult);
                         out.flush();
-                        System.out.println("Work #" + task.taskId() + " is done, result: " + result);
+                        System.out.println("Work #" + task.taskId()
+                                + " is done, result: " + result);
                     }
                 }
             } catch (ConnectException e) {
@@ -89,7 +91,8 @@ public record Slave(int threadCount) {
             multicastSocket.joinGroup(new InetSocketAddress(group, MULTICAST_PORT), netIf);
 
             byte[] msgBytes = "SLAVE_READY".getBytes(StandardCharsets.UTF_8);
-            DatagramPacket readyPacket = new DatagramPacket(msgBytes, msgBytes.length, group, MULTICAST_PORT);
+            DatagramPacket readyPacket = new DatagramPacket(msgBytes, msgBytes.length,
+                    group, MULTICAST_PORT);
             multicastSocket.send(readyPacket);
             multicastSocket.setSoTimeout(3000);
 
@@ -98,9 +101,11 @@ public record Slave(int threadCount) {
                 try {
                     DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                     multicastSocket.receive(packet);
-                    String response = new String(packet.getData(), 0, packet.getLength(), StandardCharsets.UTF_8);
+                    String response = new String(packet.getData(), 0,
+                            packet.getLength(), StandardCharsets.UTF_8);
 
-                    if (response.startsWith("MASTER_INFO:") || response.startsWith("MASTER_START:")) {
+                    if (response.startsWith("MASTER_INFO:")
+                            || response.startsWith("MASTER_START:")) {
                         int port = Integer.parseInt(response.split(":")[1]);
                         InetAddress masterIp = packet.getAddress();
 

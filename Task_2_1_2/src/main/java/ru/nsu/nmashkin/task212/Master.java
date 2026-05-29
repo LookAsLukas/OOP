@@ -69,7 +69,8 @@ public class Master {
             for (int i = 0; i < expectedWorkers; i++) {
                 try {
                     workerSockets[i] = serverSocket.accept();
-                    System.out.println("Slave detected: " + workerSockets[i].getRemoteSocketAddress());
+                    System.out.println("Slave detected: "
+                            + workerSockets[i].getRemoteSocketAddress());
                 } catch (IOException e) {
                     System.out.println("Not enough slaves: " + e.getMessage());
                     break;
@@ -119,14 +120,16 @@ public class Master {
             discoverySocket.joinGroup(new InetSocketAddress(group, MULTICAST_PORT), netIf);
 
             byte[] msgBytes = ("MASTER_START:" + port).getBytes(StandardCharsets.UTF_8);
-            DatagramPacket notification = new DatagramPacket(msgBytes, msgBytes.length, group, MULTICAST_PORT);
+            DatagramPacket notification = new DatagramPacket(msgBytes, msgBytes.length,
+                    group, MULTICAST_PORT);
             discoverySocket.send(notification);
 
             byte[] buffer = new byte[1024];
             while (!isDone.get()) {
                 DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                 discoverySocket.receive(packet);
-                String message = new String(packet.getData(), 0, packet.getLength(), StandardCharsets.UTF_8);
+                String message = new String(packet.getData(), 0,
+                        packet.getLength(), StandardCharsets.UTF_8);
 
                 if ("SLAVE_READY".equals(message)) {
                     byte[] responseBytes = ("MASTER_INFO:" + port).getBytes(StandardCharsets.UTF_8);
@@ -204,7 +207,8 @@ public class Master {
             } finally {
                 System.out.println(currentTask);
                 if (currentTask != null) {
-                    System.out.println("Sun is still up in the sky, returning task to queue: " + currentTask.taskId());
+                    System.out.println("Sun is still up in the sky, returning task to queue: "
+                            + currentTask.taskId());
                     taskQueue.add(currentTask);
                 }
             }

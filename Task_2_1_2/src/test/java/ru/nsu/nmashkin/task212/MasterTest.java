@@ -14,7 +14,6 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicBoolean;
-
 import org.junit.jupiter.api.Test;
 
 class MasterTest {
@@ -116,7 +115,8 @@ class MasterTest {
             try {
                 try (MulticastSocket multicastSocket = new MulticastSocket(4446)) {
                     InetAddress group = InetAddress.getByName("230.0.0.1");
-                    NetworkInterface netIf = NetworkInterface.getByInetAddress(InetAddress.getLocalHost());
+                    NetworkInterface netIf = NetworkInterface.getByInetAddress(
+                            InetAddress.getLocalHost());
                     if (netIf == null) {
                         netIf = NetworkInterface.getNetworkInterfaces().nextElement();
                     }
@@ -124,7 +124,8 @@ class MasterTest {
                     multicastSocket.setSoTimeout(3000);
 
                     byte[] msgBytes = "SLAVE_READY".getBytes(StandardCharsets.UTF_8);
-                    DatagramPacket readyPacket = new DatagramPacket(msgBytes, msgBytes.length, group, 4446);
+                    DatagramPacket readyPacket = new DatagramPacket(msgBytes, msgBytes.length,
+                            group, 4446);
                     multicastSocket.send(readyPacket);
 
                     byte[] buffer = new byte[1024];
@@ -132,7 +133,8 @@ class MasterTest {
                         try {
                             DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
                             multicastSocket.receive(packet);
-                            String response = new String(packet.getData(), 0, packet.getLength(), StandardCharsets.UTF_8);
+                            String response = new String(packet.getData(), 0,
+                                    packet.getLength(), StandardCharsets.UTF_8);
 
                             System.err.println(response);
                             if (response.startsWith("MASTER_INFO:")) {

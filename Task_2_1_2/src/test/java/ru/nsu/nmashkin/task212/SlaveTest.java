@@ -28,7 +28,9 @@ class SlaveTest {
                     udpSocket.send(packet);
                     Thread.sleep(500);
                 }
-            } catch (Exception ignored) {}
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
         advertiser.setDaemon(true);
         advertiser.start();
