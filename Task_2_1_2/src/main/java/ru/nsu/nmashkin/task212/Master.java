@@ -3,8 +3,15 @@ package ru.nsu.nmashkin.task212;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.MulticastSocket;
+import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
@@ -23,7 +30,11 @@ public class Master {
     private final AtomicBoolean isDone = new AtomicBoolean(false);
     private final List<Thread> workerHandlers = new CopyOnWriteArrayList<>();
     private final Object lock = new Object();
+    private volatile MulticastSocket discoverySocket;
     private int tasksLeft;
+
+    private static final String MULTICAST_ADDRESS = "230.0.0.1";
+    private static final int MULTICAST_PORT = 4446;
 
     /**
      * Make a master.
@@ -36,11 +47,6 @@ public class Master {
 
     /**
      * Accept slaves, give them work, return result.
-     *
-     * @param numbers .
-     * @param chunkSize .
-     * @param expectedWorkers .
-     * @return .
      */
     public boolean execute(int[] numbers, int chunkSize, int expectedWorkers) {
         int taskId = 0;
@@ -54,13 +60,16 @@ public class Master {
 
         System.out.println("Master is up and expecting " + expectedWorkers + " slaves...");
 
+        Thread discoveryThread = new Thread(this::searchForSlaves);
+        discoveryThread.setDaemon(true);
+        discoveryThread.start();
+
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             Socket[] workerSockets = new Socket[expectedWorkers];
             for (int i = 0; i < expectedWorkers; i++) {
                 try {
                     workerSockets[i] = serverSocket.accept();
-                    System.out.println("Slave detected: "
-                            + workerSockets[i].getRemoteSocketAddress());
+                    System.out.println("Slave detected: " + workerSockets[i].getRemoteSocketAddress());
                 } catch (IOException e) {
                     System.out.println("Not enough slaves: " + e.getMessage());
                     break;
@@ -90,24 +99,62 @@ public class Master {
             for (Thread t : workerHandlers) {
                 t.interrupt();
             }
+
+            if (discoverySocket != null && !discoverySocket.isClosed()) {
+                discoverySocket.close();
+            }
         }
 
         return globalResult.get();
     }
 
+    private void searchForSlaves() {
+        try {
+            discoverySocket = new MulticastSocket(MULTICAST_PORT);
+            InetAddress group = InetAddress.getByName(MULTICAST_ADDRESS);
+            NetworkInterface netIf = NetworkInterface.getByInetAddress(InetAddress.getLocalHost());
+            if (netIf == null) {
+                netIf = NetworkInterface.getNetworkInterfaces().nextElement();
+            }
+            discoverySocket.joinGroup(new InetSocketAddress(group, MULTICAST_PORT), netIf);
+
+            byte[] msgBytes = ("MASTER_START:" + port).getBytes(StandardCharsets.UTF_8);
+            DatagramPacket notification = new DatagramPacket(msgBytes, msgBytes.length, group, MULTICAST_PORT);
+            discoverySocket.send(notification);
+
+            byte[] buffer = new byte[1024];
+            while (!isDone.get()) {
+                DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+                discoverySocket.receive(packet);
+                String message = new String(packet.getData(), 0, packet.getLength(), StandardCharsets.UTF_8);
+
+                if ("SLAVE_READY".equals(message)) {
+                    byte[] responseBytes = ("MASTER_INFO:" + port).getBytes(StandardCharsets.UTF_8);
+                    DatagramPacket response = new DatagramPacket(
+                            responseBytes, responseBytes.length,
+                            group, MULTICAST_PORT
+                    );
+                    discoverySocket.send(response);
+                }
+            }
+        } catch (SocketException e) {
+            System.out.println("Search ended");
+        } catch (Exception e) {
+            System.err.println("We're screwed: " + e.getMessage());
+        } finally {
+            if (discoverySocket != null && !discoverySocket.isClosed()) {
+                discoverySocket.close();
+            }
+        }
+    }
+
     private class WorkerHandler implements Runnable {
         private final Socket socket;
 
-        /**
-         * Make a handler.
-         */
         public WorkerHandler(Socket socket) {
             this.socket = socket;
         }
 
-        /**
-         * Manage a Slave.
-         */
         @Override
         public void run() {
             Task currentTask = null;
@@ -133,17 +180,18 @@ public class Master {
                         if (result.hasNonPrime()) {
                             globalResult.set(true);
                         }
-                        System.out.print("Slave has completed work #"
-                                + result.taskId() + ". Works left: ");
-                        for (var task : taskQueue) {
-                            System.out.print(task.taskId() + " ");
-                        }
-                        System.out.println();
+                        System.out.println("Slave has completed work #" + result.taskId()
+                                + " with result " + result.hasNonPrime());
                         tasksLeft--;
-                        lock.notifyAll();
+
+                        if (result.hasNonPrime() || tasksLeft == 0) {
+                            lock.notifyAll();
+                        }
                     }
 
-                    currentTask = null;
+                    if (!s.isClosed()) {
+                        currentTask = null;
+                    }
                 }
 
                 if (!s.isClosed()) {
@@ -154,14 +202,10 @@ public class Master {
             } catch (Exception e) {
                 System.err.println("Slave is dead: " + socket.getRemoteSocketAddress());
             } finally {
+                System.out.println(currentTask);
                 if (currentTask != null) {
-                    System.out.println("Sun is still up in the sky, returning task to queue: "
-                            + currentTask.taskId());
+                    System.out.println("Sun is still up in the sky, returning task to queue: " + currentTask.taskId());
                     taskQueue.add(currentTask);
-
-                    synchronized (lock) {
-                        lock.notifyAll();
-                    }
                 }
             }
         }

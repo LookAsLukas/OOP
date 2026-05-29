@@ -5,10 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-/**
- * .
- */
-public class EndToEndTest {
+class EndToEndTest {
 
     @Test
     public void e2e() {
@@ -17,7 +14,7 @@ public class EndToEndTest {
         Master master = new Master(port);
 
         Thread slaveThread = new Thread(() -> {
-            Slave slave = new Slave("localhost", port, 2);
+            Slave slave = new Slave(2);
             slave.start();
         });
         slaveThread.start();
@@ -35,7 +32,7 @@ public class EndToEndTest {
         Master master = new Master(port);
 
         Thread slaveThread = new Thread(() -> {
-            Slave slave = new Slave("localhost", port, 2);
+            Slave slave = new Slave(2);
             slave.start();
         });
         slaveThread.start();
